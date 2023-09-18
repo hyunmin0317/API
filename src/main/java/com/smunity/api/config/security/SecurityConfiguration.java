@@ -23,4 +23,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/accounts/*").permitAll() // 가입 및 로그인 주소는 허용
             .antMatchers("**exception**").permitAll();
     }
+
+    @Override
+    public void configure(WebSecurity webSecurity) {
+        webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
+                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception");
+    }
 }
