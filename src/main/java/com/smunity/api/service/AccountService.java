@@ -4,5 +4,5 @@ import com.smunity.api.data.dto.SignUpResultDto;
 
 
 public interface AccountService {
-    SignUpResultDto signUp(String id, String password, String name, String role);
+    SignUpResultDto signUp(String username, String password, String email, boolean is_admin);
 }
