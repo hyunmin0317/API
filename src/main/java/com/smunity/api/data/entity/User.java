@@ -26,33 +26,33 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
     @JsonProperty(access = Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String email;
+
     @Column
-    private LocalDateTime last_login;
-
-    @Column(nullable = false)
-    private boolean is_superuser;
-
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
     private String first_name;
 
-    @Column(nullable = false)
+    @Column
     private String last_name;
 
     @Column(nullable = false)
-    private String email;
+    private boolean is_superuser;
 
     @Column(nullable = false)
     private boolean is_staff;
 
     @Column(nullable = false)
     private boolean is_active;
+
+    @Column
+    private LocalDateTime last_login;
 
     @Column
     @CreatedDate
