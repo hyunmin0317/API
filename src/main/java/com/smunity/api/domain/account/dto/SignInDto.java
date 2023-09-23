@@ -1,4 +1,4 @@
-package com.smunity.api.data.dto;
+package com.smunity.api.domain.account.dto;
 
 
 import lombok.Data;

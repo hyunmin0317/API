@@ -1,10 +1,9 @@
-package com.smunity.api.controller;
+package com.smunity.api.domain.account.controller;
 
-import com.smunity.api.data.dto.SignInResultDto;
-import com.smunity.api.data.dto.SignUpDto;
-import com.smunity.api.data.dto.SignUpResultDto;
-import com.smunity.api.service.AccountService;
-import io.swagger.annotations.ApiParam;
+import com.smunity.api.domain.account.dto.SignInResultDto;
+import com.smunity.api.domain.account.dto.SignUpDto;
+import com.smunity.api.domain.account.dto.SignUpResultDto;
+import com.smunity.api.domain.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
