@@ -17,7 +17,6 @@ public class Pbkdf2PasswordEncoder implements PasswordEncoder {
 
     private final StringKeyGenerator saltGenerator;
     private final String PREFIX;
-    private final String SEPARATOR;
     private final int ITERATIONS;
     private final int HASH_WIDTH;
     private final String ALGORITHM;
@@ -25,7 +24,6 @@ public class Pbkdf2PasswordEncoder implements PasswordEncoder {
     public Pbkdf2PasswordEncoder() {
         this.saltGenerator = KeyGenerators.string();
         this.PREFIX = "pbkdf2_sha256";
-        this.SEPARATOR = "$";
         this.ITERATIONS = 390000;
         this.HASH_WIDTH = 256;
         this.ALGORITHM = "PBKDF2WithHmacSHA256";
@@ -57,7 +55,7 @@ public class Pbkdf2PasswordEncoder implements PasswordEncoder {
         val salt = saltGenerator.generateKey();
         val hash = encodeWithSalt(rawPassword, salt.getBytes(Charsets.US_ASCII));
         val encodedHash = base64Encode(hash);
-        return String.join(SEPARATOR, Arrays.asList(PREFIX, Integer.toString(ITERATIONS), salt, encodedHash));
+        return String.join("$", Arrays.asList(PREFIX, Integer.toString(ITERATIONS), salt, encodedHash));
     }
 
     @Override
@@ -65,7 +63,7 @@ public class Pbkdf2PasswordEncoder implements PasswordEncoder {
         if (!encodedPassword.startsWith(PREFIX)) {
             throw new IllegalArgumentException("Encoded password does not start with: $PREFIX");
         }
-        val parts = encodedPassword.split(SEPARATOR);
+        val parts = encodedPassword.split("\\$");
         if (parts.length != 4) {
             throw new IllegalArgumentException("The encoded password format does not have 4 parts");
         }
