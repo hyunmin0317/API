@@ -1,4 +1,4 @@
-package com.smunity.api.service;
+package com.smunity.api.domain.account.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

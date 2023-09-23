@@ -1,4 +1,4 @@
-package com.smunity.api.common;
+package com.smunity.api.global.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

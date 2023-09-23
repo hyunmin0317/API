@@ -1,4 +1,4 @@
-package com.smunity.api.config;
+package com.smunity.api.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

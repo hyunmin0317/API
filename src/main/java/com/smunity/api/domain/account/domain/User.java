@@ -1,4 +1,4 @@
-package com.smunity.api.data.entity;
+package com.smunity.api.domain.account.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;

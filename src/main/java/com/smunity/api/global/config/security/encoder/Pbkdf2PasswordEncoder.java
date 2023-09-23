@@ -1,4 +1,4 @@
-package com.smunity.api.config.security.encoder;
+package com.smunity.api.global.config.security.encoder;
 
 import com.google.common.base.Charsets;
 import lombok.val;

@@ -1,4 +1,4 @@
-package com.smunity.api.config.security;
+package com.smunity.api.global.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

@@ -1,6 +1,6 @@
-package com.smunity.api.service.impl;
+package com.smunity.api.domain.account.service.impl;
 
-import com.smunity.api.data.repository.UserRepository;
+import com.smunity.api.domain.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
