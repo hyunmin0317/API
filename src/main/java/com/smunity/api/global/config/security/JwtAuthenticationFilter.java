@@ -1,4 +1,4 @@
-package com.smunity.api.config.security;
+package com.smunity.api.global.config.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

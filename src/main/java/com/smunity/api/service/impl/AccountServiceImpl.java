@@ -1,12 +1,12 @@
 package com.smunity.api.service.impl;
 
-import com.smunity.api.common.CommonResponse;
+import com.smunity.api.global.common.CommonResponse;
 import com.smunity.api.data.dto.SignInResultDto;
 import com.smunity.api.data.dto.SignUpResultDto;
 import com.smunity.api.data.entity.User;
 import com.smunity.api.data.repository.UserRepository;
 import com.smunity.api.service.AccountService;
-import com.smunity.api.config.security.JwtTokenProvider;
+import com.smunity.api.global.config.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
