@@ -1,10 +1,12 @@
 package com.smunity.api.service.impl;
 
 import com.smunity.api.common.CommonResponse;
+import com.smunity.api.data.dto.SignInResultDto;
 import com.smunity.api.data.dto.SignUpResultDto;
 import com.smunity.api.data.entity.User;
 import com.smunity.api.data.repository.UserRepository;
 import com.smunity.api.service.AccountService;
+import com.smunity.api.config.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountServiceImpl implements AccountService {
     public UserRepository userRepository;
+    public JwtTokenProvider jwtTokenProvider;
     public PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AccountServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -42,6 +46,20 @@ public class AccountServiceImpl implements AccountService {
             setFailResult(signUpResultDto);
         }
         return signUpResultDto;
+    }
+
+    @Override
+    public SignInResultDto signIn(String username, String password) throws RuntimeException {
+        User user = userRepository.getByUsername(username);
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException();
+        }
+        SignInResultDto signInResultDto = SignInResultDto.builder()
+                .token(jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles()))
+                .build();
+        setSuccessResult(signInResultDto);
+        return signInResultDto;
     }
 
     private void setSuccessResult(SignUpResultDto result) {
