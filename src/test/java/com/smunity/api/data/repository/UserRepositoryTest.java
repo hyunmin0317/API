@@ -1,6 +1,6 @@
 package com.smunity.api.data.repository;
 
-import com.smunity.api.domain.account.entity.User;
+import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

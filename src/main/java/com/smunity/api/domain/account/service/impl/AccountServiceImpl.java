@@ -4,7 +4,7 @@ import com.smunity.api.domain.account.service.AccountService;
 import com.smunity.api.global.common.CommonResponse;
 import com.smunity.api.domain.account.dto.SignInResultDto;
 import com.smunity.api.domain.account.dto.SignUpResultDto;
-import com.smunity.api.domain.account.entity.User;
+import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
