@@ -1,13 +1,12 @@
 package com.smunity.api.controller;
 
+import com.smunity.api.data.dto.SignInResultDto;
 import com.smunity.api.data.dto.SignUpDto;
 import com.smunity.api.data.dto.SignUpResultDto;
 import com.smunity.api.service.AccountService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/accounts")
@@ -23,5 +22,11 @@ public class AccountController {
     public SignUpResultDto signUp(@RequestBody SignUpDto signUpDto) {
         SignUpResultDto signUpResultDto = accountService.signUp(signUpDto.getUsername(), signUpDto.getPassword(), signUpDto.getEmail(), signUpDto.getIs_admin());
         return signUpResultDto;
+    }
+
+    @PostMapping(value = "/login")
+    public SignInResultDto signIn(@RequestBody SignUpDto signUpDto) throws RuntimeException {
+        SignInResultDto signInResultDto = accountService.signIn(signUpDto.getUsername(), signUpDto.getPassword());
+        return signInResultDto;
     }
 }
