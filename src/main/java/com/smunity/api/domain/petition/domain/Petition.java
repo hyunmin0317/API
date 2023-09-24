@@ -1,8 +1,7 @@
 package com.smunity.api.domain.petition.domain;
 
 import com.smunity.api.domain.account.domain.User;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "petitions_petition")
 public class Petition extends BaseEntity{
     @Id
@@ -39,4 +39,16 @@ public class Petition extends BaseEntity{
     @ToString.Exclude
     private User author;
 
+    @Builder
+    public Petition(LocalDateTime create_date, LocalDateTime modify_date, Long id, String subject, String content, Integer category, boolean anonymous, LocalDateTime end_date, Integer status, User author) {
+        super(create_date, modify_date);
+        this.id = id;
+        this.subject = subject;
+        this.content = content;
+        this.category = category;
+        this.anonymous = anonymous;
+        this.end_date = end_date;
+        this.status = status;
+        this.author = author;
+    }
 }
