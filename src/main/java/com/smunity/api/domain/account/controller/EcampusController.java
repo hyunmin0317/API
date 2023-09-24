@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/ecampus")
@@ -20,8 +22,8 @@ public class EcampusController {
     }
 
     @PostMapping(value = "/login")
-    public String signIn(@RequestBody SignInDto signInDto) throws RuntimeException {
-        String result = ecampusService.signIn(signInDto.getUsername(), signInDto.getPassword());
+    public String signIn(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
+        String result = ecampusService.signIn(signInDto.getUsername(), signInDto.getPassword()).toString();
         return result;
     }
 }
