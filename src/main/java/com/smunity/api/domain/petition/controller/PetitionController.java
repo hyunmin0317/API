@@ -4,6 +4,7 @@ package com.smunity.api.domain.petition.controller;
 import com.smunity.api.domain.petition.dto.PetitionResponseDto;
 import com.smunity.api.domain.petition.service.PetitionService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,10 @@ public class PetitionController {
     @GetMapping()
     List<PetitionResponseDto> findAllPetitions() {
         return petitionService.findAllPetitions();
+    }
+
+    @GetMapping(value = "/{id}")
+    PetitionResponseDto getPetition(@PathVariable Long id) {
+        return petitionService.getPetition(id);
     }
 }

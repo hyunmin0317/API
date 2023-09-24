@@ -38,4 +38,22 @@ public class PetitionServiceImpl implements PetitionService {
         }
         return petitionResponseDtoList;
     }
+
+    @Override
+    public PetitionResponseDto getPetition(Long id) {
+        Petition petition = petitionRepository.findById(id).get();
+        PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+                .id(petition.getId())
+                .subject(petition.getSubject())
+                .content(petition.getContent())
+                .category(petition.getCategory())
+                .anonymous(petition.isAnonymous())
+                .create_date(petition.getCreate_date())
+                .end_date(petition.getEnd_date())
+                .modify_date(petition.getModify_date())
+                .status(petition.getStatus())
+                .author_id(petition.getAuthor().getId())
+                .build();
+        return petitionResponseDto;
+    }
 }
