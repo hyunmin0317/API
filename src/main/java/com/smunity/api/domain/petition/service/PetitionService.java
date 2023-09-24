@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PetitionService {
     List<PetitionResponseDto> findAllPetitions();
+    PetitionResponseDto getPetition(Long id);
 }
