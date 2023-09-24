@@ -21,7 +21,4 @@ public class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime modify_date;
-
-    @Column(updatable = false)
-    private LocalDateTime end_date;
 }
