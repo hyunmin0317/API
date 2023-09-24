@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/petitions")
 public class PetitionController {
-    PetitionService petitionService;
+    private final PetitionService petitionService;
 
     public PetitionController(PetitionService petitionService) {
         this.petitionService = petitionService;
@@ -25,8 +25,8 @@ public class PetitionController {
     }
 
     @PostMapping()
-    public PetitionResponseDto createPetition(@RequestBody PetitionDto petitionDto) {
-        return petitionService.savePetition(petitionDto);
+    public PetitionResponseDto createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        return petitionService.savePetition(petitionDto, token);
     }
 
     @GetMapping(value = "/{id}")
