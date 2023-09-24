@@ -100,7 +100,7 @@ public class User implements UserDetails {
         return this.is_active;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @ToString.Exclude
     private List<Petition> petitionList = new ArrayList<>();
 }
