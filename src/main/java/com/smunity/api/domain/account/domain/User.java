@@ -2,6 +2,7 @@ package com.smunity.api.domain.account.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.smunity.api.domain.petition.domain.Petition;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -98,4 +99,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return this.is_active;
     }
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Petition> petitionList = new ArrayList<>();
 }
