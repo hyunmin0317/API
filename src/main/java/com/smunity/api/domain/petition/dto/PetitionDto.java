@@ -24,6 +24,4 @@ public class PetitionDto {
     private LocalDateTime modify_date;
 
     private Integer status;
-
-    private Long author_id;
 }
