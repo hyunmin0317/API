@@ -38,7 +38,7 @@ public class PetitionServiceImpl implements PetitionService {
                     .subject(petition.getSubject())
                     .content(petition.getContent())
                     .category(petition.getCategory())
-                    .anonymous(petition.isAnonymous())
+                    .anonymous(petition.getAnonymous())
                     .create_date(petition.getCreate_date())
                     .end_date(petition.getEnd_date())
                     .modify_date(petition.getModify_date())
@@ -58,7 +58,7 @@ public class PetitionServiceImpl implements PetitionService {
                 .subject(petition.getSubject())
                 .content(petition.getContent())
                 .category(petition.getCategory())
-                .anonymous(petition.isAnonymous())
+                .anonymous(petition.getAnonymous())
                 .create_date(petition.getCreate_date())
                 .modify_date(petition.getModify_date())
                 .end_date(petition.getEnd_date())
@@ -77,7 +77,7 @@ public class PetitionServiceImpl implements PetitionService {
                     .subject(petitionDto.getSubject())
                     .content(petitionDto.getContent())
                     .category(petitionDto.getCategory())
-                    .anonymous(petitionDto.isAnonymous())
+                    .anonymous(petitionDto.getAnonymous())
                     .create_date(petitionDto.getCreate_date())
                     .modify_date(petitionDto.getModify_date())
                     .end_date(petitionDto.getEnd_date())
@@ -90,7 +90,7 @@ public class PetitionServiceImpl implements PetitionService {
                     .subject(savePetition.getSubject())
                     .content(savePetition.getContent())
                     .category(savePetition.getCategory())
-                    .anonymous(savePetition.isAnonymous())
+                    .anonymous(savePetition.getAnonymous())
                     .create_date(savePetition.getCreate_date())
                     .modify_date(savePetition.getModify_date())
                     .end_date(savePetition.getEnd_date())
@@ -100,5 +100,29 @@ public class PetitionServiceImpl implements PetitionService {
             return petitionResponseDto;
         }
         return null;
+    }
+
+    @Override
+    public PetitionResponseDto changePetition(Long id, PetitionDto petitionDto) {
+        Petition petition = petitionRepository.findById(id).get();
+        petition.setSubject(petitionDto.getSubject());
+        petition.setContent(petitionDto.getContent());
+        petition.setCategory(petitionDto.getCategory());
+        petition.setAnonymous(petitionDto.getAnonymous());
+
+        Petition changedPetition = petitionRepository.save(petition);
+        PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+                .id(changedPetition.getId())
+                .subject(changedPetition.getSubject())
+                .content(changedPetition.getContent())
+                .category(changedPetition.getCategory())
+                .anonymous(changedPetition.getAnonymous())
+                .create_date(changedPetition.getCreate_date())
+                .modify_date(changedPetition.getModify_date())
+                .end_date(changedPetition.getEnd_date())
+                .status(changedPetition.getStatus())
+                .author_id(changedPetition.getAuthor().getId())
+                .build();
+        return petitionResponseDto;
     }
 }

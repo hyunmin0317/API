@@ -26,7 +26,7 @@ public class Petition extends BaseEntity{
     private Integer category;
 
     @Column(nullable = false)
-    private boolean anonymous;
+    private Boolean anonymous;
 
     @Column
     private LocalDateTime end_date;
