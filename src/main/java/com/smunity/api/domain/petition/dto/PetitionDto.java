@@ -9,6 +9,10 @@ import lombok.Data;
 @Data
 @Builder
 public class PetitionDto {
+    private Long id;
+
+    private Long author_id;
+
     private String subject;
 
     private String content;

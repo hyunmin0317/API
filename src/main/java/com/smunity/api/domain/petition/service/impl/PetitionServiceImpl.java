@@ -4,7 +4,6 @@ import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.petition.domain.Petition;
 import com.smunity.api.domain.petition.dto.PetitionDto;
-import com.smunity.api.domain.petition.dto.PetitionResponseDto;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
@@ -29,11 +28,11 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public List<PetitionResponseDto> findAllPetitions() {
-        List<PetitionResponseDto> petitionResponseDtoList = new ArrayList<>();
+    public List<PetitionDto> findAllPetitions() {
+        List<PetitionDto> petitionResponseDtoList = new ArrayList<>();
         List<Petition> petitionList = petitionRepository.findAll();
         for (Petition petition: petitionList) {
-            PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+            PetitionDto petitionResponseDto = PetitionDto.builder()
                     .id(petition.getId())
                     .subject(petition.getSubject())
                     .content(petition.getContent())
@@ -51,9 +50,9 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public PetitionResponseDto getPetition(Long id) {
+    public PetitionDto getPetition(Long id) {
         Petition petition = petitionRepository.findById(id).get();
-        PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+        PetitionDto petitionResponseDto = PetitionDto.builder()
                 .id(petition.getId())
                 .subject(petition.getSubject())
                 .content(petition.getContent())
@@ -69,7 +68,7 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public PetitionResponseDto savePetition(PetitionDto petitionDto, String token) {
+    public PetitionDto savePetition(PetitionDto petitionDto, String token) {
         if (jwtTokenProvider.validateToken(token)) {
             String username = jwtTokenProvider.getUsername(token);
             User user = userRepository.getByUsername(username);
@@ -85,7 +84,7 @@ public class PetitionServiceImpl implements PetitionService {
                     .author(user)
                     .build();
             Petition savePetition = petitionRepository.save(petition);
-            PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+            PetitionDto petitionResponseDto = PetitionDto.builder()
                     .id(savePetition.getId())
                     .subject(savePetition.getSubject())
                     .content(savePetition.getContent())
@@ -103,7 +102,7 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public PetitionResponseDto changePetition(Long id, PetitionDto petitionDto) {
+    public PetitionDto changePetition(Long id, PetitionDto petitionDto) {
         Petition petition = petitionRepository.findById(id).get();
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
@@ -111,7 +110,7 @@ public class PetitionServiceImpl implements PetitionService {
         petition.setAnonymous(petitionDto.getAnonymous());
 
         Petition changedPetition = petitionRepository.save(petition);
-        PetitionResponseDto petitionResponseDto = PetitionResponseDto.petitionResponseDtoBuilder()
+        PetitionDto petitionResponseDto = PetitionDto.builder()
                 .id(changedPetition.getId())
                 .subject(changedPetition.getSubject())
                 .content(changedPetition.getContent())

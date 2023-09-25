@@ -1,14 +1,14 @@
 package com.smunity.api.domain.petition.service;
 
 import com.smunity.api.domain.petition.dto.PetitionDto;
-import com.smunity.api.domain.petition.dto.PetitionResponseDto;
+
 import java.util.List;
 
 
 public interface PetitionService {
-    List<PetitionResponseDto> findAllPetitions();
-    PetitionResponseDto getPetition(Long id);
-    PetitionResponseDto savePetition(PetitionDto petitionDto, String token);
-    PetitionResponseDto changePetition(Long id, PetitionDto petitionDto);
+    List<PetitionDto> findAllPetitions();
+    PetitionDto getPetition(Long id);
+    PetitionDto savePetition(PetitionDto petitionDto, String token);
+    PetitionDto changePetition(Long id, PetitionDto petitionDto);
     void deletePetition(Long id);
 }
