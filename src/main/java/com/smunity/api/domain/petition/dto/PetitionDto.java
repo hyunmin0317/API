@@ -15,7 +15,7 @@ public class PetitionDto {
 
     private Integer category;
 
-    private boolean anonymous;
+    private Boolean anonymous;
 
     private LocalDateTime create_date;
 
