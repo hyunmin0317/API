@@ -33,4 +33,9 @@ public class PetitionController {
     PetitionResponseDto getPetition(@PathVariable Long id) {
         return petitionService.getPetition(id);
     }
+
+    @PutMapping(value = "/{id}")
+    PetitionResponseDto getPetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
+        return petitionService.changePetition(id, petitionDto);
+    }
 }
