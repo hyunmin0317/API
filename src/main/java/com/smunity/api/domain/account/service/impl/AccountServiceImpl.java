@@ -27,39 +27,33 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseDto signUp(UserDto userDto) {
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        User user = userDto.toEntity();
-        User savedUser = userRepository.save(user);
-
+        boolean exists = userRepository.existsByUsername(userDto.getUsername());
+        String token = null;
+        if (!exists) {
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User user = userDto.toEntity();
+            userRepository.save(user);
+            token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
+        }
         ResponseDto responseDto = ResponseDto.builder()
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles()))
+                .success(!exists)
+                .token(token)
                 .build();
-        setResult(responseDto, !savedUser.getUsername().isEmpty());
         return responseDto;
     }
 
     @Override
     public ResponseDto signIn(String username, String password) throws RuntimeException {
         User user = userRepository.getByUsername(username);
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException();
-        }
-
-        ResponseDto responseDto = ResponseDto.builder()
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles()))
-                .build();
-        setResult(responseDto, true);
-        return responseDto;
-    }
-
-    private void setResult(ResponseDto result, boolean success) {
-        result.setSuccess(success);
+        boolean success = passwordEncoder.matches(password, user.getPassword());
+        String token = null;
         if (success) {
-            result.setCode(CommonResponse.SUCCESS.getCode());
-            result.setMsg(CommonResponse.SUCCESS.getMsg());
-        } else {
-            result.setCode(CommonResponse.FAIL.getCode());
-            result.setMsg(CommonResponse.FAIL.getMsg());
+            token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
         }
+        ResponseDto responseDto = ResponseDto.builder()
+                .success(success)
+                .token(token)
+                .build();
+        return responseDto;
     }
 }

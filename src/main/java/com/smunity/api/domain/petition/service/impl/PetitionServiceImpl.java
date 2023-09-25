@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -40,9 +41,10 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public PetitionDto getPetition(Long id) {
-        Petition petition = petitionRepository.findById(id).get();
-        PetitionDto petitionDto = PetitionDto.toDto(petition);
-        return petitionDto;
+        Optional<Petition> petitionOptional = petitionRepository.findById(id);
+        if (!petitionOptional.isEmpty())
+            return PetitionDto.toDto(petitionOptional.get());
+        return null;
     }
 
     @Override
@@ -60,18 +62,21 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public PetitionDto changePetition(Long id, PetitionDto petitionDto) {
-        Petition petition = petitionRepository.findById(id).get();
+        Optional<Petition> petitionOptional = petitionRepository.findById(id);
+        if (petitionOptional.isEmpty())
+            return null;
+        Petition petition = petitionOptional.get();
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());
         petition.setAnonymous(petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
-        PetitionDto petitionResponseDto = PetitionDto.toDto(changedPetition);
-        return petitionResponseDto;
+        return PetitionDto.toDto(changedPetition);
     }
 
     @Override
     public void deletePetition(Long id) {
-        petitionRepository.deleteById(id);
+        if (petitionRepository.existsById(id))
+            petitionRepository.deleteById(id);
     }
 }
