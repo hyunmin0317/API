@@ -9,6 +9,6 @@ public interface PetitionService {
     List<PetitionResponseDto> findAllPetitions();
     PetitionResponseDto getPetition(Long id);
     PetitionResponseDto savePetition(PetitionDto petitionDto, String token);
-
     PetitionResponseDto changePetition(Long id, PetitionDto petitionDto);
+    void deletePetition(Long id);
 }
