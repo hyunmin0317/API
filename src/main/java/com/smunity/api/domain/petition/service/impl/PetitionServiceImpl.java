@@ -29,42 +29,20 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> findAllPetitions() {
-        List<PetitionDto> petitionResponseDtoList = new ArrayList<>();
+        List<PetitionDto> petitionDtoList = new ArrayList<>();
         List<Petition> petitionList = petitionRepository.findAll();
         for (Petition petition: petitionList) {
-            PetitionDto petitionResponseDto = PetitionDto.builder()
-                    .id(petition.getId())
-                    .subject(petition.getSubject())
-                    .content(petition.getContent())
-                    .category(petition.getCategory())
-                    .anonymous(petition.getAnonymous())
-                    .create_date(petition.getCreate_date())
-                    .end_date(petition.getEnd_date())
-                    .modify_date(petition.getModify_date())
-                    .status(petition.getStatus())
-                    .author_id(petition.getAuthor().getId())
-                    .build();
-            petitionResponseDtoList.add(petitionResponseDto);
+            PetitionDto petitionDto = PetitionDto.toDto(petition);
+            petitionDtoList.add(petitionDto);
         }
-        return petitionResponseDtoList;
+        return petitionDtoList;
     }
 
     @Override
     public PetitionDto getPetition(Long id) {
         Petition petition = petitionRepository.findById(id).get();
-        PetitionDto petitionResponseDto = PetitionDto.builder()
-                .id(petition.getId())
-                .subject(petition.getSubject())
-                .content(petition.getContent())
-                .category(petition.getCategory())
-                .anonymous(petition.getAnonymous())
-                .create_date(petition.getCreate_date())
-                .modify_date(petition.getModify_date())
-                .end_date(petition.getEnd_date())
-                .status(petition.getStatus())
-                .author_id(petition.getAuthor().getId())
-                .build();
-        return petitionResponseDto;
+        PetitionDto petitionDto = PetitionDto.toDto(petition);
+        return petitionDto;
     }
 
     @Override
@@ -72,30 +50,9 @@ public class PetitionServiceImpl implements PetitionService {
         if (jwtTokenProvider.validateToken(token)) {
             String username = jwtTokenProvider.getUsername(token);
             User user = userRepository.getByUsername(username);
-            Petition petition = Petition.builder()
-                    .subject(petitionDto.getSubject())
-                    .content(petitionDto.getContent())
-                    .category(petitionDto.getCategory())
-                    .anonymous(petitionDto.getAnonymous())
-                    .create_date(petitionDto.getCreate_date())
-                    .modify_date(petitionDto.getModify_date())
-                    .end_date(petitionDto.getEnd_date())
-                    .status(petitionDto.getStatus())
-                    .author(user)
-                    .build();
+            Petition petition = petitionDto.toEntity(user);
             Petition savePetition = petitionRepository.save(petition);
-            PetitionDto petitionResponseDto = PetitionDto.builder()
-                    .id(savePetition.getId())
-                    .subject(savePetition.getSubject())
-                    .content(savePetition.getContent())
-                    .category(savePetition.getCategory())
-                    .anonymous(savePetition.getAnonymous())
-                    .create_date(savePetition.getCreate_date())
-                    .modify_date(savePetition.getModify_date())
-                    .end_date(savePetition.getEnd_date())
-                    .status(savePetition.getStatus())
-                    .author_id(savePetition.getAuthor().getId())
-                    .build();
+            PetitionDto petitionResponseDto = PetitionDto.toDto(savePetition);
             return petitionResponseDto;
         }
         return null;
@@ -108,20 +65,8 @@ public class PetitionServiceImpl implements PetitionService {
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());
         petition.setAnonymous(petitionDto.getAnonymous());
-
         Petition changedPetition = petitionRepository.save(petition);
-        PetitionDto petitionResponseDto = PetitionDto.builder()
-                .id(changedPetition.getId())
-                .subject(changedPetition.getSubject())
-                .content(changedPetition.getContent())
-                .category(changedPetition.getCategory())
-                .anonymous(changedPetition.getAnonymous())
-                .create_date(changedPetition.getCreate_date())
-                .modify_date(changedPetition.getModify_date())
-                .end_date(changedPetition.getEnd_date())
-                .status(changedPetition.getStatus())
-                .author_id(changedPetition.getAuthor().getId())
-                .build();
+        PetitionDto petitionResponseDto = PetitionDto.toDto(changedPetition);
         return petitionResponseDto;
     }
 
