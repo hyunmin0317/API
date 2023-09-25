@@ -38,4 +38,10 @@ public class PetitionController {
     PetitionResponseDto getPetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
         return petitionService.changePetition(id, petitionDto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    String deletePetition(@PathVariable Long id) {
+        petitionService.deletePetition(id);
+        return "정상적으로 삭제되었습니다.";
+    }
 }

@@ -125,4 +125,9 @@ public class PetitionServiceImpl implements PetitionService {
                 .build();
         return petitionResponseDto;
     }
+
+    @Override
+    public void deletePetition(Long id) {
+        petitionRepository.deleteById(id);
+    }
 }
