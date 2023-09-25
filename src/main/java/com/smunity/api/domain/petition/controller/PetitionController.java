@@ -2,10 +2,7 @@ package com.smunity.api.domain.petition.controller;
 
 
 import com.smunity.api.domain.petition.dto.PetitionDto;
-import com.smunity.api.domain.petition.dto.PetitionResponseDto;
 import com.smunity.api.domain.petition.service.PetitionService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,22 +17,22 @@ public class PetitionController {
     }
 
     @GetMapping()
-    List<PetitionResponseDto> findAllPetitions() {
+    List<PetitionDto> findAllPetitions() {
         return petitionService.findAllPetitions();
     }
 
     @PostMapping()
-    public PetitionResponseDto createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+    public PetitionDto createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         return petitionService.savePetition(petitionDto, token);
     }
 
     @GetMapping(value = "/{id}")
-    PetitionResponseDto getPetition(@PathVariable Long id) {
+    PetitionDto getPetition(@PathVariable Long id) {
         return petitionService.getPetition(id);
     }
 
     @PutMapping(value = "/{id}")
-    PetitionResponseDto getPetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
+    PetitionDto getPetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
         return petitionService.changePetition(id, petitionDto);
     }
 

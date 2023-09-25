@@ -1,9 +1,8 @@
 package com.smunity.api.domain.account.controller;
 
 import com.smunity.api.domain.account.dto.InformationDto;
-import com.smunity.api.domain.account.dto.SignInDto;
+import com.smunity.api.domain.account.dto.UserDto;
 import com.smunity.api.domain.account.service.EcampusService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,7 @@ public class EcampusController {
     }
 
     @PostMapping()
-    public InformationDto getInformation(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
+    public InformationDto getInformation(@RequestBody UserDto signInDto) throws RuntimeException, IOException {
         Map<String, String> cookies = ecampusService.signIn(signInDto.getUsername(), signInDto.getPassword());
         InformationDto informationDto = ecampusService.getInformation(cookies);
         return informationDto;

@@ -1,11 +1,8 @@
 package com.smunity.api.domain.account.controller;
 
-import com.smunity.api.domain.account.dto.SignInDto;
-import com.smunity.api.domain.account.dto.SignInResultDto;
-import com.smunity.api.domain.account.dto.SignUpDto;
-import com.smunity.api.domain.account.dto.SignUpResultDto;
+import com.smunity.api.domain.account.dto.ResponseDto;
+import com.smunity.api.domain.account.dto.UserDto;
 import com.smunity.api.domain.account.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,14 +15,14 @@ public class AccountController {
     }
 
     @PostMapping(value = "/register")
-    public SignUpResultDto signUp(@RequestBody SignUpDto signUpDto) {
-        SignUpResultDto signUpResultDto = accountService.signUp(signUpDto.getUsername(), signUpDto.getPassword(), signUpDto.getEmail(), signUpDto.getIs_admin());
+    public ResponseDto signUp(@RequestBody UserDto userDto) {
+        ResponseDto signUpResultDto = accountService.signUp(userDto);
         return signUpResultDto;
     }
 
     @PostMapping(value = "/login")
-    public SignInResultDto signIn(@RequestBody SignInDto signInDto) throws RuntimeException {
-        SignInResultDto signInResultDto = accountService.signIn(signInDto.getUsername(), signInDto.getPassword());
-        return signInResultDto;
+    public ResponseDto signIn(@RequestBody UserDto signInDto) throws RuntimeException {
+        ResponseDto responseDto = accountService.signIn(signInDto.getUsername(), signInDto.getPassword());
+        return responseDto;
     }
 }
