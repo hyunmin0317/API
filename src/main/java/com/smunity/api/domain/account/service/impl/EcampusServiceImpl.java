@@ -2,6 +2,7 @@ package com.smunity.api.domain.account.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.dto.InformationDto;
+import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.service.EcampusService;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -26,9 +27,9 @@ import java.util.Map;
 public class EcampusServiceImpl implements EcampusService {
 
     @Override
-    public Map<String, String> signIn(String username, String password) throws IOException {
+    public Map<String, String> signIn(SignInDto signInDto) throws IOException {
         Connection.Response res = Jsoup.connect("https://ecampus.smu.ac.kr/login/index.php")
-                .data("username", username, "password", password)
+                .data("username", signInDto.getUsername(), "password", signInDto.getPassword())
                 .method(Connection.Method.POST)
                 .execute();
         URL url = res.url();

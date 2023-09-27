@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 
 @SpringBootTest
 public class YearRepositoryTest {
@@ -13,7 +15,8 @@ public class YearRepositoryTest {
 
     @Test
     void findByYearTest(){
-        Year year = yearRepository.getByYear("2019");
-        System.out.println(year);
+        Optional<Year> year = yearRepository.findByYear("2019");
+        if (!year.isEmpty())
+            System.out.println(year.get());
     }
 }
