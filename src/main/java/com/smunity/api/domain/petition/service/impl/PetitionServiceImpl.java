@@ -7,7 +7,9 @@ import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
+import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,31 +43,27 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public PetitionDto getPetition(Long id) {
-        Optional<Petition> petitionOptional = petitionRepository.findById(id);
-        if (!petitionOptional.isEmpty())
-            return PetitionDto.toDto(petitionOptional.get());
-        return null;
+        Petition petition = petitionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return PetitionDto.toDto(petition);
     }
 
     @Override
-    public PetitionDto savePetition(PetitionDto petitionDto, String token) {
-        if (jwtTokenProvider.validateToken(token)) {
-            String username = jwtTokenProvider.getUsername(token);
-            User user = userRepository.getByUsername(username);
-            Petition petition = petitionDto.toEntity(user);
-            Petition savePetition = petitionRepository.save(petition);
-            PetitionDto petitionResponseDto = PetitionDto.toDto(savePetition);
-            return petitionResponseDto;
-        }
-        return null;
+    public PetitionDto createPetition(PetitionDto petitionDto, String token) {
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        String username = jwtTokenProvider.getUsername(token);
+        User user = userRepository.getByUsername(username);
+        Petition petition = petitionDto.toEntity(user);
+        Petition savePetition = petitionRepository.save(petition);
+        PetitionDto petitionResponseDto = PetitionDto.toDto(savePetition);
+        return petitionResponseDto;
     }
 
     @Override
     public PetitionDto changePetition(Long id, PetitionDto petitionDto) {
-        Optional<Petition> petitionOptional = petitionRepository.findById(id);
-        if (petitionOptional.isEmpty())
-            return null;
-        Petition petition = petitionOptional.get();
+        Petition petition = petitionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());
