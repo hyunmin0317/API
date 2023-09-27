@@ -26,25 +26,19 @@ public class PetitionController {
 
     @PostMapping()
     public ResponseEntity<PetitionDto> createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        PetitionDto petition = petitionService.savePetition(petitionDto, token);
-        if (petition == null)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        PetitionDto petition = petitionService.createPetition(petitionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
     @GetMapping(value = "/{id}")
     ResponseEntity<PetitionDto> getPetition(@PathVariable Long id) {
         PetitionDto petitionDto = petitionService.getPetition(id);
-        if (petitionDto == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
     @PutMapping(value = "/{id}")
-    ResponseEntity<PetitionDto> changePetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
-        PetitionDto petition = petitionService.changePetition(id, petitionDto);
-        if (petition == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    ResponseEntity<PetitionDto> changePetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        PetitionDto petition = petitionService.changePetition(id, petitionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 

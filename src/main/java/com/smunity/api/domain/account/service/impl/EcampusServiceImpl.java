@@ -3,9 +3,11 @@ package com.smunity.api.domain.account.service.impl;
 import com.smunity.api.domain.account.dto.InformationDto;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.service.EcampusService;
+import com.smunity.api.global.exception.CustomException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URL;
@@ -30,19 +32,18 @@ public class EcampusServiceImpl implements EcampusService {
 
     @Override
     public InformationDto getInformation(Map<String, String> cookies) throws IOException {
-        if (cookies != null) {
-            Document doc = Jsoup.connect("https://ecampus.smu.ac.kr/user/user_edit.php")
-                    .cookies(cookies)
-                    .method(Connection.Method.GET)
-                    .get();
-            InformationDto informationDto = InformationDto.builder()
-                    .username(getInformationById(doc, "id_firstname"))
-                    .department(changeDepartmentName(getInformationById(doc, "id_department")))
-                    .email(getInformationById(doc, "id_email"))
-                    .build();
-            return informationDto;
-        }
-        return null;
+        if (cookies == null)
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        Document doc = Jsoup.connect("https://ecampus.smu.ac.kr/user/user_edit.php")
+                .cookies(cookies)
+                .method(Connection.Method.GET)
+                .get();
+        InformationDto informationDto = InformationDto.builder()
+                .username(getInformationById(doc, "id_firstname"))
+                .department(changeDepartmentName(getInformationById(doc, "id_department")))
+                .email(getInformationById(doc, "id_email"))
+                .build();
+        return informationDto;
     }
 
     public String getInformationById(Document doc, String id) {

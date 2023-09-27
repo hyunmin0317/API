@@ -13,7 +13,9 @@ import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
+import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,18 +45,18 @@ public class AccountServiceImpl implements AccountService {
     public ResponseDto signUp(SignUpDto signUpDto) {
         Optional<Year> year = yearRepository.findByYear(signUpDto.getUsername().substring(0,4));
         Optional<Department> department = departmentRepository.findByName(signUpDto.getDepartment());
-        boolean check = !userRepository.existsByUsername(signUpDto.getUsername()) && !year.isEmpty() && !department.isEmpty();
-        String token = null;
-        if (check) {
-            signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-            User user = signUpDto.toUserEntity();
-            User savedUser = userRepository.save(user);
-            Profile profile = signUpDto.toProfileEntity(savedUser, year.get(), department.get());
-            profileRepository.save(profile);
-            token = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getRoles());
-        }
+        boolean check = userRepository.existsByUsername(signUpDto.getUsername()) || year.isEmpty() || department.isEmpty();
+        if (check)
+            throw new CustomException(HttpStatus.BAD_REQUEST);
+
+        signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        User user = signUpDto.toUserEntity();
+        User savedUser = userRepository.save(user);
+        Profile profile = signUpDto.toProfileEntity(savedUser, year.get(), department.get());
+        profileRepository.save(profile);
+        String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getRoles());
         ResponseDto responseDto = ResponseDto.builder()
-                .success(check)
+                .success(true)
                 .token(token)
                 .build();
         return responseDto;
@@ -63,13 +65,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseDto signIn(SignInDto signInDto) throws RuntimeException {
         User user = userRepository.getByUsername(signInDto.getUsername());
-        boolean success = passwordEncoder.matches(signInDto.getPassword(), user.getPassword());
-        String token = null;
-        if (success) {
-            token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
-        }
+        boolean matches = passwordEncoder.matches(signInDto.getPassword(), user.getPassword());
+        if (!matches)
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
         ResponseDto responseDto = ResponseDto.builder()
-                .success(success)
+                .success(true)
                 .token(token)
                 .build();
         return responseDto;
