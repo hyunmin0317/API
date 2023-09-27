@@ -11,10 +11,8 @@ import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -61,9 +59,11 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public PetitionDto changePetition(Long id, PetitionDto petitionDto) {
+    public PetitionDto changePetition(Long id, PetitionDto petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (!jwtTokenProvider.validateToken(token) || !jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());

@@ -37,8 +37,8 @@ public class PetitionController {
     }
 
     @PutMapping(value = "/{id}")
-    ResponseEntity<PetitionDto> changePetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
-        PetitionDto petition = petitionService.changePetition(id, petitionDto);
+    ResponseEntity<PetitionDto> changePetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        PetitionDto petition = petitionService.changePetition(id, petitionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
