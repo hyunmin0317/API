@@ -28,7 +28,7 @@ public class PetitionController {
     public ResponseEntity<PetitionDto> createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         PetitionDto petition = petitionService.savePetition(petitionDto, token);
         if (petition == null)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(petition);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
@@ -36,7 +36,7 @@ public class PetitionController {
     ResponseEntity<PetitionDto> getPetition(@PathVariable Long id) {
         PetitionDto petitionDto = petitionService.getPetition(id);
         if (petitionDto == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(petitionDto);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
@@ -44,13 +44,13 @@ public class PetitionController {
     ResponseEntity<PetitionDto> changePetition(@PathVariable Long id, @RequestBody PetitionDto petitionDto) {
         PetitionDto petition = petitionService.changePetition(id, petitionDto);
         if (petition == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(petition);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
     @DeleteMapping(value = "/{id}")
     ResponseEntity<String> deletePetition(@PathVariable Long id) {
         petitionService.deletePetition(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
