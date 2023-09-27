@@ -1,22 +1,11 @@
 package com.smunity.api.domain.account.service.impl;
 
-import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.dto.InformationDto;
 import com.smunity.api.domain.account.service.EcampusService;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
@@ -47,7 +36,7 @@ public class EcampusServiceImpl implements EcampusService {
                     .get();
             InformationDto informationDto = InformationDto.builder()
                     .username(getInformationById(doc, "id_firstname"))
-                    .department(getInformationById(doc, "id_department"))
+                    .department(changeDepartmentName(getInformationById(doc, "id_department")))
                     .email(getInformationById(doc, "id_email"))
                     .build();
             return informationDto;
@@ -57,5 +46,16 @@ public class EcampusServiceImpl implements EcampusService {
 
     public String getInformationById(Document doc, String id) {
         return doc.select("input[id="+id+"]").val();
+    }
+
+    public String changeDepartmentName(String department) {
+        String dept_name = department;
+        Map<String, String> map = Map.of(
+                "융합전자공학전공", "지능IOT융합전공",
+                "지능·데이터융합학부", "핀테크전공"
+        );
+        if (map.containsKey(dept_name))
+            dept_name = map.get(dept_name);
+        return dept_name;
     }
 }
