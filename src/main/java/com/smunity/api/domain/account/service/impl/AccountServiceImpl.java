@@ -2,6 +2,9 @@ package com.smunity.api.domain.account.service.impl;
 
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.dto.SignUpDto;
+import com.smunity.api.domain.account.repository.DepartmentRepository;
+import com.smunity.api.domain.account.repository.ProfileRepository;
+import com.smunity.api.domain.account.repository.YearRepository;
 import com.smunity.api.domain.account.service.AccountService;
 import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.domain.User;
@@ -15,28 +18,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountServiceImpl implements AccountService {
     public UserRepository userRepository;
+    public ProfileRepository profileRepository;
+    public YearRepository yearRepository;
+    public DepartmentRepository departmentRepository;
     public JwtTokenProvider jwtTokenProvider;
     public PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
+    public AccountServiceImpl(UserRepository userRepository, ProfileRepository profileRepository, YearRepository yearRepository, DepartmentRepository departmentRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+        this.yearRepository = yearRepository;
+        this.departmentRepository = departmentRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public ResponseDto signUp(SignUpDto signUpDto) {
-        boolean exists = userRepository.existsByUsername(signUpDto.getUsername());
+        boolean check = !userRepository.existsByUsername(signUpDto.getUsername()) &&
+                        yearRepository.existsByYear(signUpDto.getUsername().substring(0,4)) &&
+                        departmentRepository.existsByName(signUpDto.getDepartment());
         String token = null;
-        if (!exists) {
+        if (check) {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
             User user = signUpDto.toEntity();
             userRepository.save(user);
             token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
         }
         ResponseDto responseDto = ResponseDto.builder()
-                .success(!exists)
+                .success(check)
                 .token(token)
                 .build();
         return responseDto;

@@ -10,6 +10,8 @@ public class SignUpDto {
     private String password;
     private String email;
     private Boolean is_admin;
+    private String name;
+    private String department;
 
     public User toEntity() {
         return User.builder()
