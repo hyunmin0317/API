@@ -1,4 +1,4 @@
-package com.smunity.api.domain.account.repository;
+package com.smunity.api.domain.petition.repository;
 
 import com.smunity.api.domain.petition.domain.Petition;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
