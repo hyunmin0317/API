@@ -1,5 +1,8 @@
 package com.smunity.api.domain.account.service.impl;
 
+import com.smunity.api.domain.account.domain.Department;
+import com.smunity.api.domain.account.domain.Profile;
+import com.smunity.api.domain.account.domain.Year;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.dto.SignUpDto;
 import com.smunity.api.domain.account.repository.DepartmentRepository;
@@ -13,6 +16,8 @@ import com.smunity.api.global.config.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -36,14 +41,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseDto signUp(SignUpDto signUpDto) {
-        boolean check = !userRepository.existsByUsername(signUpDto.getUsername()) &&
-                        yearRepository.existsByYear(signUpDto.getUsername().substring(0,4)) &&
-                        departmentRepository.existsByName(signUpDto.getDepartment());
+        Optional<Year> year = yearRepository.findByYear(signUpDto.getUsername().substring(0,4));
+        Optional<Department> department = departmentRepository.findByName(signUpDto.getDepartment());
+        boolean check = !userRepository.existsByUsername(signUpDto.getUsername()) && !year.isEmpty() && !department.isEmpty();
         String token = null;
         if (check) {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-            User user = signUpDto.toEntity();
+            User user = signUpDto.toUserEntity();
             User savedUser = userRepository.save(user);
+            Profile profile = signUpDto.toProfileEntity(savedUser, year.get(), department.get());
+            profileRepository.save(profile);
             token = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getRoles());
         }
         ResponseDto responseDto = ResponseDto.builder()

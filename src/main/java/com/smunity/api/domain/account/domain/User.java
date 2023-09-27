@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "auth_user")
 public class User implements UserDetails {
