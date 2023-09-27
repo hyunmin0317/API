@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 
 @SpringBootTest
 public class DepartmentRepositoryTest {
@@ -13,9 +15,8 @@ public class DepartmentRepositoryTest {
 
     @Test
     void findByNameTest(){
-        Department department = departmentRepository.getByName("컴퓨터과학과");
-        Department department2 = departmentRepository.getByName("컴퓨터과학전공");
-        System.out.println(department);
-        System.out.println(department2);
+        Optional<Department> department = departmentRepository.findByName("컴퓨터과학전공");
+        if (!department.isEmpty())
+            System.out.println(department.get());
     }
 }
