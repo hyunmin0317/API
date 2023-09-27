@@ -1,11 +1,12 @@
 package com.smunity.api.domain.account.service;
 
 import com.smunity.api.domain.account.dto.ResponseDto;
-import com.smunity.api.domain.account.dto.UserDto;
+import com.smunity.api.domain.account.dto.SignInDto;
+import com.smunity.api.domain.account.dto.SignUpDto;
 
 
 public interface AccountService {
-    ResponseDto signUp(UserDto userDto);
+    ResponseDto signUp(SignUpDto signUpDto);
 
-    ResponseDto signIn(String username, String password) throws RuntimeException;
+    ResponseDto signIn(SignInDto signInDto) throws RuntimeException;
 }

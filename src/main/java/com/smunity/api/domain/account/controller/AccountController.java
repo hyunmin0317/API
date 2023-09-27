@@ -1,7 +1,8 @@
 package com.smunity.api.domain.account.controller;
 
 import com.smunity.api.domain.account.dto.ResponseDto;
-import com.smunity.api.domain.account.dto.UserDto;
+import com.smunity.api.domain.account.dto.SignInDto;
+import com.smunity.api.domain.account.dto.SignUpDto;
 import com.smunity.api.domain.account.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class AccountController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody UserDto userDto) {
-        ResponseDto responseDto = accountService.signUp(userDto);
+    public ResponseEntity<ResponseDto> signUp(@RequestBody SignUpDto signUpDto) {
+        ResponseDto responseDto = accountService.signUp(signUpDto);
         if (responseDto.getCode() == 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
         }
@@ -27,8 +28,8 @@ public class AccountController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody UserDto signInDto) throws RuntimeException {
-        ResponseDto responseDto = accountService.signIn(signInDto.getUsername(), signInDto.getPassword());
+    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) throws RuntimeException {
+        ResponseDto responseDto = accountService.signIn(signInDto);
         if (responseDto.getCode() == 0) {
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         }

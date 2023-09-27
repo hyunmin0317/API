@@ -1,8 +1,8 @@
 package com.smunity.api.domain.account.service.impl;
 
-import com.smunity.api.domain.account.dto.UserDto;
+import com.smunity.api.domain.account.dto.SignInDto;
+import com.smunity.api.domain.account.dto.SignUpDto;
 import com.smunity.api.domain.account.service.AccountService;
-import com.smunity.api.global.common.CommonResponse;
 import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
@@ -26,12 +26,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseDto signUp(UserDto userDto) {
-        boolean exists = userRepository.existsByUsername(userDto.getUsername());
+    public ResponseDto signUp(SignUpDto signUpDto) {
+        boolean exists = userRepository.existsByUsername(signUpDto.getUsername());
         String token = null;
         if (!exists) {
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            User user = userDto.toEntity();
+            signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+            User user = signUpDto.toEntity();
             userRepository.save(user);
             token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
         }
@@ -43,9 +43,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseDto signIn(String username, String password) throws RuntimeException {
-        User user = userRepository.getByUsername(username);
-        boolean success = passwordEncoder.matches(password, user.getPassword());
+    public ResponseDto signIn(SignInDto signInDto) throws RuntimeException {
+        User user = userRepository.getByUsername(signInDto.getUsername());
+        boolean success = passwordEncoder.matches(signInDto.getPassword(), user.getPassword());
         String token = null;
         if (success) {
             token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());

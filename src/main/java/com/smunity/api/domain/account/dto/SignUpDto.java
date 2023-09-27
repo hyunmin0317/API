@@ -5,7 +5,7 @@ import com.smunity.api.domain.account.domain.User;
 import lombok.Data;
 
 @Data
-public class UserDto {
+public class SignUpDto {
     private String username;
     private String password;
     private String email;
