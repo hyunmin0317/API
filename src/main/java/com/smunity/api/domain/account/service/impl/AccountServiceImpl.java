@@ -43,8 +43,8 @@ public class AccountServiceImpl implements AccountService {
         if (check) {
             signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
             User user = signUpDto.toEntity();
-            userRepository.save(user);
-            token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
+            User savedUser = userRepository.save(user);
+            token = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getRoles());
         }
         ResponseDto responseDto = ResponseDto.builder()
                 .success(check)
