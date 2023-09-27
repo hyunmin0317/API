@@ -27,9 +27,6 @@ public class EcampusController {
     public ResponseEntity<InformationDto> getInformation(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
         Map<String, String> cookies = ecampusService.signIn(signInDto);
         InformationDto informationDto = ecampusService.getInformation(cookies);
-        if (informationDto == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
         return ResponseEntity.status(HttpStatus.OK).body(informationDto);
     }
 }
