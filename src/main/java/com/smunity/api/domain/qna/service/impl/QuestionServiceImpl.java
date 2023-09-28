@@ -2,8 +2,6 @@ package com.smunity.api.domain.qna.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Petition;
-import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.qna.domain.Question;
 import com.smunity.api.domain.qna.dto.QuestionDto;
 import com.smunity.api.domain.qna.repository.QuestionRepository;
@@ -63,7 +61,17 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto changeQuestion(Long id, QuestionDto questionDto, String token) {
-        return null;
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(question.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        question.setSubject(questionDto.getSubject());
+        question.setContent(questionDto.getContent());
+        question.setAnonymous(questionDto.getAnonymous());
+        Question changedQuestion = questionRepository.save(question);
+        return QuestionDto.toDto(changedQuestion);
     }
 
     @Override
