@@ -62,8 +62,10 @@ public class PetitionServiceImpl implements PetitionService {
     public PetitionDto changePetition(Long id, PetitionDto petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        if ((!jwtTokenProvider.validateToken(token) || !jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername())) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());
@@ -73,8 +75,13 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public void deletePetition(Long id) {
-        if (petitionRepository.existsById(id))
-            petitionRepository.deleteById(id);
+    public void deletePetition(Long id, String token) {
+        Petition petition = petitionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        petitionRepository.delete(petition);
     }
 }

@@ -2,7 +2,7 @@ package com.smunity.api.domain.account.controller;
 
 import com.smunity.api.domain.account.dto.InformationDto;
 import com.smunity.api.domain.account.dto.SignInDto;
-import com.smunity.api.domain.account.service.EcampusService;
+import com.smunity.api.domain.account.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,19 +14,19 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/ecampus")
-public class EcampusController {
+@RequestMapping("/auth")
+public class AuthController {
 
-    private final EcampusService ecampusService;
+    private final AuthService authService;
 
-    public EcampusController(EcampusService ecampusService) {
-        this.ecampusService = ecampusService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping()
     public ResponseEntity<InformationDto> getInformation(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
-        Map<String, String> cookies = ecampusService.signIn(signInDto);
-        InformationDto informationDto = ecampusService.getInformation(cookies);
+        Map<String, String> cookies = authService.signIn(signInDto);
+        InformationDto informationDto = authService.getInformation(cookies);
         return ResponseEntity.status(HttpStatus.OK).body(informationDto);
     }
 }

@@ -1,4 +1,4 @@
-package com.smunity.api.global.exception;
+package com.smunity.api.global.common;
 
 import lombok.Builder;
 import lombok.Data;

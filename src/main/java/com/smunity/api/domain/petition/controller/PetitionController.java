@@ -3,6 +3,7 @@ package com.smunity.api.domain.petition.controller;
 
 import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.service.PetitionService;
+import com.smunity.api.global.common.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,8 @@ public class PetitionController {
     }
 
     @DeleteMapping(value = "/{id}")
-    ResponseEntity<String> deletePetition(@PathVariable Long id) {
-        petitionService.deletePetition(id);
+    ResponseEntity<String> deletePetition(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        petitionService.deletePetition(id, token);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
