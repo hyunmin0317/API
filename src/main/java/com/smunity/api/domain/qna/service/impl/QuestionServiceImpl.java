@@ -2,6 +2,7 @@ package com.smunity.api.domain.qna.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
+import com.smunity.api.domain.petition.domain.Petition;
 import com.smunity.api.domain.qna.domain.Question;
 import com.smunity.api.domain.qna.dto.QuestionDto;
 import com.smunity.api.domain.qna.repository.QuestionRepository;
@@ -76,6 +77,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long id, String token) {
-
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(question.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        questionRepository.delete(question);
     }
 }
