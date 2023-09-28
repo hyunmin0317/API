@@ -2,7 +2,7 @@ package com.smunity.api.domain.account.service.impl;
 
 import com.smunity.api.domain.account.dto.InformationDto;
 import com.smunity.api.domain.account.dto.SignInDto;
-import com.smunity.api.domain.account.service.EcampusService;
+import com.smunity.api.domain.account.service.AuthService;
 import com.smunity.api.global.exception.CustomException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 @Service
-public class EcampusServiceImpl implements EcampusService {
+public class AuthServiceImpl implements AuthService {
 
     @Override
     public Map<String, String> signIn(SignInDto signInDto) throws IOException {
