@@ -1,4 +1,4 @@
-package com.smunity.api.domain.petition.domain;
+package com.smunity.api.global.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
