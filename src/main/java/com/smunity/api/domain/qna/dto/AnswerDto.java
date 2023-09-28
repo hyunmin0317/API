@@ -15,7 +15,7 @@ public class AnswerDto {
 
     private Long author_id;
 
-    private Long petition_id;
+    private Long question_id;
 
     private String content;
 
@@ -35,7 +35,7 @@ public class AnswerDto {
         return AnswerDto.builder()
                 .id(answer.getId())
                 .author_id(answer.getAuthor().getId())
-                .petition_id(answer.getQuestion().getId())
+                .question_id(answer.getQuestion().getId())
                 .content(answer.getContent())
                 .create_date(answer.getCreate_date())
                 .modify_date(answer.getModify_date())
