@@ -34,9 +34,9 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String userUid, List<String> roles) {
+    public String createToken(String userUid, boolean isSuperuser) {
         Claims claims = Jwts.claims().setSubject(userUid);
-        claims.put("roles", roles);
+        claims.put("isSuperuser", isSuperuser);
         Date now = new Date();
         String token = Jwts.builder()
             .setClaims(claims)
@@ -55,6 +55,11 @@ public class JwtTokenProvider {
     public String getUsername(String token) {
         String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         return info;
+    }
+
+    public boolean getIsSuperuser(String token) {
+        boolean isSuperuser = (boolean) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("isSuperuser");
+        return isSuperuser;
     }
 
     public String resolveToken(HttpServletRequest request) {
