@@ -5,7 +5,6 @@ import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.qna.domain.Answer;
 import com.smunity.api.domain.qna.domain.Question;
 import com.smunity.api.domain.qna.dto.AnswerDto;
-import com.smunity.api.domain.qna.dto.QuestionDto;
 import com.smunity.api.domain.qna.repository.AnswerRepository;
 import com.smunity.api.domain.qna.repository.QuestionRepository;
 import com.smunity.api.domain.qna.service.AnswerService;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +34,13 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<AnswerDto> findAllAnswers() {
-        return null;
+        List<AnswerDto> answerDtoList = new ArrayList<>();
+        List<Answer> answerList = answerRepository.findAll();
+        for (Answer answer: answerList) {
+            AnswerDto answerDto = AnswerDto.toDto(answer);
+            answerDtoList.add(answerDto);
+        }
+        return answerDtoList;
     }
 
     @Override
