@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
         User savedUser = userRepository.save(user);
         Profile profile = signUpDto.toProfileEntity(savedUser, year.get(), department.get());
         profileRepository.save(profile);
-        String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getRoles());
+        String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getIs_superuser());
         ResponseDto responseDto = ResponseDto.builder()
                 .success(true)
                 .token(token)
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
         boolean matches = passwordEncoder.matches(signInDto.getPassword(), user.getPassword());
         if (!matches)
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getRoles());
+        String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getIs_superuser());
         ResponseDto responseDto = ResponseDto.builder()
                 .success(true)
                 .token(token)

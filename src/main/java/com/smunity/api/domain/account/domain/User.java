@@ -46,13 +46,13 @@ public class User implements UserDetails {
     private String last_name;
 
     @Column(nullable = false)
-    private boolean is_superuser;
+    private Boolean is_superuser;
 
     @Column(nullable = false)
-    private boolean is_staff;
+    private Boolean is_staff;
 
     @Column(nullable = false)
-    private boolean is_active;
+    private Boolean is_active;
 
     @Column
     private LocalDateTime last_login;

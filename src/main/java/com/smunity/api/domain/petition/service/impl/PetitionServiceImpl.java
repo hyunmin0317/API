@@ -62,7 +62,7 @@ public class PetitionServiceImpl implements PetitionService {
     public PetitionDto changePetition(Long id, PetitionDto petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        if (!jwtTokenProvider.validateToken(token) || !jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()))
+        if ((!jwtTokenProvider.validateToken(token) || !jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername())) && !jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
