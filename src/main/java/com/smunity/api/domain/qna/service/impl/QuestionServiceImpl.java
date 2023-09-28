@@ -2,6 +2,8 @@ package com.smunity.api.domain.qna.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
+import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.qna.domain.Question;
 import com.smunity.api.domain.qna.dto.QuestionDto;
 import com.smunity.api.domain.qna.repository.QuestionRepository;
@@ -42,7 +44,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto getQuestion(Long id) {
-        return null;
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return QuestionDto.toDto(question);
     }
 
     @Override
