@@ -1,5 +1,6 @@
 package com.smunity.api.global.exception;
 
+import com.smunity.api.global.common.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
