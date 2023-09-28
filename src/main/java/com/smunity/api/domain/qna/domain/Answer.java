@@ -23,9 +23,6 @@ public class Answer extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private Boolean anonymous;
-
     @ManyToOne
     @JoinColumn(name = "author_id")
     @ToString.Exclude
@@ -37,11 +34,10 @@ public class Answer extends BaseEntity {
     private Question question;
 
     @Builder
-    public Answer(LocalDateTime create_date, LocalDateTime modify_date, Long id, String content, Boolean anonymous, User author, Question question) {
+    public Answer(LocalDateTime create_date, LocalDateTime modify_date, Long id, String content, User author, Question question) {
         super(create_date, modify_date);
         this.id = id;
         this.content = content;
-        this.anonymous = anonymous;
         this.author = author;
         this.question = question;
     }
