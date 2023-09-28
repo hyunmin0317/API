@@ -11,6 +11,8 @@ import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +31,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionDto> findAllQuestions() {
-        return null;
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        List<Question> questionList = questionRepository.findAll();
+        for (Question question: questionList) {
+            QuestionDto questionDto = QuestionDto.toDto(question);
+            questionDtoList.add(questionDto);
+        }
+        return questionDtoList;
     }
 
     @Override
