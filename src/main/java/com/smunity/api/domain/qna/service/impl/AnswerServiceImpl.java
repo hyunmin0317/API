@@ -67,7 +67,15 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public AnswerDto changeAnswer(Long id, AnswerDto answerDto, String token) {
-        return null;
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(answer.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        answer.setContent(answerDto.getContent());
+        Answer changedAnswer = answerRepository.save(answer);
+        return AnswerDto.toDto(changedAnswer);
     }
 
     @Override
