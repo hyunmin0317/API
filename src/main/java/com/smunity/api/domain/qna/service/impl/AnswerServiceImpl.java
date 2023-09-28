@@ -5,6 +5,7 @@ import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.qna.domain.Answer;
 import com.smunity.api.domain.qna.domain.Question;
 import com.smunity.api.domain.qna.dto.AnswerDto;
+import com.smunity.api.domain.qna.dto.QuestionDto;
 import com.smunity.api.domain.qna.repository.AnswerRepository;
 import com.smunity.api.domain.qna.repository.QuestionRepository;
 import com.smunity.api.domain.qna.service.AnswerService;
@@ -45,7 +46,9 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public AnswerDto getAnswer(Long id) {
-        return null;
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return AnswerDto.toDto(answer);
     }
 
     @Override
