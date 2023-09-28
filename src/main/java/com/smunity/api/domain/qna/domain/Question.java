@@ -35,7 +35,7 @@ public class Question extends BaseEntity {
     private User author;
 
     @Builder
-    public Question(LocalDateTime create_date, LocalDateTime modify_date, Long id, String subject, String content, Integer category, boolean anonymous, LocalDateTime end_date, Integer status, User author) {
+    public Question(LocalDateTime create_date, LocalDateTime modify_date, Long id, String subject, String content, boolean anonymous, User author) {
         super(create_date, modify_date);
         this.id = id;
         this.subject = subject;
