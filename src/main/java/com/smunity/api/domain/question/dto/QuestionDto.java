@@ -30,7 +30,6 @@ public class QuestionDto {
                 .subject(subject)
                 .content(content)
                 .anonymous(anonymous)
-                .modify_date(modify_date)
                 .author(user)
                 .build();
     }

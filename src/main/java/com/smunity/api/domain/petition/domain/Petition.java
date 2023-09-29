@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "petitions_petition")
 public class Petition extends BaseEntity {
     @Id
@@ -39,17 +41,4 @@ public class Petition extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
-
-    @Builder
-    public Petition(LocalDateTime create_date, LocalDateTime modify_date, Long id, String subject, String content, Integer category, boolean anonymous, LocalDateTime end_date, Integer status, User author) {
-        super(create_date, modify_date);
-        this.id = id;
-        this.subject = subject;
-        this.content = content;
-        this.category = category;
-        this.anonymous = anonymous;
-        this.end_date = end_date;
-        this.status = status;
-        this.author = author;
-    }
 }
