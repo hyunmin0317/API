@@ -1,7 +1,7 @@
 package com.smunity.api.domain.petition.dto;
 
 import com.smunity.api.domain.account.domain.User;
-import com.smunity.api.domain.petition.domain.Answer;
+import com.smunity.api.domain.petition.domain.Respond;
 import com.smunity.api.domain.petition.domain.Petition;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class AnswerDto {
+public class RespondDto {
     private Long id;
 
     private Long author_id;
@@ -23,22 +23,22 @@ public class AnswerDto {
 
     private LocalDateTime modify_date;
 
-    public Answer toEntity(User user, Petition petition) {
-        return Answer.builder()
+    public Respond toEntity(User user, Petition petition) {
+        return Respond.builder()
                 .content(content)
                 .author(user)
                 .petition(petition)
                 .build();
     }
 
-    public static AnswerDto toDto(Answer answer) {
-        return AnswerDto.builder()
-                .id(answer.getId())
-                .author_id(answer.getAuthor().getId())
-                .petition_id(answer.getPetition().getId())
-                .content(answer.getContent())
-                .create_date(answer.getCreate_date())
-                .modify_date(answer.getModify_date())
+    public static RespondDto toDto(Respond respond) {
+        return RespondDto.builder()
+                .id(respond.getId())
+                .author_id(respond.getAuthor().getId())
+                .petition_id(respond.getPetition().getId())
+                .content(respond.getContent())
+                .create_date(respond.getCreate_date())
+                .modify_date(respond.getModify_date())
                 .build();
     }
 }
