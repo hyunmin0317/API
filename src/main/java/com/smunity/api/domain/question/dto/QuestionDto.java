@@ -1,8 +1,7 @@
-package com.smunity.api.domain.qna.dto;
+package com.smunity.api.domain.question.dto;
 
 import com.smunity.api.domain.account.domain.User;
-import com.smunity.api.domain.petition.domain.Petition;
-import com.smunity.api.domain.qna.domain.Question;
+import com.smunity.api.domain.question.domain.Question;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,12 +1,11 @@
-package com.smunity.api.domain.qna.service.impl;
+package com.smunity.api.domain.question.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Petition;
-import com.smunity.api.domain.qna.domain.Question;
-import com.smunity.api.domain.qna.dto.QuestionDto;
-import com.smunity.api.domain.qna.repository.QuestionRepository;
-import com.smunity.api.domain.qna.service.QuestionService;
+import com.smunity.api.domain.question.domain.Question;
+import com.smunity.api.domain.question.dto.QuestionDto;
+import com.smunity.api.domain.question.repository.QuestionRepository;
+import com.smunity.api.domain.question.service.QuestionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;

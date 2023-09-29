@@ -1,6 +1,6 @@
-package com.smunity.api.domain.qna.repository;
+package com.smunity.api.domain.question.repository;
 
-import com.smunity.api.domain.qna.domain.Question;
+import com.smunity.api.domain.question.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
