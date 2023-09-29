@@ -1,4 +1,4 @@
-package com.smunity.api.domain.qna.domain;
+package com.smunity.api.domain.question.domain;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.global.common.BaseEntity;

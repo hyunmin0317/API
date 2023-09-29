@@ -1,8 +1,8 @@
-package com.smunity.api.domain.qna.controller;
+package com.smunity.api.domain.question.controller;
 
 
-import com.smunity.api.domain.qna.dto.QuestionDto;
-import com.smunity.api.domain.qna.service.QuestionService;
+import com.smunity.api.domain.question.dto.QuestionDto;
+import com.smunity.api.domain.question.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

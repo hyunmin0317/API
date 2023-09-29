@@ -1,7 +1,6 @@
-package com.smunity.api.domain.qna.service;
+package com.smunity.api.domain.question.service;
 
-import com.smunity.api.domain.qna.dto.AnswerDto;
-import com.smunity.api.domain.qna.dto.QuestionDto;
+import com.smunity.api.domain.question.dto.AnswerDto;
 
 import java.util.List;
 
