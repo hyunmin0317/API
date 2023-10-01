@@ -52,27 +52,27 @@ public class PetitionController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @PostMapping(value = "/{id}/answers")
-    public ResponseEntity<RespondDto> createAnswer(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        RespondDto answer = respondService.createAnswer(id, respondDto, token);
+    @PostMapping(value = "/{id}/responds")
+    public ResponseEntity<RespondDto> createRespond(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        RespondDto answer = respondService.createRespond(id, respondDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @GetMapping(value = "/{id}answers")
-    ResponseEntity<RespondDto> getAnswer(@PathVariable Long id) {
-        RespondDto respondDto = respondService.getAnswer(id);
+    @GetMapping(value = "/{id}/responds")
+    ResponseEntity<RespondDto> getRespond(@PathVariable Long id) {
+        RespondDto respondDto = respondService.getRespond(id);
         return ResponseEntity.status(HttpStatus.OK).body(respondDto);
     }
 
-    @PutMapping(value = "/{id}/answers")
-    ResponseEntity<RespondDto> changeAnswer(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        RespondDto answer = respondService.changeAnswer(id, respondDto, token);
+    @PutMapping(value = "/{id}/responds")
+    ResponseEntity<RespondDto> changeRespond(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        RespondDto answer = respondService.changeRespond(id, respondDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @DeleteMapping(value = "/{id}/answers")
-    ResponseEntity<String> deleteAnswer(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        respondService.deleteAnswer(id, token);
+    @DeleteMapping(value = "/{id}/responds")
+    ResponseEntity<String> deleteRespond(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        respondService.deleteRespond(id, token);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
