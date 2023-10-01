@@ -19,12 +19,11 @@ import java.util.List;
 
 @Service
 public class RespondServiceImpl implements RespondService {
-    public JwtTokenProvider jwtTokenProvider;
-    public UserRepository userRepository;
-    private PetitionRepository petitionRepository;
-    private RespondRepository respondRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final PetitionRepository petitionRepository;
+    private final RespondRepository respondRepository;
 
-    @Autowired
     public RespondServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository, RespondRepository respondRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;

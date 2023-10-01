@@ -24,14 +24,13 @@ import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-    public UserRepository userRepository;
-    public ProfileRepository profileRepository;
-    public YearRepository yearRepository;
-    public DepartmentRepository departmentRepository;
-    public JwtTokenProvider jwtTokenProvider;
-    public PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
+    private final YearRepository yearRepository;
+    private final DepartmentRepository departmentRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public AccountServiceImpl(UserRepository userRepository, ProfileRepository profileRepository, YearRepository yearRepository, DepartmentRepository departmentRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;

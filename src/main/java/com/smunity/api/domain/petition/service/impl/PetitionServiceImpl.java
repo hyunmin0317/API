@@ -17,11 +17,10 @@ import java.util.List;
 
 @Service
 public class PetitionServiceImpl implements PetitionService {
-    public JwtTokenProvider jwtTokenProvider;
-    public UserRepository userRepository;
-    private PetitionRepository petitionRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final PetitionRepository petitionRepository;
 
-    @Autowired
     public PetitionServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
