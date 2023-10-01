@@ -70,7 +70,7 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public void deleteAnswer(Long petitionId, String token) {
-        Respond respond = respondRepository.findById(petitionId)
+        Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
