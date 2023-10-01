@@ -15,11 +15,9 @@ import java.util.List;
 @RequestMapping("/api/questions")
 public class QuestionController {
     private final QuestionService questionService;
-    private final AnswerService answerService;
 
-    public QuestionController(QuestionService questionService, AnswerService answerService) {
+    public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
-        this.answerService = answerService;
     }
 
     @GetMapping()
@@ -34,45 +32,21 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(question);
     }
 
-    @GetMapping(value = "/{id}")
-    ResponseEntity<QuestionDto> getQuestion(@PathVariable Long id) {
-        QuestionDto petitionDto = questionService.getQuestion(id);
+    @GetMapping(value = "/{questionId}")
+    ResponseEntity<QuestionDto> getQuestion(@PathVariable Long questionId) {
+        QuestionDto petitionDto = questionService.getQuestion(questionId);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
-    @PutMapping(value = "/{id}")
-    ResponseEntity<QuestionDto> changeQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        QuestionDto petition = questionService.changeQuestion(id, questionDto, token);
+    @PutMapping(value = "/{questionId}")
+    ResponseEntity<QuestionDto> changeQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        QuestionDto petition = questionService.changeQuestion(questionId, questionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
-    @DeleteMapping(value = "/{id}")
-    ResponseEntity<String> deleteQuestion(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        questionService.deleteQuestion(id, token);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-    }
-
-    @PostMapping(value = "/{id}/answers")
-    public ResponseEntity<AnswerDto> createAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        AnswerDto answer = answerService.createAnswer(id, answerDto, token);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answer);
-    }
-
-    @GetMapping(value = "/{id}/answers")
-    ResponseEntity<AnswerDto> getAnswer(@PathVariable Long id) {
-        AnswerDto answerDto = answerService.getAnswer(id);
-        return ResponseEntity.status(HttpStatus.OK).body(answerDto);
-    }
-
-    @PutMapping(value = "/{id}/answers")
-    ResponseEntity<AnswerDto> changeAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        AnswerDto answer = answerService.changeAnswer(id, answerDto, token);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answer);
-    }
-
-    @DeleteMapping(value = "/{id}/answers")
-    ResponseEntity<String> deleteAnswer(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        answerService.deleteAnswer(id, token);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    @DeleteMapping(value = "/{questionId}")
+    ResponseEntity<?> deleteQuestion(@PathVariable Long questionId, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        questionService.deleteQuestion(questionId, token);
+        return ResponseEntity.noContent().build();
     }
 }
