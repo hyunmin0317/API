@@ -52,31 +52,25 @@ public class PetitionController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @GetMapping(value = "/answers")
-    ResponseEntity<List<RespondDto>> findAllAnswers() {
-        List<RespondDto> respondDtoList = respondService.findAllAnswers();
-        return ResponseEntity.status(HttpStatus.OK).body(respondDtoList);
-    }
-
-    @PostMapping(value = "/answers")
-    public ResponseEntity<RespondDto> createAnswer(@RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        RespondDto answer = respondService.createAnswer(respondDto, token);
+    @PostMapping(value = "/{id}/answers")
+    public ResponseEntity<RespondDto> createAnswer(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        RespondDto answer = respondService.createAnswer(id, respondDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @GetMapping(value = "/answers/{id}")
+    @GetMapping(value = "/{id}answers")
     ResponseEntity<RespondDto> getAnswer(@PathVariable Long id) {
         RespondDto respondDto = respondService.getAnswer(id);
         return ResponseEntity.status(HttpStatus.OK).body(respondDto);
     }
 
-    @PutMapping(value = "/answers/{id}")
+    @PutMapping(value = "/{id}/answers")
     ResponseEntity<RespondDto> changeAnswer(@PathVariable Long id, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         RespondDto answer = respondService.changeAnswer(id, respondDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @DeleteMapping(value = "/answers/{id}")
+    @DeleteMapping(value = "/{id}/answers")
     ResponseEntity<String> deleteAnswer(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         respondService.deleteAnswer(id, token);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

@@ -5,9 +5,8 @@ import java.util.List;
 
 
 public interface RespondService {
-    List<RespondDto> findAllAnswers();
-    RespondDto getAnswer(Long id);
-    RespondDto createAnswer(RespondDto respondDto, String token);
-    RespondDto changeAnswer(Long id, RespondDto respondDto, String token);
-    void deleteAnswer(Long id, String token);
+    RespondDto getAnswer(Long petitionId);
+    RespondDto createAnswer(Long petitionId, RespondDto respondDto, String token);
+    RespondDto changeAnswer(Long petitionId, RespondDto respondDto, String token);
+    void deleteAnswer(Long petitionId, String token);
 }
