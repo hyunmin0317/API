@@ -44,7 +44,9 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        Question question = questionRepository.findById(answerDto.getQuestion_id())
+        if (answerRepository.existsByQuestionId(questionId))
+            throw new CustomException(HttpStatus.CONFLICT);
+        Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
