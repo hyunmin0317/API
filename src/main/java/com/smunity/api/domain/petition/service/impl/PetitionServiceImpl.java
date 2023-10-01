@@ -30,13 +30,8 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> findAllPetitions() {
-        List<PetitionDto> petitionDtoList = new ArrayList<>();
         List<Petition> petitionList = petitionRepository.findAll();
-        for (Petition petition: petitionList) {
-            PetitionDto petitionDto = PetitionDto.toDto(petition);
-            petitionDtoList.add(petitionDto);
-        }
-        return petitionDtoList;
+        return PetitionDto.toDtos(petitionList);
     }
 
     @Override

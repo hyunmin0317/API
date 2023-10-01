@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -42,5 +44,12 @@ public class CommentDto {
                 .create_date(comment.getCreate_date())
                 .modify_date(comment.getModify_date())
                 .build();
+    }
+
+    public static List<CommentDto> toDtos(List<Comment> commentList) {
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment: commentList)
+            commentDtoList.add(toDto(comment));
+        return commentDtoList;
     }
 }
