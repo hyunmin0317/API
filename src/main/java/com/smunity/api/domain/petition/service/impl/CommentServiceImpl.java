@@ -6,6 +6,7 @@ import com.smunity.api.domain.petition.domain.Comment;
 import com.smunity.api.domain.petition.domain.Petition;
 import com.smunity.api.domain.petition.domain.Respond;
 import com.smunity.api.domain.petition.dto.CommentDto;
+import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.dto.RespondDto;
 import com.smunity.api.domain.petition.repository.CommentRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
@@ -64,7 +65,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto changeComment(Long petitionId, Long commentId, CommentDto commentDto, String token) {
-        return null;
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(comment.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        if (comment.getPetition().getId() != petitionId)
+            throw new CustomException(HttpStatus.BAD_REQUEST);
+        comment.setContent(commentDto.getContent());
+        Comment changedComment = commentRepository.save(comment);
+        return CommentDto.toDto(changedComment);
     }
 
     @Override
