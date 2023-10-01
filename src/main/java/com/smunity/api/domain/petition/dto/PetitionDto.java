@@ -1,6 +1,9 @@
 package com.smunity.api.domain.petition.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.petition.domain.Petition;
 import lombok.Builder;
@@ -55,5 +58,12 @@ public class PetitionDto {
                 .status(petition.getStatus())
                 .author_id(petition.getAuthor().getId())
                 .build();
+    }
+
+    public static List<PetitionDto> toDtos(List<Petition> petitionList) {
+        List<PetitionDto> petitionDtoList = new ArrayList<>();
+        for (Petition petition: petitionList)
+            petitionDtoList.add(toDto(petition));
+        return petitionDtoList;
     }
 }
