@@ -71,7 +71,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void deleteAnswer(Long questionId, String token) {
-        Answer answer = answerRepository.findById(questionId)
+        Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
