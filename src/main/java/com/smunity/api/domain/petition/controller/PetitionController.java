@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/petitions")
+@RequestMapping("/api/petitions")
 public class PetitionController {
     private final PetitionService petitionService;
     private final RespondService respondService;
