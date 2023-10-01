@@ -43,7 +43,9 @@ public class RespondServiceImpl implements RespondService {
     public RespondDto createAnswer(Long petitionId, RespondDto respondDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        Petition petition = petitionRepository.findById(respondDto.getPetition_id())
+        if (respondRepository.existsByPetitionId(petitionId))
+            throw new CustomException(HttpStatus.CONFLICT);
+        Petition petition = petitionRepository.findById(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
