@@ -33,28 +33,19 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public List<RespondDto> findAllAnswers() {
-        List<RespondDto> respondDtoList = new ArrayList<>();
-        List<Respond> respondList = respondRepository.findAll();
-        for (Respond respond : respondList) {
-            RespondDto respondDto = RespondDto.toDto(respond);
-            respondDtoList.add(respondDto);
-        }
-        return respondDtoList;
-    }
-
-    @Override
-    public RespondDto getAnswer(Long id) {
-        Respond respond = respondRepository.findById(id)
+    public RespondDto getRespond(Long petitionId) {
+        Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         return RespondDto.toDto(respond);
     }
 
     @Override
-    public RespondDto createAnswer(RespondDto respondDto, String token) {
+    public RespondDto createRespond(Long petitionId, RespondDto respondDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        Petition petition = petitionRepository.findById(respondDto.getPetition_id())
+        if (respondRepository.existsByPetitionId(petitionId))
+            throw new CustomException(HttpStatus.CONFLICT);
+        Petition petition = petitionRepository.findById(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
@@ -65,8 +56,8 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public RespondDto changeAnswer(Long id, RespondDto respondDto, String token) {
-        Respond respond = respondRepository.findById(id)
+    public RespondDto changeRespond(Long petitionId, RespondDto respondDto, String token) {
+        Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
@@ -78,8 +69,8 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public void deleteAnswer(Long id, String token) {
-        Respond respond = respondRepository.findById(id)
+    public void deleteRespond(Long petitionId, String token) {
+        Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);

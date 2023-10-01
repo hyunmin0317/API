@@ -5,7 +5,6 @@ import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.question.domain.Answer;
 import com.smunity.api.domain.question.domain.Question;
 import com.smunity.api.domain.question.dto.AnswerDto;
-import com.smunity.api.domain.question.dto.QuestionDto;
 import com.smunity.api.domain.question.repository.AnswerRepository;
 import com.smunity.api.domain.question.repository.QuestionRepository;
 import com.smunity.api.domain.question.service.AnswerService;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
