@@ -5,6 +5,7 @@ import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.question.domain.Answer;
 import com.smunity.api.domain.question.domain.Question;
 import com.smunity.api.domain.question.dto.AnswerDto;
+import com.smunity.api.domain.question.dto.QuestionDto;
 import com.smunity.api.domain.question.repository.AnswerRepository;
 import com.smunity.api.domain.question.repository.QuestionRepository;
 import com.smunity.api.domain.question.service.AnswerService;
@@ -33,28 +34,19 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<AnswerDto> findAllAnswers() {
-        List<AnswerDto> answerDtoList = new ArrayList<>();
-        List<Answer> answerList = answerRepository.findAll();
-        for (Answer answer: answerList) {
-            AnswerDto answerDto = AnswerDto.toDto(answer);
-            answerDtoList.add(answerDto);
-        }
-        return answerDtoList;
-    }
-
-    @Override
-    public AnswerDto getAnswer(Long id) {
-        Answer answer = answerRepository.findById(id)
+    public AnswerDto getAnswer(Long questionId) {
+        Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         return AnswerDto.toDto(answer);
     }
 
     @Override
-    public AnswerDto createAnswer(AnswerDto answerDto, String token) {
+    public AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        Question question = questionRepository.findById(answerDto.getQuestion_id())
+        if (answerRepository.existsByQuestionId(questionId))
+            throw new CustomException(HttpStatus.CONFLICT);
+        Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
@@ -65,8 +57,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public AnswerDto changeAnswer(Long id, AnswerDto answerDto, String token) {
-        Answer answer = answerRepository.findById(id)
+    public AnswerDto changeAnswer(Long questionId, AnswerDto answerDto, String token) {
+        Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
@@ -78,8 +70,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void deleteAnswer(Long id, String token) {
-        Answer answer = answerRepository.findById(id)
+    public void deleteAnswer(Long questionId, String token) {
+        Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);

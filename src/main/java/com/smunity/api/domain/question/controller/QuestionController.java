@@ -52,31 +52,25 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @GetMapping(value = "/answers")
-    ResponseEntity<List<AnswerDto>> findAllAnswers() {
-        List<AnswerDto> answerDtoList = answerService.findAllAnswers();
-        return ResponseEntity.status(HttpStatus.OK).body(answerDtoList);
-    }
-
-    @PostMapping(value = "/answers")
-    public ResponseEntity<AnswerDto> createAnswer(@RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        AnswerDto answer = answerService.createAnswer(answerDto, token);
+    @PostMapping(value = "/{id}/answers")
+    public ResponseEntity<AnswerDto> createAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        AnswerDto answer = answerService.createAnswer(id, answerDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @GetMapping(value = "/answers/{id}")
+    @GetMapping(value = "/{id}/answers")
     ResponseEntity<AnswerDto> getAnswer(@PathVariable Long id) {
         AnswerDto answerDto = answerService.getAnswer(id);
         return ResponseEntity.status(HttpStatus.OK).body(answerDto);
     }
 
-    @PutMapping(value = "/answers/{id}")
+    @PutMapping(value = "/{id}/answers")
     ResponseEntity<AnswerDto> changeAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         AnswerDto answer = answerService.changeAnswer(id, answerDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @DeleteMapping(value = "/answers/{id}")
+    @DeleteMapping(value = "/{id}/answers")
     ResponseEntity<String> deleteAnswer(@PathVariable Long id, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         answerService.deleteAnswer(id, token);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
