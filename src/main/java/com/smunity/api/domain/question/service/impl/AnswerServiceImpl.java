@@ -58,7 +58,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public AnswerDto changeAnswer(Long questionId, AnswerDto answerDto, String token) {
-        Answer answer = answerRepository.findById(questionId)
+        Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
