@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByPetitionId(Long petitionId);
-    Optional<Comment> findByPetitionId(Long petitionId);
     boolean existsByPetitionId(Long petitionId);
 }

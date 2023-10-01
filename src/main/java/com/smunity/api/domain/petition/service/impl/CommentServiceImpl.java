@@ -41,7 +41,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getComment(Long petitionId, Long commentId) {
-        return null;
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (comment.getPetition().getId() != petitionId)
+            throw new CustomException(HttpStatus.BAD_REQUEST);
+        return CommentDto.toDto(comment);
     }
 
     @Override
