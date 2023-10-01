@@ -4,16 +4,12 @@ import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.petition.domain.Comment;
 import com.smunity.api.domain.petition.domain.Petition;
-import com.smunity.api.domain.petition.domain.Respond;
 import com.smunity.api.domain.petition.dto.CommentDto;
-import com.smunity.api.domain.petition.dto.PetitionDto;
-import com.smunity.api.domain.petition.dto.RespondDto;
 import com.smunity.api.domain.petition.repository.CommentRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.CommentService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -34,18 +30,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> findAllComments(Long petitionId) {
+    public List<CommentDto> getCommentsByPetitionId(Long petitionId) {
         List<Comment> commentList = commentRepository.findAllByPetitionId(petitionId);
         return CommentDto.toDtos(commentList);
-    }
-
-    @Override
-    public CommentDto getComment(Long petitionId, Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        if (comment.getPetition().getId() != petitionId)
-            throw new CustomException(HttpStatus.BAD_REQUEST);
-        return CommentDto.toDto(comment);
     }
 
     @Override
@@ -63,7 +50,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto changeComment(Long petitionId, Long commentId, CommentDto commentDto, String token) {
+    public CommentDto getCommentById(Long petitionId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        if (comment.getPetition().getId() != petitionId)
+            throw new CustomException(HttpStatus.BAD_REQUEST);
+        return CommentDto.toDto(comment);
+    }
+
+    @Override
+    public CommentDto updateComment(Long petitionId, Long commentId, CommentDto commentDto, String token) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))

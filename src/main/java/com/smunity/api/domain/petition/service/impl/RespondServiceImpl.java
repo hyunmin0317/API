@@ -10,11 +10,8 @@ import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.RespondService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -29,13 +26,6 @@ public class RespondServiceImpl implements RespondService {
         this.userRepository = userRepository;
         this.petitionRepository = petitionRepository;
         this.respondRepository = respondRepository;
-    }
-
-    @Override
-    public RespondDto getRespond(Long petitionId) {
-        Respond respond = respondRepository.findByPetitionId(petitionId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        return RespondDto.toDto(respond);
     }
 
     @Override
@@ -57,7 +47,14 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public RespondDto changeRespond(Long petitionId, RespondDto respondDto, String token) {
+    public RespondDto getRespondByPetitionId(Long petitionId) {
+        Respond respond = respondRepository.findByPetitionId(petitionId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return RespondDto.toDto(respond);
+    }
+
+    @Override
+    public RespondDto updateRespond(Long petitionId, RespondDto respondDto, String token) {
         Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))

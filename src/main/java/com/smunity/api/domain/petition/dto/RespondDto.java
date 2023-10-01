@@ -12,15 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 public class RespondDto {
     private Long id;
-
     private Long author_id;
-
     private Long petition_id;
-
     private String content;
-
     private LocalDateTime create_date;
-
     private LocalDateTime modify_date;
 
     public Respond toEntity(User user, Petition petition) {

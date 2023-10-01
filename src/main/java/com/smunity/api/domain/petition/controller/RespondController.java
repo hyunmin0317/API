@@ -1,16 +1,10 @@
 package com.smunity.api.domain.petition.controller;
 
-import com.smunity.api.domain.petition.dto.CommentDto;
-import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.dto.RespondDto;
-import com.smunity.api.domain.petition.service.CommentService;
-import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.domain.petition.service.RespondService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -29,14 +23,14 @@ public class RespondController {
     }
 
     @GetMapping()
-    ResponseEntity<RespondDto> getRespond(@PathVariable Long petitionId) {
-        RespondDto respondDto = respondService.getRespond(petitionId);
+    ResponseEntity<RespondDto> getRespondByPetitionId(@PathVariable Long petitionId) {
+        RespondDto respondDto = respondService.getRespondByPetitionId(petitionId);
         return ResponseEntity.status(HttpStatus.OK).body(respondDto);
     }
 
     @PutMapping()
-    ResponseEntity<RespondDto> changeRespond(@PathVariable Long petitionId, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        RespondDto answer = respondService.changeRespond(petitionId, respondDto, token);
+    ResponseEntity<RespondDto> updateRespond(@PathVariable Long petitionId, @RequestBody RespondDto respondDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        RespondDto answer = respondService.updateRespond(petitionId, respondDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 

@@ -3,10 +3,8 @@ package com.smunity.api.domain.petition.dto;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.petition.domain.Comment;
 import com.smunity.api.domain.petition.domain.Petition;
-import com.smunity.api.domain.petition.domain.Respond;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +14,10 @@ import java.util.List;
 @Builder
 public class CommentDto {
     private Long id;
-
     private Long author_id;
-
     private Long petition_id;
-
     private String content;
-
     private LocalDateTime create_date;
-
     private LocalDateTime modify_date;
 
     public Comment toEntity(User user, Petition petition) {
