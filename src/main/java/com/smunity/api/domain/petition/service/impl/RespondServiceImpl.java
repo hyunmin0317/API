@@ -57,7 +57,7 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public RespondDto changeAnswer(Long petitionId, RespondDto respondDto, String token) {
-        Respond respond = respondRepository.findById(petitionId)
+        Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
