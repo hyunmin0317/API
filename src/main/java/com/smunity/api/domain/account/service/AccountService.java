@@ -7,6 +7,5 @@ import com.smunity.api.domain.account.dto.SignUpDto;
 
 public interface AccountService {
     ResponseDto signUp(SignUpDto signUpDto);
-
     ResponseDto signIn(SignInDto signInDto) throws RuntimeException;
 }

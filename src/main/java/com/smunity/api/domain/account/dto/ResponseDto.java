@@ -3,6 +3,7 @@ package com.smunity.api.domain.account.dto;
 import com.smunity.api.global.common.CommonResponse;
 import lombok.*;
 
+
 @Data
 public class ResponseDto {
     private boolean success;

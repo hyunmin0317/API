@@ -1,11 +1,11 @@
 package com.smunity.api.domain.account.dto;
 
-
 import com.smunity.api.domain.account.domain.Department;
 import com.smunity.api.domain.account.domain.Profile;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.domain.Year;
 import lombok.Data;
+
 
 @Data
 public class SignUpDto {

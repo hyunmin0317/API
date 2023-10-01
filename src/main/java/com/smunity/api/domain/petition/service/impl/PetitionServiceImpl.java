@@ -8,20 +8,17 @@ import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
 public class PetitionServiceImpl implements PetitionService {
-    public JwtTokenProvider jwtTokenProvider;
-    public UserRepository userRepository;
-    private PetitionRepository petitionRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final PetitionRepository petitionRepository;
 
-    @Autowired
     public PetitionServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
@@ -29,13 +26,13 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public List<PetitionDto> findAllPetitions() {
+    public List<PetitionDto> getAllPetitions() {
         List<Petition> petitionList = petitionRepository.findAll();
         return PetitionDto.toDtos(petitionList);
     }
 
     @Override
-    public PetitionDto getPetition(Long id) {
+    public PetitionDto getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         return PetitionDto.toDto(petition);
@@ -54,7 +51,7 @@ public class PetitionServiceImpl implements PetitionService {
     }
 
     @Override
-    public PetitionDto changePetition(Long id, PetitionDto petitionDto, String token) {
+    public PetitionDto updatePetition(Long id, PetitionDto petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))

@@ -14,7 +14,6 @@ import java.util.Base64;
 
 
 public class Pbkdf2PasswordEncoder implements PasswordEncoder {
-
     private final StringKeyGenerator saltGenerator;
     private final String PREFIX;
     private final int ITERATIONS;

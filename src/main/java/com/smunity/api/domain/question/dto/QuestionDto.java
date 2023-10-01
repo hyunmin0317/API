@@ -4,8 +4,9 @@ import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.question.domain.Question;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -44,5 +45,12 @@ public class QuestionDto {
                 .modify_date(question.getModify_date())
                 .author_id(question.getAuthor().getId())
                 .build();
+    }
+
+    public static List<QuestionDto> toDtos(List<Question> questionList) {
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for (Question question: questionList)
+            questionDtoList.add(toDto(question));
+        return questionDtoList;
     }
 }

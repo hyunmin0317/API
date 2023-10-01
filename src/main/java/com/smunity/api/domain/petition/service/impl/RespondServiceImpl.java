@@ -10,21 +10,17 @@ import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.RespondService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
 public class RespondServiceImpl implements RespondService {
-    public JwtTokenProvider jwtTokenProvider;
-    public UserRepository userRepository;
-    private PetitionRepository petitionRepository;
-    private RespondRepository respondRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final PetitionRepository petitionRepository;
+    private final RespondRepository respondRepository;
 
-    @Autowired
     public RespondServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository, RespondRepository respondRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
@@ -33,16 +29,11 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public RespondDto getRespond(Long petitionId) {
-        Respond respond = respondRepository.findByPetitionId(petitionId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        return RespondDto.toDto(respond);
-    }
-
-    @Override
     public RespondDto createRespond(Long petitionId, RespondDto respondDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
         if (respondRepository.existsByPetitionId(petitionId))
             throw new CustomException(HttpStatus.CONFLICT);
         Petition petition = petitionRepository.findById(petitionId)
@@ -56,12 +47,19 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public RespondDto changeRespond(Long petitionId, RespondDto respondDto, String token) {
+    public RespondDto getRespondByPetitionId(Long petitionId) {
+        Respond respond = respondRepository.findByPetitionId(petitionId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return RespondDto.toDto(respond);
+    }
+
+    @Override
+    public RespondDto updateRespond(Long petitionId, RespondDto respondDto, String token) {
         Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(respond.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         respond.setContent(respondDto.getContent());
         Respond changedRespond = respondRepository.save(respond);
@@ -74,7 +72,7 @@ public class RespondServiceImpl implements RespondService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(respond.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         respondRepository.delete(respond);
     }

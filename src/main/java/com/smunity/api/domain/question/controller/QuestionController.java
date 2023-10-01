@@ -1,15 +1,12 @@
 package com.smunity.api.domain.question.controller;
 
-
-import com.smunity.api.domain.question.dto.AnswerDto;
 import com.smunity.api.domain.question.dto.QuestionDto;
-import com.smunity.api.domain.question.service.AnswerService;
 import com.smunity.api.domain.question.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/questions")
@@ -21,8 +18,8 @@ public class QuestionController {
     }
 
     @GetMapping()
-    ResponseEntity<List<QuestionDto>> findAllQuestions() {
-        List<QuestionDto> questionDtoList = questionService.findAllQuestions();
+    ResponseEntity<List<QuestionDto>> getAllQuestions() {
+        List<QuestionDto> questionDtoList = questionService.getAllQuestions();
         return ResponseEntity.status(HttpStatus.OK).body(questionDtoList);
     }
 
@@ -33,14 +30,14 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/{questionId}")
-    ResponseEntity<QuestionDto> getQuestion(@PathVariable Long questionId) {
-        QuestionDto petitionDto = questionService.getQuestion(questionId);
+    ResponseEntity<QuestionDto> getQuestionById(@PathVariable Long questionId) {
+        QuestionDto petitionDto = questionService.getQuestionById(questionId);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
     @PutMapping(value = "/{questionId}")
-    ResponseEntity<QuestionDto> changeQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        QuestionDto petition = questionService.changeQuestion(questionId, questionDto, token);
+    ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        QuestionDto petition = questionService.updateQuestion(questionId, questionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 

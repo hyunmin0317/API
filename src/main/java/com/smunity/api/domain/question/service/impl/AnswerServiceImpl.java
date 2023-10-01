@@ -31,13 +31,6 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public AnswerDto getAnswer(Long questionId) {
-        Answer answer = answerRepository.findByQuestionId(questionId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        return AnswerDto.toDto(answer);
-    }
-
-    @Override
     public AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
@@ -56,7 +49,14 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public AnswerDto changeAnswer(Long questionId, AnswerDto answerDto, String token) {
+    public AnswerDto getAnswerQuestionId(Long questionId) {
+        Answer answer = answerRepository.findByQuestionId(questionId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return AnswerDto.toDto(answer);
+    }
+
+    @Override
+    public AnswerDto updateAnswer(Long questionId, AnswerDto answerDto, String token) {
         Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))

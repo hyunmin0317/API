@@ -5,9 +5,9 @@ import java.util.List;
 
 
 public interface PetitionService {
-    List<PetitionDto> findAllPetitions();
-    PetitionDto getPetition(Long id);
+    List<PetitionDto> getAllPetitions();
     PetitionDto createPetition(PetitionDto petitionDto, String token);
-    PetitionDto changePetition(Long id, PetitionDto petitionDto, String token);
+    PetitionDto getPetitionById(Long id);
+    PetitionDto updatePetition(Long id, PetitionDto petitionDto, String token);
     void deletePetition(Long id, String token);
 }

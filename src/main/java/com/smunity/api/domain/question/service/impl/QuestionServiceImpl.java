@@ -11,8 +11,6 @@ import com.smunity.api.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,21 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> findAllQuestions() {
-        List<QuestionDto> questionDtoList = new ArrayList<>();
+    public List<QuestionDto> getAllQuestions() {
         List<Question> questionList = questionRepository.findAll();
-        for (Question question: questionList) {
-            QuestionDto questionDto = QuestionDto.toDto(question);
-            questionDtoList.add(questionDto);
-        }
-        return questionDtoList;
-    }
-
-    @Override
-    public QuestionDto getQuestion(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
-        return QuestionDto.toDto(question);
+        return QuestionDto.toDtos(questionList);
     }
 
     @Override
@@ -60,7 +46,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionDto changeQuestion(Long id, QuestionDto questionDto, String token) {
+    public QuestionDto getQuestionById(Long id) {
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+        return QuestionDto.toDto(question);
+    }
+
+    @Override
+    public QuestionDto updateQuestion(Long id, QuestionDto questionDto, String token) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
