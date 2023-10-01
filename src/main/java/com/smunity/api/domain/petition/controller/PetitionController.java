@@ -106,6 +106,6 @@ public class PetitionController {
     @DeleteMapping(value = "/{petitionId}/comments/{commentId}")
     ResponseEntity<?> deleteComment(@PathVariable Long petitionId, @PathVariable Long commentId, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
         commentService.deleteComment(petitionId, commentId, token);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 }

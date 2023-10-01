@@ -80,6 +80,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(Long petitionId, Long commentId, String token) {
-
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
+        if (!jwtTokenProvider.validateToken(token))
+            throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getUsername(token).equals(comment.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
+        if (comment.getPetition().getId() != petitionId)
+            throw new CustomException(HttpStatus.BAD_REQUEST);
+        commentRepository.delete(comment);
     }
 }
