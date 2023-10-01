@@ -42,6 +42,8 @@ public class RespondServiceImpl implements RespondService {
     public RespondDto createRespond(Long petitionId, RespondDto respondDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
         if (respondRepository.existsByPetitionId(petitionId))
             throw new CustomException(HttpStatus.CONFLICT);
         Petition petition = petitionRepository.findById(petitionId)
@@ -60,7 +62,7 @@ public class RespondServiceImpl implements RespondService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(respond.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         respond.setContent(respondDto.getContent());
         Respond changedRespond = respondRepository.save(respond);
@@ -73,7 +75,7 @@ public class RespondServiceImpl implements RespondService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(respond.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         respondRepository.delete(respond);
     }
