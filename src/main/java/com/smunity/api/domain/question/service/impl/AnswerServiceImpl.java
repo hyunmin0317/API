@@ -41,6 +41,8 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenProvider.getIsSuperuser(token))
+            throw new CustomException(HttpStatus.FORBIDDEN);
         if (answerRepository.existsByQuestionId(questionId))
             throw new CustomException(HttpStatus.CONFLICT);
         Question question = questionRepository.findById(questionId)
@@ -59,7 +61,7 @@ public class AnswerServiceImpl implements AnswerService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(answer.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         answer.setContent(answerDto.getContent());
         Answer changedAnswer = answerRepository.save(answer);
@@ -72,7 +74,7 @@ public class AnswerServiceImpl implements AnswerService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new CustomException(HttpStatus.UNAUTHORIZED);
-        if (!jwtTokenProvider.getUsername(token).equals(answer.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
+        if (!jwtTokenProvider.getIsSuperuser(token))
             throw new CustomException(HttpStatus.FORBIDDEN);
         answerRepository.delete(answer);
     }
