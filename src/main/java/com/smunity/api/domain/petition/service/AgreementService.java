@@ -1,5 +1,6 @@
 package com.smunity.api.domain.petition.service;
 
-public interface AgreementService {
+import java.util.List;
 
+public interface AgreementService {
 }
