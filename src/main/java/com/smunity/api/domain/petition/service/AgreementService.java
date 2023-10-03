@@ -1,7 +1,6 @@
 package com.smunity.api.domain.petition.service;
 
 import com.smunity.api.domain.petition.dto.AgreementDto;
-
 import java.util.List;
 
 
