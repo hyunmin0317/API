@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class InformationDto {
+public class AuthDto {
     private String username;
     private String department;
     private String email;

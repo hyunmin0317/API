@@ -1,6 +1,6 @@
 package com.smunity.api.domain.account.service.impl;
 
-import com.smunity.api.domain.account.dto.InformationDto;
+import com.smunity.api.domain.account.dto.AuthDto;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.service.AuthService;
 import com.smunity.api.global.exception.CustomException;
@@ -31,19 +31,19 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public InformationDto getInformation(Map<String, String> cookies) throws IOException {
+    public AuthDto getInformation(Map<String, String> cookies) throws IOException {
         if (cookies == null)
             throw new CustomException(HttpStatus.UNAUTHORIZED);
         Document doc = Jsoup.connect("https://ecampus.smu.ac.kr/user/user_edit.php")
                 .cookies(cookies)
                 .method(Connection.Method.GET)
                 .get();
-        InformationDto informationDto = InformationDto.builder()
+        AuthDto authDto = AuthDto.builder()
                 .username(getInformationById(doc, "id_firstname"))
                 .department(changeDepartmentName(getInformationById(doc, "id_department")))
                 .email(getInformationById(doc, "id_email"))
                 .build();
-        return informationDto;
+        return authDto;
     }
 
     public String getInformationById(Document doc, String id) {

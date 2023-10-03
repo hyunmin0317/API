@@ -1,6 +1,6 @@
 package com.smunity.api.domain.account.controller;
 
-import com.smunity.api.domain.account.dto.InformationDto;
+import com.smunity.api.domain.account.dto.AuthDto;
 import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.dto.SignUpDto;
@@ -37,9 +37,9 @@ public class AccountController {
     }
 
     @PostMapping(value = "/auth")
-    public ResponseEntity<InformationDto> authenticate(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
+    public ResponseEntity<AuthDto> authenticate(@RequestBody SignInDto signInDto) throws RuntimeException, IOException {
         Map<String, String> cookies = authService.signIn(signInDto);
-        InformationDto informationDto = authService.getInformation(cookies);
-        return ResponseEntity.status(HttpStatus.OK).body(informationDto);
+        AuthDto authDto = authService.getInformation(cookies);
+        return ResponseEntity.status(HttpStatus.OK).body(authDto);
     }
 }
