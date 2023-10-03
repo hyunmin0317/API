@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AgreementService {
     List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId);
-    void createAgreement(Long petitionId, String token);
+    AgreementDto createAgreement(Long petitionId, String token);
 }

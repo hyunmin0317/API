@@ -23,4 +23,10 @@ public class AgreementController {
         List<AgreementDto> commentDtoList = agreementService.getAgreementUsersByPetitionId(petitionId);
         return ResponseEntity.status(HttpStatus.OK).body(commentDtoList);
     }
+
+    @PostMapping()
+    public ResponseEntity<AgreementDto> createAgreement(@PathVariable Long petitionId, @RequestHeader(value = "X-AUTH-TOKEN") String toke) {
+        AgreementDto agreementDto = agreementService.createAgreement(petitionId, toke);
+        return ResponseEntity.status(HttpStatus.CREATED).body(agreementDto);
+    }
 }
