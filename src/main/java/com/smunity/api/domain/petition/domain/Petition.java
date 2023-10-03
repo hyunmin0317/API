@@ -1,5 +1,6 @@
 package com.smunity.api.domain.petition.domain;
 
+import com.smunity.api.domain.account.domain.Profile;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
@@ -42,8 +43,4 @@ public class Petition extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
-
-    @OneToMany(mappedBy = "petition", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Agreement> agreementList = new ArrayList<>();
 }

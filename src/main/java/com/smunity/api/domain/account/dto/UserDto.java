@@ -1,9 +1,12 @@
 package com.smunity.api.domain.account.dto;
 
 import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.petition.domain.Agreement;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -27,7 +30,13 @@ public class UserDto {
                 .is_staff(user.getIs_staff())
                 .is_active(user.getIs_active())
                 .last_login(user.getLast_login())
-                .profile_id(user.getProfile().getId())
                 .build();
+    }
+
+    public static List<UserDto> toAgreementDtos(List<Agreement> agreementList) {
+        List<UserDto> userDtoList = new ArrayList<>();
+        for (Agreement agreement: agreementList)
+            userDtoList.add(toDto(agreement.getAuthor()));
+        return userDtoList;
     }
 }
