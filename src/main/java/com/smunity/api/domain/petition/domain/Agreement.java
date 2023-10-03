@@ -18,9 +18,9 @@ public class Agreement extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "user_id")
     @ToString.Exclude
-    private User author;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "petition_id")
