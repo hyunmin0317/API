@@ -52,11 +52,7 @@ public class AccountServiceImpl implements AccountService {
         Profile profile = signUpDto.toProfileEntity(savedUser, year.get(), department.get());
         profileRepository.save(profile);
         String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getIs_superuser());
-        ResponseDto responseDto = ResponseDto.builder()
-                .success(true)
-                .token(token)
-                .build();
-        return responseDto;
+        return ResponseDto.toDto(token);
     }
 
     @Override
@@ -66,10 +62,6 @@ public class AccountServiceImpl implements AccountService {
         if (!matches)
             throw new CustomException(HttpStatus.UNAUTHORIZED);
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getIs_superuser());
-        ResponseDto responseDto = ResponseDto.builder()
-                .success(true)
-                .token(token)
-                .build();
-        return responseDto;
+        return ResponseDto.toDto(token);
     }
 }

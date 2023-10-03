@@ -46,8 +46,7 @@ public class PetitionServiceImpl implements PetitionService {
         User user = userRepository.getByUsername(username);
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
-        PetitionDto petitionResponseDto = PetitionDto.toDto(savePetition);
-        return petitionResponseDto;
+        return PetitionDto.toDto(savePetition);
     }
 
     @Override
