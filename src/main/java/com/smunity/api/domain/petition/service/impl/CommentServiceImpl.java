@@ -45,8 +45,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.getByUsername(username);
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
-        CommentDto commentResponseDto = CommentDto.toDto(saveComment);
-        return commentResponseDto;
+        return CommentDto.toDto(saveComment);
     }
 
     @Override

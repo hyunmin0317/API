@@ -22,4 +22,11 @@ public class ResponseDto {
         this.code = response.getCode();
         this.msg = response.getMsg();
     }
+
+    public static ResponseDto toDto(String token) {
+        return ResponseDto.builder()
+                .success(true)
+                .token(token)
+                .build();
+    }
 }

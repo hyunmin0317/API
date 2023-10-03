@@ -99,8 +99,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return this.is_active;
     }
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Petition> petitionList = new ArrayList<>();
 }

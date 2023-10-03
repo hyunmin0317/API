@@ -1,10 +1,13 @@
 package com.smunity.api.domain.petition.domain;
 
+import com.smunity.api.domain.account.domain.Profile;
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity

@@ -42,8 +42,7 @@ public class RespondServiceImpl implements RespondService {
         User user = userRepository.getByUsername(username);
         Respond respond = respondDto.toEntity(user, petition);
         Respond saveRespond = respondRepository.save(respond);
-        RespondDto answerResponseDto = RespondDto.toDto(saveRespond);
-        return answerResponseDto;
+        return RespondDto.toDto(saveRespond);
     }
 
     @Override
