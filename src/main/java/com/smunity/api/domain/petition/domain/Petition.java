@@ -5,6 +5,8 @@ import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -40,4 +42,8 @@ public class Petition extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
+
+    @OneToMany(mappedBy = "petition", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Agreement> agreementList = new ArrayList<>();
 }
