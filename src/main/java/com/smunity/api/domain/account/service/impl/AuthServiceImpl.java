@@ -3,7 +3,7 @@ package com.smunity.api.domain.account.service.impl;
 import com.smunity.api.domain.account.dto.AuthDto;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.service.AuthService;
-import com.smunity.api.global.exception.CustomException;
+import com.smunity.api.global.error.exception.RestException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthDto getInformation(Map<String, String> cookies) throws IOException {
         if (cookies == null)
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         Document doc = Jsoup.connect("https://ecampus.smu.ac.kr/user/user_edit.php")
                 .cookies(cookies)
                 .method(Connection.Method.GET)

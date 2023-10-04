@@ -7,7 +7,7 @@ import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
-import com.smunity.api.global.exception.CustomException;
+import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,14 +30,14 @@ public class PetitionServiceImpl implements PetitionService {
     @Override
     public PetitionDto getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         return PetitionDto.toDto(petition);
     }
 
     @Override
     public PetitionDto createPetition(PetitionDto petitionDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
         Petition petition = petitionDto.toEntity(user);
@@ -48,11 +48,11 @@ public class PetitionServiceImpl implements PetitionService {
     @Override
     public PetitionDto updatePetition(Long id, PetitionDto petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
-            throw new CustomException(HttpStatus.FORBIDDEN);
+            throw new RestException(HttpStatus.FORBIDDEN);
         petition.setSubject(petitionDto.getSubject());
         petition.setContent(petitionDto.getContent());
         petition.setCategory(petitionDto.getCategory());
@@ -64,11 +64,11 @@ public class PetitionServiceImpl implements PetitionService {
     @Override
     public void deletePetition(Long id, String token) {
         Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
+                .orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
-            throw new CustomException(HttpStatus.FORBIDDEN);
+            throw new RestException(HttpStatus.FORBIDDEN);
         petitionRepository.delete(petition);
     }
 }

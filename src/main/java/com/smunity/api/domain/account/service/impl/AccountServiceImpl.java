@@ -13,7 +13,7 @@ import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
-import com.smunity.api.global.exception.CustomException;
+import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Department> department = departmentRepository.findByName(signUpDto.getDepartment());
         boolean check = userRepository.existsByUsername(signUpDto.getUsername()) || year.isEmpty() || department.isEmpty();
         if (check)
-            throw new CustomException(HttpStatus.BAD_REQUEST);
+            throw new RestException(HttpStatus.BAD_REQUEST);
 
         signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         User user = signUpDto.toUserEntity();
@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userRepository.getByUsername(signInDto.getUsername());
         boolean matches = passwordEncoder.matches(signInDto.getPassword(), user.getPassword());
         if (!matches)
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getIs_superuser());
         return ResponseDto.toDto(token);
     }

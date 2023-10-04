@@ -9,7 +9,7 @@ import com.smunity.api.domain.petition.repository.CommentRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.CommentService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
-import com.smunity.api.global.exception.CustomException;
+import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto createComment(Long petitionId, CommentDto commentDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         Petition petition = petitionRepository.findById(petitionId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
         Comment comment = commentDto.toEntity(user, petition);
@@ -46,22 +46,22 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto getCommentById(Long petitionId, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (comment.getPetition().getId() != petitionId)
-            throw new CustomException(HttpStatus.BAD_REQUEST);
+            throw new RestException(HttpStatus.BAD_REQUEST);
         return CommentDto.toDto(comment);
     }
 
     @Override
     public CommentDto updateComment(Long petitionId, Long commentId, CommentDto commentDto, String token) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(comment.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
-            throw new CustomException(HttpStatus.FORBIDDEN);
+            throw new RestException(HttpStatus.FORBIDDEN);
         if (comment.getPetition().getId() != petitionId)
-            throw new CustomException(HttpStatus.BAD_REQUEST);
+            throw new RestException(HttpStatus.BAD_REQUEST);
         comment.setContent(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
         return CommentDto.toDto(changedComment);
@@ -70,13 +70,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long petitionId, Long commentId, String token) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NO_CONTENT));
+                .orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
-            throw new CustomException(HttpStatus.UNAUTHORIZED);
+            throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(comment.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
-            throw new CustomException(HttpStatus.FORBIDDEN);
+            throw new RestException(HttpStatus.FORBIDDEN);
         if (comment.getPetition().getId() != petitionId)
-            throw new CustomException(HttpStatus.BAD_REQUEST);
+            throw new RestException(HttpStatus.BAD_REQUEST);
         commentRepository.delete(comment);
     }
 }
