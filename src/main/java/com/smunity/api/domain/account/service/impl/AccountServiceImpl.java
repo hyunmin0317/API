@@ -14,6 +14,7 @@ import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
@@ -28,15 +30,6 @@ public class AccountServiceImpl implements AccountService {
     private final DepartmentRepository departmentRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
-
-    public AccountServiceImpl(UserRepository userRepository, ProfileRepository profileRepository, YearRepository yearRepository, DepartmentRepository departmentRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.profileRepository = profileRepository;
-        this.yearRepository = yearRepository;
-        this.departmentRepository = departmentRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public ResponseDto signUp(SignUpDto signUpDto) {

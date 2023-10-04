@@ -16,7 +16,6 @@ import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-
     @Override
     public Map<String, String> signIn(SignInDto signInDto) throws IOException {
         Connection.Response res = Jsoup.connect("https://ecampus.smu.ac.kr/login/index.php")
