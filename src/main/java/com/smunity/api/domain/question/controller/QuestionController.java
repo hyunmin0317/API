@@ -2,6 +2,7 @@ package com.smunity.api.domain.question.controller;
 
 import com.smunity.api.domain.question.dto.QuestionDto;
 import com.smunity.api.domain.question.service.QuestionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,10 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/questions")
 public class QuestionController {
     private final QuestionService questionService;
-
-    public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
-    }
 
     @GetMapping()
     ResponseEntity<List<QuestionDto>> getAllQuestions() {

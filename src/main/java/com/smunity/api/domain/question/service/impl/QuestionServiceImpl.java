@@ -8,24 +8,18 @@ import com.smunity.api.domain.question.repository.QuestionRepository;
 import com.smunity.api.domain.question.service.QuestionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
-    public JwtTokenProvider jwtTokenProvider;
-    public UserRepository userRepository;
-    private QuestionRepository questionRepository;
-
-    @Autowired
-    public QuestionServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, QuestionRepository questionRepository) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.questionRepository = questionRepository;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final QuestionRepository questionRepository;
 
     @Override
     public List<QuestionDto> getAllQuestions() {
