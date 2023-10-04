@@ -1,8 +1,7 @@
-package com.smunity.api.domain.account.domain;
+package com.smunity.api.domain.account.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.smunity.api.domain.petition.domain.Petition;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

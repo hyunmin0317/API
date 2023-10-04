@@ -6,6 +6,7 @@ import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.dto.SignUpDto;
 import com.smunity.api.domain.account.service.AccountService;
 import com.smunity.api.domain.account.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,11 @@ import java.util.Map;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/accounts")
 public class AccountController {
     private final AccountService accountService;
     private final AuthService authService;
-
-    public AccountController(AccountService accountService, AuthService authService) {
-        this.accountService = accountService;
-        this.authService = authService;
-    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<ResponseDto> signUp(@RequestBody SignUpDto signUpDto) {

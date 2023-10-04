@@ -2,6 +2,7 @@ package com.smunity.api.domain.petition.controller;
 
 import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.service.PetitionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,10 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/petitions")
 public class PetitionController {
     private final PetitionService petitionService;
-
-    public PetitionController(PetitionService petitionService) {
-        this.petitionService = petitionService;
-    }
 
     @GetMapping()
     ResponseEntity<List<PetitionDto>> getAllPetitions() {

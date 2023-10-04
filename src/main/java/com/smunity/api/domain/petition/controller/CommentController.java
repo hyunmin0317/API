@@ -2,6 +2,7 @@ package com.smunity.api.domain.petition.controller;
 
 import com.smunity.api.domain.petition.dto.CommentDto;
 import com.smunity.api.domain.petition.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,10 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/petitions/{petitionId}/comments")
 public class CommentController {
     private final CommentService commentService;
-
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
 
     @GetMapping()
     public ResponseEntity<List<CommentDto>> getCommentsByPetitionId(@PathVariable Long petitionId) {
