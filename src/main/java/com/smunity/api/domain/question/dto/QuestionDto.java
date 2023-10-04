@@ -1,7 +1,7 @@
 package com.smunity.api.domain.question.dto;
 
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.question.domain.Question;
+import com.smunity.api.domain.question.entity.Question;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
