@@ -1,8 +1,8 @@
 package com.smunity.api.domain.account.service.impl;
 
-import com.smunity.api.domain.account.domain.Department;
-import com.smunity.api.domain.account.domain.Profile;
-import com.smunity.api.domain.account.domain.Year;
+import com.smunity.api.domain.account.entity.Department;
+import com.smunity.api.domain.account.entity.Profile;
+import com.smunity.api.domain.account.entity.Year;
 import com.smunity.api.domain.account.dto.SignInDto;
 import com.smunity.api.domain.account.dto.SignUpDto;
 import com.smunity.api.domain.account.repository.DepartmentRepository;
@@ -10,7 +10,7 @@ import com.smunity.api.domain.account.repository.ProfileRepository;
 import com.smunity.api.domain.account.repository.YearRepository;
 import com.smunity.api.domain.account.service.AccountService;
 import com.smunity.api.domain.account.dto.ResponseDto;
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;

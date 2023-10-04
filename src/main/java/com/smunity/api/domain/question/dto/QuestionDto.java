@@ -1,6 +1,6 @@
 package com.smunity.api.domain.question.dto;
 
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.question.domain.Question;
 import lombok.Builder;
 import lombok.Data;

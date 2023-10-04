@@ -3,7 +3,7 @@ package com.smunity.api.domain.petition.dto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
 import lombok.Data;

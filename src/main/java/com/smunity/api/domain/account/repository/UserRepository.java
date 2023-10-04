@@ -1,6 +1,6 @@
 package com.smunity.api.domain.account.repository;
 
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

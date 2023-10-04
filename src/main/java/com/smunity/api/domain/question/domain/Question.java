@@ -1,6 +1,6 @@
 package com.smunity.api.domain.question.domain;
 
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
 import javax.persistence.*;

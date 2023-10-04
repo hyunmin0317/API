@@ -1,6 +1,6 @@
 package com.smunity.api.domain.petition.dto;
 
-import com.smunity.api.domain.account.domain.User;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Agreement;
 import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
