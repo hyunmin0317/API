@@ -1,4 +1,4 @@
-package com.smunity.api.domain.petition.domain;
+package com.smunity.api.domain.petition.entity;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.global.common.BaseEntity;
@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "petitions_answer")
-public class Respond extends BaseEntity {
+@Table(name = "petitions_comment")
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class Respond extends BaseEntity {
     @ToString.Exclude
     private User author;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "petition_id")
     @ToString.Exclude
     private Petition petition;

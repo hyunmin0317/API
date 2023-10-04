@@ -1,6 +1,6 @@
 package com.smunity.api.domain.petition.repository;
 
-import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.entity.Petition;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -2,32 +2,27 @@ package com.smunity.api.domain.petition.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Agreement;
-import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.entity.Agreement;
+import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.dto.AgreementDto;
 import com.smunity.api.domain.petition.repository.AgreementRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.AgreementService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class AgreementServiceImpl implements AgreementService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PetitionRepository petitionRepository;
     private final AgreementRepository agreementRepository;
-
-    public AgreementServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository, AgreementRepository agreementRepository) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.petitionRepository = petitionRepository;
-        this.agreementRepository = agreementRepository;
-    }
 
     @Override
     public List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId) {

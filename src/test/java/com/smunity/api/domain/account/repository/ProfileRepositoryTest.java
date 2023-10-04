@@ -1,7 +1,6 @@
 package com.smunity.api.domain.account.repository;
 
 import com.smunity.api.domain.account.domain.Profile;
-import com.smunity.api.domain.petition.domain.Petition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -2,32 +2,27 @@ package com.smunity.api.domain.petition.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Comment;
-import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.entity.Comment;
+import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.dto.CommentDto;
 import com.smunity.api.domain.petition.repository.CommentRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.CommentService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PetitionRepository petitionRepository;
     private final CommentRepository commentRepository;
-
-    public CommentServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository, CommentRepository commentRepository) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.petitionRepository = petitionRepository;
-        this.commentRepository = commentRepository;
-    }
 
     @Override
     public List<CommentDto> getCommentsByPetitionId(Long petitionId) {

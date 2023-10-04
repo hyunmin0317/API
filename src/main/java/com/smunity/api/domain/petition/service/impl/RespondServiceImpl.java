@@ -2,31 +2,26 @@ package com.smunity.api.domain.petition.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Respond;
-import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.entity.Respond;
+import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.dto.RespondDto;
 import com.smunity.api.domain.petition.repository.RespondRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.RespondService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class RespondServiceImpl implements RespondService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PetitionRepository petitionRepository;
     private final RespondRepository respondRepository;
-
-    public RespondServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository, RespondRepository respondRepository) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.petitionRepository = petitionRepository;
-        this.respondRepository = respondRepository;
-    }
 
     @Override
     public RespondDto createRespond(Long petitionId, RespondDto respondDto, String token) {

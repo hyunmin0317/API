@@ -2,28 +2,24 @@ package com.smunity.api.domain.petition.service.impl;
 
 import com.smunity.api.domain.account.domain.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.petition.domain.Petition;
+import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class PetitionServiceImpl implements PetitionService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PetitionRepository petitionRepository;
-
-    public PetitionServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, PetitionRepository petitionRepository) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.petitionRepository = petitionRepository;
-    }
 
     @Override
     public List<PetitionDto> getAllPetitions() {
