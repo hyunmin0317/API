@@ -11,22 +11,11 @@ public class ResponseDto {
     private String msg;
     private String token;
 
-    @Builder
     public ResponseDto(boolean success, String token) {
         this.success = success;
         this.token = token;
-        CommonResponse response = CommonResponse.FAIL;
-        if (success) {
-            response = CommonResponse.SUCCESS;
-        }
+        CommonResponse response = success ? CommonResponse.SUCCESS : CommonResponse.FAIL;
         this.code = response.getCode();
         this.msg = response.getMsg();
-    }
-
-    public static ResponseDto toDto(String token) {
-        return ResponseDto.builder()
-                .success(true)
-                .token(token)
-                .build();
     }
 }
