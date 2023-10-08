@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -27,10 +28,11 @@ public class AgreementServiceImpl implements AgreementService {
     @Override
     public List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId) {
         petitionRepository.findById(petitionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        List<Agreement> agreementList = agreementRepository.findAllByPetitionId(petitionId);
-        for (Agreement agreement: agreementList)
-            System.out.println(agreement);
-        return AgreementDto.toDtos(agreementList);
+        List<AgreementDto> agreementDtoList = agreementRepository.findAllByPetitionId(petitionId)
+                .stream()
+                .map(AgreementDto::new)
+                .collect(Collectors.toList());
+        return agreementDtoList;
     }
 
     @Override
@@ -46,6 +48,6 @@ public class AgreementServiceImpl implements AgreementService {
             throw new RestException(HttpStatus.CONFLICT);
         Agreement agreement = AgreementDto.toEntity(user, petition);
         Agreement saveAgreement = agreementRepository.save(agreement);
-        return AgreementDto.toDto(saveAgreement);
+        return new AgreementDto(saveAgreement);
     }
 }

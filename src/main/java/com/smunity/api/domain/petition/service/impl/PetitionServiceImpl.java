@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,15 +24,18 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> getAllPetitions() {
-        List<Petition> petitionList = petitionRepository.findAll();
-        return PetitionDto.toDtos(petitionList);
+        List<PetitionDto> petitionDtoList = petitionRepository.findAll()
+                .stream()
+                .map(PetitionDto::new)
+                .collect(Collectors.toList());
+        return petitionDtoList;
     }
 
     @Override
     public PetitionDto getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return PetitionDto.toDto(petition);
+        return new PetitionDto(petition);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class PetitionServiceImpl implements PetitionService {
         User user = userRepository.getByUsername(username);
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
-        return PetitionDto.toDto(savePetition);
+        return new PetitionDto(savePetition);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class PetitionServiceImpl implements PetitionService {
         petition.setCategory(petitionDto.getCategory());
         petition.setAnonymous(petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
-        return PetitionDto.toDto(changedPetition);
+        return new PetitionDto(changedPetition);
     }
 
     @Override

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,8 +27,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getCommentsByPetitionId(Long petitionId) {
-        List<Comment> commentList = commentRepository.findAllByPetitionId(petitionId);
-        return CommentDto.toDtos(commentList);
+        List<CommentDto> commentDtoList = commentRepository.findAllByPetitionId(petitionId)
+                .stream()
+                .map(CommentDto::new)
+                .collect(Collectors.toList());
+        return commentDtoList;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.getByUsername(username);
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
-        return CommentDto.toDto(saveComment);
+        return new CommentDto(saveComment);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (comment.getPetition().getId() != petitionId)
             throw new RestException(HttpStatus.BAD_REQUEST);
-        return CommentDto.toDto(comment);
+        return new CommentDto(comment);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
             throw new RestException(HttpStatus.BAD_REQUEST);
         comment.setContent(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
-        return CommentDto.toDto(changedComment);
+        return new CommentDto(changedComment);
     }
 
     @Override
