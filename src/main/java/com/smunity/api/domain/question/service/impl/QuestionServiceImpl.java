@@ -2,6 +2,7 @@ package com.smunity.api.domain.question.service.impl;
 
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
+import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.question.entity.Question;
 import com.smunity.api.domain.question.dto.QuestionDto;
 import com.smunity.api.domain.question.repository.QuestionRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,8 +25,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionDto> getAllQuestions() {
-        List<Question> questionList = questionRepository.findAll();
-        return QuestionDto.toDtos(questionList);
+        List<QuestionDto> questionDtoList = questionRepository.findAll()
+                .stream()
+                .map(QuestionDto::new)
+                .collect(Collectors.toList());
+        return questionDtoList;
     }
 
     @Override
@@ -35,15 +40,14 @@ public class QuestionServiceImpl implements QuestionService {
         User user = userRepository.getByUsername(username);
         Question question = questionDto.toEntity(user);
         Question saveQuestion = questionRepository.save(question);
-        QuestionDto questionResponseDto = QuestionDto.toDto(saveQuestion);
-        return questionResponseDto;
+        return new QuestionDto(saveQuestion);
     }
 
     @Override
     public QuestionDto getQuestionById(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return QuestionDto.toDto(question);
+        return new QuestionDto(question);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setContent(questionDto.getContent());
         question.setAnonymous(questionDto.getAnonymous());
         Question changedQuestion = questionRepository.save(question);
-        return QuestionDto.toDto(changedQuestion);
+        return new QuestionDto(changedQuestion);
     }
 
     @Override

@@ -2,28 +2,20 @@ package com.smunity.api.domain.question.dto;
 
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.question.entity.Question;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Data
-@Builder
+@NoArgsConstructor
 public class QuestionDto {
     private Long id;
-
     private Long author_id;
-
     private String subject;
-
     private String content;
-
     private Boolean anonymous;
-
     private LocalDateTime create_date;
-
     private LocalDateTime modify_date;
 
     public Question toEntity(User user) {
@@ -35,22 +27,13 @@ public class QuestionDto {
                 .build();
     }
 
-    public static QuestionDto toDto(Question question) {
-        return QuestionDto.builder()
-                .id(question.getId())
-                .subject(question.getSubject())
-                .content(question.getContent())
-                .anonymous(question.getAnonymous())
-                .create_date(question.getCreate_date())
-                .modify_date(question.getModify_date())
-                .author_id(question.getAuthor().getId())
-                .build();
-    }
-
-    public static List<QuestionDto> toDtos(List<Question> questionList) {
-        List<QuestionDto> questionDtoList = new ArrayList<>();
-        for (Question question: questionList)
-            questionDtoList.add(toDto(question));
-        return questionDtoList;
+    public QuestionDto(Question question) {
+        this.id = question.getId();
+        this.author_id = question.getAuthor().getId();
+        this.subject = question.getSubject();
+        this.content = question.getContent();
+        this.anonymous = question.getAnonymous();
+        this.create_date = question.getCreate_date();
+        this.modify_date = question.getModify_date();
     }
 }
