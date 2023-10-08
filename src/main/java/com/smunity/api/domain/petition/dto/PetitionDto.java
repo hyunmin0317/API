@@ -1,16 +1,14 @@
 package com.smunity.api.domain.petition.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
-@Builder
+@NoArgsConstructor
 public class PetitionDto {
     private Long id;
     private Long author_id;
@@ -35,25 +33,16 @@ public class PetitionDto {
                 .build();
     }
 
-    public static PetitionDto toDto(Petition petition) {
-        return PetitionDto.builder()
-                .id(petition.getId())
-                .subject(petition.getSubject())
-                .content(petition.getContent())
-                .category(petition.getCategory())
-                .anonymous(petition.getAnonymous())
-                .create_date(petition.getCreate_date())
-                .modify_date(petition.getModify_date())
-                .end_date(petition.getEnd_date())
-                .status(petition.getStatus())
-                .author_id(petition.getAuthor().getId())
-                .build();
-    }
-
-    public static List<PetitionDto> toDtos(List<Petition> petitionList) {
-        List<PetitionDto> petitionDtoList = new ArrayList<>();
-        for (Petition petition: petitionList)
-            petitionDtoList.add(toDto(petition));
-        return petitionDtoList;
+    public PetitionDto(Petition petition) {
+        this.id = petition.getId();
+        this.author_id = petition.getAuthor().getId();
+        this.subject = petition.getSubject();
+        this.content = petition.getContent();
+        this.category = petition.getCategory();
+        this.anonymous = petition.getAnonymous();
+        this.create_date = petition.getCreate_date();
+        this.end_date = petition.getEnd_date();
+        this.modify_date = petition.getModify_date();
+        this.status = petition.getStatus();
     }
 }
