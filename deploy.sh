@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPOSITORY=/home/ubuntu
+REPOSITORY=/home/ubuntu/app
 PROJECT_NAME=API
 PACKAGE_NAME=api
 cd $REPOSITORY/$PROJECT_NAME/
