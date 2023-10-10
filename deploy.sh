@@ -7,6 +7,9 @@ cd $REPOSITORY/$PROJECT_NAME/
 echo "> Git Pull"
 git pull
 
+echo "> Maven Wrapper 구성"
+mvn -N io.takari:maven:wrapper
+
 echo "> 프로젝트 Build 시작"
 ./mvnw clean install -DskipTests
 
