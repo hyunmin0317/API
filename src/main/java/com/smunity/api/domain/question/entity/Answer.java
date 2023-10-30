@@ -29,4 +29,8 @@ public class Answer extends BaseEntity {
     @JoinColumn(name = "question_id")
     @ToString.Exclude
     private Question question;
+
+    public void update(String content) {
+        this.content = content;
+    }
 }

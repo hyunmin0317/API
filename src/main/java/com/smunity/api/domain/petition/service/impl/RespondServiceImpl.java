@@ -55,7 +55,7 @@ public class RespondServiceImpl implements RespondService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
             throw new RestException(HttpStatus.FORBIDDEN);
-        respond.setContent(respondDto.getContent());
+        respond.update(respondDto.getContent());
         Respond changedRespond = respondRepository.save(respond);
         return RespondDto.Response.of(changedRespond);
     }

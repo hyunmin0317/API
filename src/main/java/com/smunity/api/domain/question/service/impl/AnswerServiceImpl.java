@@ -55,7 +55,7 @@ public class AnswerServiceImpl implements AnswerService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
             throw new RestException(HttpStatus.FORBIDDEN);
-        answer.setContent(answerDto.getContent());
+        answer.update(answerDto.getContent());
         Answer changedAnswer = answerRepository.save(answer);
         return AnswerDto.Response.of(changedAnswer);
     }

@@ -53,9 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(question.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
             throw new RestException(HttpStatus.FORBIDDEN);
-        question.setSubject(questionDto.getSubject());
-        question.setContent(questionDto.getContent());
-        question.setAnonymous(questionDto.getAnonymous());
+        question.update(questionDto.getSubject(), questionDto.getContent(), questionDto.getAnonymous());
         Question changedQuestion = questionRepository.save(question);
         return QuestionDto.Response.of(changedQuestion);
     }

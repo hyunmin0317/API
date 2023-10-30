@@ -53,10 +53,7 @@ public class PetitionServiceImpl implements PetitionService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
             throw new RestException(HttpStatus.FORBIDDEN);
-        petition.setSubject(petitionDto.getSubject());
-        petition.setContent(petitionDto.getContent());
-        petition.setCategory(petitionDto.getCategory());
-        petition.setAnonymous(petitionDto.getAnonymous());
+        petition.update(petitionDto.getSubject(), petitionDto.getContent(), petitionDto.getCategory(), petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
         return PetitionDto.Response.of(changedPetition);
     }
