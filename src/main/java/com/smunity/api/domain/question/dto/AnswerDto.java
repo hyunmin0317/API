@@ -32,8 +32,8 @@ public class AnswerDto {
                 .author_id(answer.getAuthor().getId())
                 .question_id(answer.getQuestion().getId())
                 .content(answer.getContent())
-                .create_date(answer.getCreate_date())
-                .modify_date(answer.getModify_date())
+                .create_date(answer.getCreateDate())
+                .modify_date(answer.getModifyDate())
                 .build();
     }
 }

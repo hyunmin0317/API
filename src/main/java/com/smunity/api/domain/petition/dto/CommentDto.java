@@ -34,8 +34,8 @@ public class CommentDto {
                 .author_id(comment.getAuthor().getId())
                 .petition_id(comment.getPetition().getId())
                 .content(comment.getContent())
-                .create_date(comment.getCreate_date())
-                .modify_date(comment.getModify_date())
+                .create_date(comment.getCreateDate())
+                .modify_date(comment.getModifyDate())
                 .build();
     }
 

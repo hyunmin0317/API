@@ -32,8 +32,8 @@ public class RespondDto {
                 .author_id(respond.getAuthor().getId())
                 .petition_id(respond.getPetition().getId())
                 .content(respond.getContent())
-                .create_date(respond.getCreate_date())
-                .modify_date(respond.getModify_date())
+                .create_date(respond.getCreateDate())
+                .modify_date(respond.getModifyDate())
                 .build();
     }
 }

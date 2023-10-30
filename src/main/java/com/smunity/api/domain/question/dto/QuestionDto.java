@@ -36,8 +36,8 @@ public class QuestionDto {
                 .subject(question.getSubject())
                 .content(question.getContent())
                 .anonymous(question.getAnonymous())
-                .create_date(question.getCreate_date())
-                .modify_date(question.getModify_date())
+                .create_date(question.getCreateDate())
+                .modify_date(question.getModifyDate())
                 .build();
     }
 

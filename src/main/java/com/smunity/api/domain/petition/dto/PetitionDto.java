@@ -29,7 +29,7 @@ public class PetitionDto {
                 .content(content)
                 .category(category)
                 .anonymous(anonymous)
-                .end_date(end_date)
+                .endDate(end_date)
                 .status(status)
                 .author(user)
                 .build();
@@ -42,9 +42,9 @@ public class PetitionDto {
                 .subject(petition.getSubject())
                 .content(petition.getContent())
                 .category(petition.getCategory())
-                .create_date(petition.getCreate_date())
-                .end_date(petition.getEnd_date())
-                .modify_date(petition.getModify_date())
+                .create_date(petition.getCreateDate())
+                .end_date(petition.getEndDate())
+                .modify_date(petition.getModifyDate())
                 .status(petition.getStatus())
                 .build();
     }

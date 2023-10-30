@@ -31,7 +31,7 @@ public class Petition extends BaseEntity {
     private Boolean anonymous;
 
     @Column
-    private LocalDateTime end_date;
+    private LocalDateTime endDate;
 
     @Column(nullable = false)
     private Integer status;
