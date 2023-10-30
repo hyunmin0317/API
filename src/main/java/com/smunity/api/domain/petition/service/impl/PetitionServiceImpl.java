@@ -24,11 +24,10 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> getAllPetitions() {
-        List<PetitionDto> petitionDtoList = petitionRepository.findAll()
+        return petitionRepository.findAll()
                 .stream()
                 .map(PetitionDto::of)
                 .collect(Collectors.toList());
-        return petitionDtoList;
     }
 
     @Override
