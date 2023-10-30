@@ -22,31 +22,31 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
     @Override
-    public List<QuestionDto> getAllQuestions() {
+    public List<QuestionDto.Response> getAllQuestions() {
         List<Question> questionList = questionRepository.findAll();
-        return QuestionDto.of(questionList);
+        return QuestionDto.Response.of(questionList);
     }
 
     @Override
-    public QuestionDto createQuestion(QuestionDto questionDto, String token) {
+    public QuestionDto.Response createQuestion(QuestionDto.Request questionDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
         Question question = questionDto.toEntity(user);
         Question saveQuestion = questionRepository.save(question);
-        return QuestionDto.of(saveQuestion);
+        return QuestionDto.Response.of(saveQuestion);
     }
 
     @Override
-    public QuestionDto getQuestionById(Long id) {
+    public QuestionDto.Response getQuestionById(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return QuestionDto.of(question);
+        return QuestionDto.Response.of(question);
     }
 
     @Override
-    public QuestionDto updateQuestion(Long id, QuestionDto questionDto, String token) {
+    public QuestionDto.Response updateQuestion(Long id, QuestionDto.Request questionDto, String token) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
@@ -57,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setContent(questionDto.getContent());
         question.setAnonymous(questionDto.getAnonymous());
         Question changedQuestion = questionRepository.save(question);
-        return QuestionDto.of(changedQuestion);
+        return QuestionDto.Response.of(changedQuestion);
     }
 
     @Override

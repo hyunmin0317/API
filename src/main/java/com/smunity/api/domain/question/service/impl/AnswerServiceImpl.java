@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
 
     @Override
-    public AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token) {
+    public AnswerDto.Response createAnswer(Long questionId, AnswerDto.Request answerDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
@@ -37,18 +37,18 @@ public class AnswerServiceImpl implements AnswerService {
         User user = userRepository.getByUsername(username);
         Answer answer = answerDto.toEntity(user, question);
         Answer saveAnswer = answerRepository.save(answer);
-        return AnswerDto.of(saveAnswer);
+        return AnswerDto.Response.of(saveAnswer);
     }
 
     @Override
-    public AnswerDto getAnswerQuestionId(Long questionId) {
+    public AnswerDto.Response getAnswerQuestionId(Long questionId) {
         Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return AnswerDto.of(answer);
+        return AnswerDto.Response.of(answer);
     }
 
     @Override
-    public AnswerDto updateAnswer(Long questionId, AnswerDto answerDto, String token) {
+    public AnswerDto.Response updateAnswer(Long questionId, AnswerDto.Request answerDto, String token) {
         Answer answer = answerRepository.findByQuestionId(questionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
@@ -57,7 +57,7 @@ public class AnswerServiceImpl implements AnswerService {
             throw new RestException(HttpStatus.FORBIDDEN);
         answer.setContent(answerDto.getContent());
         Answer changedAnswer = answerRepository.save(answer);
-        return AnswerDto.of(changedAnswer);
+        return AnswerDto.Response.of(changedAnswer);
     }
 
     @Override

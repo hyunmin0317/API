@@ -5,9 +5,9 @@ import java.util.List;
 
 
 public interface QuestionService {
-    List<QuestionDto> getAllQuestions();
-    QuestionDto createQuestion(QuestionDto questionDto, String token);
-    QuestionDto getQuestionById(Long id);
-    QuestionDto updateQuestion(Long id, QuestionDto questionDto, String token);
+    List<QuestionDto.Response> getAllQuestions();
+    QuestionDto.Response createQuestion(QuestionDto.Request questionDto, String token);
+    QuestionDto.Response getQuestionById(Long id);
+    QuestionDto.Response updateQuestion(Long id, QuestionDto.Request questionDto, String token);
     void deleteQuestion(Long id, String token);
 }

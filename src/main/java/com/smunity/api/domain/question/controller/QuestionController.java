@@ -16,26 +16,26 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping()
-    ResponseEntity<List<QuestionDto>> getAllQuestions() {
-        List<QuestionDto> questionDtoList = questionService.getAllQuestions();
+    ResponseEntity<List<QuestionDto.Response>> getAllQuestions() {
+        List<QuestionDto.Response> questionDtoList = questionService.getAllQuestions();
         return ResponseEntity.status(HttpStatus.OK).body(questionDtoList);
     }
 
     @PostMapping()
-    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        QuestionDto question = questionService.createQuestion(questionDto, token);
+    public ResponseEntity<QuestionDto.Response> createQuestion(@RequestBody QuestionDto.Request questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        QuestionDto.Response question = questionService.createQuestion(questionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(question);
     }
 
     @GetMapping(value = "/{questionId}")
-    ResponseEntity<QuestionDto> getQuestionById(@PathVariable Long questionId) {
-        QuestionDto petitionDto = questionService.getQuestionById(questionId);
+    ResponseEntity<QuestionDto.Response> getQuestionById(@PathVariable Long questionId) {
+        QuestionDto.Response petitionDto = questionService.getQuestionById(questionId);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
     @PutMapping(value = "/{questionId}")
-    ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        QuestionDto petition = questionService.updateQuestion(questionId, questionDto, token);
+    ResponseEntity<QuestionDto.Response> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto.Request questionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        QuestionDto.Response petition = questionService.updateQuestion(questionId, questionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 

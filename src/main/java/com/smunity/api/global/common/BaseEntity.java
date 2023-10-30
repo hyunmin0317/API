@@ -1,8 +1,6 @@
 package com.smunity.api.global.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,17 +10,16 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 
-@Data
+@Getter
 @MappedSuperclass
-@NoArgsConstructor
-@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime create_date;
+    private LocalDateTime createDate;
 
     @LastModifiedDate
-    private LocalDateTime modify_date;
+    @Column
+    private LocalDateTime modifyDate;
 }

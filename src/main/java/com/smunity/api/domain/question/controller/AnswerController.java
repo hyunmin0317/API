@@ -15,20 +15,20 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @PostMapping()
-    public ResponseEntity<AnswerDto> createAnswer(@PathVariable Long questionId, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        AnswerDto answer = answerService.createAnswer(questionId, answerDto, token);
+    public ResponseEntity<AnswerDto.Response> createAnswer(@PathVariable Long questionId, @RequestBody AnswerDto.Request answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        AnswerDto.Response answer = answerService.createAnswer(questionId, answerDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
     @GetMapping()
-    ResponseEntity<AnswerDto> getAnswerQuestionId(@PathVariable Long questionId) {
-        AnswerDto answerDto = answerService.getAnswerQuestionId(questionId);
+    ResponseEntity<AnswerDto.Response> getAnswerQuestionId(@PathVariable Long questionId) {
+        AnswerDto.Response answerDto = answerService.getAnswerQuestionId(questionId);
         return ResponseEntity.status(HttpStatus.OK).body(answerDto);
     }
 
     @PutMapping()
-    ResponseEntity<AnswerDto> updateAnswer(@PathVariable Long questionId, @RequestBody AnswerDto answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        AnswerDto answer = answerService.updateAnswer(questionId, answerDto, token);
+    ResponseEntity<AnswerDto.Response> updateAnswer(@PathVariable Long questionId, @RequestBody AnswerDto.Request answerDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        AnswerDto.Response answer = answerService.updateAnswer(questionId, answerDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
