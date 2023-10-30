@@ -5,7 +5,6 @@ import com.smunity.api.domain.petition.entity.Comment;
 import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 
