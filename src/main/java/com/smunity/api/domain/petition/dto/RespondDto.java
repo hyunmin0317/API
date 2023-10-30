@@ -8,32 +8,39 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 
-@Data
-@Builder
 public class RespondDto {
-    private Long id;
-    private Long author_id;
-    private Long petition_id;
-    private String content;
-    private LocalDateTime create_date;
-    private LocalDateTime modify_date;
+    @Data
+    @Builder
+    public static class Response {
+        private Long id;
+        private Long author_id;
+        private Long petition_id;
+        private String content;
+        private LocalDateTime create_date;
+        private LocalDateTime modify_date;
 
-    public Respond toEntity(User user, Petition petition) {
-        return Respond.builder()
-                .content(content)
-                .author(user)
-                .petition(petition)
-                .build();
+        public static RespondDto.Response of(Respond respond) {
+            return RespondDto.Response.builder()
+                    .id(respond.getId())
+                    .author_id(respond.getAuthor().getId())
+                    .petition_id(respond.getPetition().getId())
+                    .content(respond.getContent())
+                    .create_date(respond.getCreateDate())
+                    .modify_date(respond.getModifyDate())
+                    .build();
+        }
     }
 
-    public static RespondDto of(Respond respond) {
-        return RespondDto.builder()
-                .id(respond.getId())
-                .author_id(respond.getAuthor().getId())
-                .petition_id(respond.getPetition().getId())
-                .content(respond.getContent())
-                .create_date(respond.getCreateDate())
-                .modify_date(respond.getModifyDate())
-                .build();
+    @Data
+    public static class Request {
+        private String content;
+
+        public Respond toEntity(User user, Petition petition) {
+            return Respond.builder()
+                    .content(content)
+                    .author(user)
+                    .petition(petition)
+                    .build();
+        }
     }
 }

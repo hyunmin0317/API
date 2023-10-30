@@ -24,7 +24,7 @@ public class RespondServiceImpl implements RespondService {
     private final RespondRepository respondRepository;
 
     @Override
-    public RespondDto createRespond(Long petitionId, RespondDto respondDto, String token) {
+    public RespondDto.Response createRespond(Long petitionId, RespondDto.Request respondDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
@@ -37,18 +37,18 @@ public class RespondServiceImpl implements RespondService {
         User user = userRepository.getByUsername(username);
         Respond respond = respondDto.toEntity(user, petition);
         Respond saveRespond = respondRepository.save(respond);
-        return RespondDto.of(saveRespond);
+        return RespondDto.Response.of(saveRespond);
     }
 
     @Override
-    public RespondDto getRespondByPetitionId(Long petitionId) {
+    public RespondDto.Response getRespondByPetitionId(Long petitionId) {
         Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return RespondDto.of(respond);
+        return RespondDto.Response.of(respond);
     }
 
     @Override
-    public RespondDto updateRespond(Long petitionId, RespondDto respondDto, String token) {
+    public RespondDto.Response updateRespond(Long petitionId, RespondDto.Request respondDto, String token) {
         Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
@@ -57,7 +57,7 @@ public class RespondServiceImpl implements RespondService {
             throw new RestException(HttpStatus.FORBIDDEN);
         respond.setContent(respondDto.getContent());
         Respond changedRespond = respondRepository.save(respond);
-        return RespondDto.of(changedRespond);
+        return RespondDto.Response.of(changedRespond);
     }
 
     @Override
