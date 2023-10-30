@@ -62,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
             throw new RestException(HttpStatus.FORBIDDEN);
         if (comment.getPetition().getId() != petitionId)
             throw new RestException(HttpStatus.BAD_REQUEST);
-        comment.setContent(commentDto.getContent());
+        comment.update(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
         return CommentDto.Response.of(changedComment);
     }

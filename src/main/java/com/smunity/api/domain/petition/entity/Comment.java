@@ -29,4 +29,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "petition_id")
     @ToString.Exclude
     private Petition petition;
+
+    public void update(String content) {
+        this.content = content;
+    }
 }
