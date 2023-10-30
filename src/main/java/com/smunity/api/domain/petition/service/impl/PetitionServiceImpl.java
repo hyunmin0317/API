@@ -22,31 +22,31 @@ public class PetitionServiceImpl implements PetitionService {
     private final PetitionRepository petitionRepository;
 
     @Override
-    public List<PetitionDto> getAllPetitions() {
+    public List<PetitionDto.Response> getAllPetitions() {
         List<Petition> petitionList = petitionRepository.findAll();
-        return PetitionDto.of(petitionList);
+        return PetitionDto.Response.of(petitionList);
     }
 
     @Override
-    public PetitionDto getPetitionById(Long id) {
+    public PetitionDto.Response getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return PetitionDto.of(petition);
+        return PetitionDto.Response.of(petition);
     }
 
     @Override
-    public PetitionDto createPetition(PetitionDto petitionDto, String token) {
+    public PetitionDto.Response createPetition(PetitionDto.Request petitionDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username);
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
-        return PetitionDto.of(savePetition);
+        return PetitionDto.Response.of(savePetition);
     }
 
     @Override
-    public PetitionDto updatePetition(Long id, PetitionDto petitionDto, String token) {
+    public PetitionDto.Response updatePetition(Long id, PetitionDto.Request petitionDto, String token) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
@@ -58,7 +58,7 @@ public class PetitionServiceImpl implements PetitionService {
         petition.setCategory(petitionDto.getCategory());
         petition.setAnonymous(petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
-        return PetitionDto.of(changedPetition);
+        return PetitionDto.Response.of(changedPetition);
     }
 
     @Override

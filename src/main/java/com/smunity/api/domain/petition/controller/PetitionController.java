@@ -16,26 +16,26 @@ public class PetitionController {
     private final PetitionService petitionService;
 
     @GetMapping()
-    ResponseEntity<List<PetitionDto>> getAllPetitions() {
-        List<PetitionDto> petitionDtoList = petitionService.getAllPetitions();
+    ResponseEntity<List<PetitionDto.Response>> getAllPetitions() {
+        List<PetitionDto.Response> petitionDtoList = petitionService.getAllPetitions();
         return ResponseEntity.status(HttpStatus.OK).body(petitionDtoList);
     }
 
     @PostMapping()
-    public ResponseEntity<PetitionDto> createPetition(@RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        PetitionDto petition = petitionService.createPetition(petitionDto, token);
+    public ResponseEntity<PetitionDto.Response> createPetition(@RequestBody PetitionDto.Request petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        PetitionDto.Response petition = petitionService.createPetition(petitionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 
     @GetMapping(value = "/{petitionId}")
-    ResponseEntity<PetitionDto> getPetitionById(@PathVariable Long petitionId) {
-        PetitionDto petitionDto = petitionService.getPetitionById(petitionId);
+    ResponseEntity<PetitionDto.Response> getPetitionById(@PathVariable Long petitionId) {
+        PetitionDto.Response petitionDto = petitionService.getPetitionById(petitionId);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDto);
     }
 
     @PutMapping(value = "/{petitionId}")
-    ResponseEntity<PetitionDto> updatePetition(@PathVariable Long petitionId, @RequestBody PetitionDto petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
-        PetitionDto petition = petitionService.updatePetition(petitionId, petitionDto, token);
+    ResponseEntity<PetitionDto.Response> updatePetition(@PathVariable Long petitionId, @RequestBody PetitionDto.Request petitionDto, @RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        PetitionDto.Response petition = petitionService.updatePetition(petitionId, petitionDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(petition);
     }
 

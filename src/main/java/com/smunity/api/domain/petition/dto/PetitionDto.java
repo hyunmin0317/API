@@ -9,47 +9,57 @@ import lombok.Builder;
 import lombok.Data;
 
 
-@Data
-@Builder
+
 public class PetitionDto {
-    private Long id;
-    private Long author_id;
-    private String subject;
-    private String content;
-    private Integer category;
-    private Boolean anonymous;
-    private LocalDateTime create_date;
-    private LocalDateTime end_date;
-    private LocalDateTime modify_date;
-    private Integer status;
+    @Data
+    @Builder
+    public static class Response {
+        private Long id;
+        private Long author_id;
+        private String subject;
+        private String content;
+        private Integer category;
+        private Boolean anonymous;
+        private LocalDateTime create_date;
+        private LocalDateTime end_date;
+        private LocalDateTime modify_date;
+        private Integer status;
 
-    public Petition toEntity(User user) {
-        return Petition.builder()
-                .subject(subject)
-                .content(content)
-                .category(category)
-                .anonymous(anonymous)
-                .endDate(end_date)
-                .status(status)
-                .author(user)
-                .build();
+        public static PetitionDto.Response of(Petition petition) {
+            return PetitionDto.Response.builder()
+                    .id(petition.getId())
+                    .author_id(petition.getAuthor().getId())
+                    .subject(petition.getSubject())
+                    .content(petition.getContent())
+                    .category(petition.getCategory())
+                    .create_date(petition.getCreateDate())
+                    .end_date(petition.getEndDate())
+                    .modify_date(petition.getModifyDate())
+                    .status(petition.getStatus())
+                    .build();
+        }
+
+        public static List<PetitionDto.Response> of(List<Petition> petitionList) {
+            return petitionList.stream().map(PetitionDto.Response::of).collect(Collectors.toList());
+        }
     }
 
-    public static PetitionDto of(Petition petition) {
-        return PetitionDto.builder()
-                .id(petition.getId())
-                .author_id(petition.getAuthor().getId())
-                .subject(petition.getSubject())
-                .content(petition.getContent())
-                .category(petition.getCategory())
-                .create_date(petition.getCreateDate())
-                .end_date(petition.getEndDate())
-                .modify_date(petition.getModifyDate())
-                .status(petition.getStatus())
-                .build();
-    }
+    @Data
+    public static class Request {
+        private String subject;
+        private String content;
+        private Integer category;
+        private Boolean anonymous;
 
-    public static List<PetitionDto> of(List<Petition> petitionList) {
-        return petitionList.stream().map(PetitionDto::of).collect(Collectors.toList());
+        public Petition toEntity(User user) {
+            return Petition.builder()
+                    .subject(subject)
+                    .content(content)
+                    .category(category)
+                    .anonymous(anonymous)
+                    .author(user)
+                    .status(1)
+                    .build();
+        }
     }
 }
