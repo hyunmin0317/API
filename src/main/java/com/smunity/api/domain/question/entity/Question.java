@@ -30,4 +30,10 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
+
+    public void update(String subject, String content, Boolean anonymous) {
+        this.subject = subject;
+        this.content = content;
+        this.anonymous = anonymous;
+    }
 }
