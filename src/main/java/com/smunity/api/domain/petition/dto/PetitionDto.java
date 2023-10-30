@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 
 
-
 public class PetitionDto {
     @Data
     @Builder
