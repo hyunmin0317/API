@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDto> getCommentsByPetitionId(Long petitionId) {
         List<CommentDto> commentDtoList = commentRepository.findAllByPetitionId(petitionId)
                 .stream()
-                .map(CommentDto::new)
+                .map(CommentDto::of)
                 .collect(Collectors.toList());
         return commentDtoList;
     }
@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.getByUsername(username);
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
-        return new CommentDto(saveComment);
+        return CommentDto.of(saveComment);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (comment.getPetition().getId() != petitionId)
             throw new RestException(HttpStatus.BAD_REQUEST);
-        return new CommentDto(comment);
+        return CommentDto.of(comment);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
             throw new RestException(HttpStatus.BAD_REQUEST);
         comment.setContent(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
-        return new CommentDto(changedComment);
+        return CommentDto.of(changedComment);
     }
 
     @Override
