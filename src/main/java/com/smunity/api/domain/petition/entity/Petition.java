@@ -40,4 +40,11 @@ public class Petition extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
+
+    public void update(String subject, String content, Integer category, Boolean anonymous) {
+        this.subject = subject;
+        this.content = content;
+        this.category = category;
+        this.anonymous = anonymous;
+    }
 }
