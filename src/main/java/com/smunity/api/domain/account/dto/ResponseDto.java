@@ -5,17 +5,20 @@ import lombok.*;
 
 
 @Data
+@Builder
 public class ResponseDto {
     private boolean success;
     private int code;
     private String msg;
     private String token;
 
-    public ResponseDto(boolean success, String token) {
-        this.success = success;
-        this.token = token;
+    public static ResponseDto of(boolean success, String token) {
         CommonResponse response = success ? CommonResponse.SUCCESS : CommonResponse.FAIL;
-        this.code = response.getCode();
-        this.msg = response.getMsg();
+        return ResponseDto.builder()
+                .success(success)
+                .token(token)
+                .code(response.getCode())
+                .msg(response.getMsg())
+                .build();
     }
 }
