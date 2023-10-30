@@ -5,6 +5,8 @@ import com.smunity.api.domain.petition.entity.Agreement;
 import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
 import lombok.Data;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -27,5 +29,9 @@ public class AgreementDto {
                 .user_id(agreement.getUser().getId())
                 .petition_id(agreement.getPetition().getId())
                 .build();
+    }
+
+    public static List<AgreementDto> of(List<Agreement> agreementList) {
+        return agreementList.stream().map(AgreementDto::of).collect(Collectors.toList());
     }
 }

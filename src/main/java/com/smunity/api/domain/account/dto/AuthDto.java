@@ -10,4 +10,12 @@ public class AuthDto {
     private String username;
     private String department;
     private String email;
+
+    public static AuthDto of(String username, String department, String email) {
+        return AuthDto.builder()
+                .username(username)
+                .department(department)
+                .email(email)
+                .build();
+    }
 }

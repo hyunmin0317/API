@@ -10,7 +10,6 @@ import org.jsoup.nodes.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Map;
 
 
@@ -22,11 +21,9 @@ public class AuthServiceImpl implements AuthService {
                 .data("username", signInDto.getUsername(), "password", signInDto.getPassword())
                 .method(Connection.Method.POST)
                 .execute();
-        URL url = res.url();
-        if (url.toString().equals("https://ecampus.smu.ac.kr/")) {
-            return res.cookies();
-        }
-        return null;
+        if (!res.url().toString().equals("https://ecampus.smu.ac.kr/"))
+            return null;
+        return res.cookies();
     }
 
     @Override
@@ -37,26 +34,20 @@ public class AuthServiceImpl implements AuthService {
                 .cookies(cookies)
                 .method(Connection.Method.GET)
                 .get();
-        AuthDto authDto = AuthDto.builder()
-                .username(getInformationById(doc, "id_firstname"))
-                .department(changeDepartmentName(getInformationById(doc, "id_department")))
-                .email(getInformationById(doc, "id_email"))
-                .build();
-        return authDto;
+        return AuthDto.of(getById(doc, "id_firstname"), changeName(getById(doc, "id_department")), getById(doc, "id_email"));
     }
 
-    public String getInformationById(Document doc, String id) {
+    public String getById(Document doc, String id) {
         return doc.select("input[id="+id+"]").val();
     }
 
-    public String changeDepartmentName(String department) {
-        String dept_name = department;
+    public String changeName(String department) {
         Map<String, String> map = Map.of(
                 "융합전자공학전공", "지능IOT융합전공",
                 "지능·데이터융합학부", "핀테크전공"
         );
-        if (map.containsKey(dept_name))
-            dept_name = map.get(dept_name);
-        return dept_name;
+        if (map.containsKey(department))
+            return map.get(department);
+        return department;
     }
 }

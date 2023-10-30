@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -24,10 +23,8 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> getAllPetitions() {
-        return petitionRepository.findAll()
-                .stream()
-                .map(PetitionDto::of)
-                .collect(Collectors.toList());
+        List<Petition> petitionList = petitionRepository.findAll();
+        return PetitionDto.of(petitionList);
     }
 
     @Override
