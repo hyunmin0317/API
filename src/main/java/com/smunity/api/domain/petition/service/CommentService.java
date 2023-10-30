@@ -5,9 +5,9 @@ import java.util.List;
 
 
 public interface CommentService {
-    List<CommentDto> getCommentsByPetitionId(Long petitionId);
-    CommentDto createComment(Long petitionId, CommentDto commentDto, String token);
-    CommentDto getCommentById(Long petitionId, Long commentId);
-    CommentDto updateComment(Long petitionId, Long commentId, CommentDto commentDto, String token);
+    List<CommentDto.Response> getCommentsByPetitionId(Long petitionId);
+    CommentDto.Response createComment(Long petitionId, CommentDto.Request commentDto, String token);
+    CommentDto.Response getCommentById(Long petitionId, Long commentId);
+    CommentDto.Response updateComment(Long petitionId, Long commentId, CommentDto.Request commentDto, String token);
     void deleteComment(Long petitionId, Long commentId, String token);
 }

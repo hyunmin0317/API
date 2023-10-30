@@ -25,13 +25,13 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<CommentDto> getCommentsByPetitionId(Long petitionId) {
+    public List<CommentDto.Response> getCommentsByPetitionId(Long petitionId) {
         List<Comment> commentList = commentRepository.findAllByPetitionId(petitionId);
-        return CommentDto.of(commentList);
+        return CommentDto.Response.of(commentList);
     }
 
     @Override
-    public CommentDto createComment(Long petitionId, CommentDto commentDto, String token) {
+    public CommentDto.Response createComment(Long petitionId, CommentDto.Request commentDto, String token) {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         Petition petition = petitionRepository.findById(petitionId)
@@ -40,20 +40,20 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.getByUsername(username);
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
-        return CommentDto.of(saveComment);
+        return CommentDto.Response.of(saveComment);
     }
 
     @Override
-    public CommentDto getCommentById(Long petitionId, Long commentId) {
+    public CommentDto.Response getCommentById(Long petitionId, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (comment.getPetition().getId() != petitionId)
             throw new RestException(HttpStatus.BAD_REQUEST);
-        return CommentDto.of(comment);
+        return CommentDto.Response.of(comment);
     }
 
     @Override
-    public CommentDto updateComment(Long petitionId, Long commentId, CommentDto commentDto, String token) {
+    public CommentDto.Response updateComment(Long petitionId, Long commentId, CommentDto.Request commentDto, String token) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
             throw new RestException(HttpStatus.BAD_REQUEST);
         comment.setContent(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
-        return CommentDto.of(changedComment);
+        return CommentDto.Response.of(changedComment);
     }
 
     @Override

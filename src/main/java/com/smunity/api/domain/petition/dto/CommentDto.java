@@ -10,36 +10,42 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Data
-@Builder
 public class CommentDto {
-    private Long id;
-    private Long author_id;
-    private Long petition_id;
-    private String content;
-    private LocalDateTime create_date;
-    private LocalDateTime modify_date;
+    @Data
+    @Builder
+    public static class Response {
+        private Long id;
+        private Long author_id;
+        private Long petition_id;
+        private String content;
+        private LocalDateTime create_date;
+        private LocalDateTime modify_date;
+        public static CommentDto.Response of(Comment comment) {
+            return CommentDto.Response.builder()
+                    .id(comment.getId())
+                    .author_id(comment.getAuthor().getId())
+                    .petition_id(comment.getPetition().getId())
+                    .content(comment.getContent())
+                    .create_date(comment.getCreateDate())
+                    .modify_date(comment.getModifyDate())
+                    .build();
+        }
 
-    public Comment toEntity(User user, Petition petition) {
-        return Comment.builder()
-                .content(content)
-                .author(user)
-                .petition(petition)
-                .build();
+        public static List<CommentDto.Response> of(List<Comment> commentList) {
+            return commentList.stream().map(CommentDto.Response::of).collect(Collectors.toList());
+        }
     }
 
-    public static CommentDto of(Comment comment) {
-        return CommentDto.builder()
-                .id(comment.getId())
-                .author_id(comment.getAuthor().getId())
-                .petition_id(comment.getPetition().getId())
-                .content(comment.getContent())
-                .create_date(comment.getCreateDate())
-                .modify_date(comment.getModifyDate())
-                .build();
-    }
+    @Data
+    public static class Request {
+        private String content;
 
-    public static List<CommentDto> of(List<Comment> commentList) {
-        return commentList.stream().map(CommentDto::of).collect(Collectors.toList());
+        public Comment toEntity(User user, Petition petition) {
+            return Comment.builder()
+                    .content(content)
+                    .author(user)
+                    .petition(petition)
+                    .build();
+        }
     }
 }
