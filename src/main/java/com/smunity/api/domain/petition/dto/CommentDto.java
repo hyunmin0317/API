@@ -6,6 +6,8 @@ import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -35,5 +37,9 @@ public class CommentDto {
                 .create_date(comment.getCreate_date())
                 .modify_date(comment.getModify_date())
                 .build();
+    }
+
+    public static List<CommentDto> of(List<Comment> commentList) {
+        return commentList.stream().map(CommentDto::of).collect(Collectors.toList());
     }
 }

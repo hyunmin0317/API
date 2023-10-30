@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -27,11 +26,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getCommentsByPetitionId(Long petitionId) {
-        List<CommentDto> commentDtoList = commentRepository.findAllByPetitionId(petitionId)
-                .stream()
-                .map(CommentDto::of)
-                .collect(Collectors.toList());
-        return commentDtoList;
+        List<Comment> commentList = commentRepository.findAllByPetitionId(petitionId);
+        return CommentDto.of(commentList);
     }
 
     @Override
