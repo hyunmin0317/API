@@ -28,11 +28,10 @@ public class AgreementServiceImpl implements AgreementService {
     @Override
     public List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId) {
         petitionRepository.findById(petitionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        List<AgreementDto> agreementDtoList = agreementRepository.findAllByPetitionId(petitionId)
+        return agreementRepository.findAllByPetitionId(petitionId)
                 .stream()
-                .map(AgreementDto::new)
+                .map(AgreementDto::of)
                 .collect(Collectors.toList());
-        return agreementDtoList;
     }
 
     @Override
@@ -48,6 +47,6 @@ public class AgreementServiceImpl implements AgreementService {
             throw new RestException(HttpStatus.CONFLICT);
         Agreement agreement = AgreementDto.toEntity(user, petition);
         Agreement saveAgreement = agreementRepository.save(agreement);
-        return new AgreementDto(saveAgreement);
+        return AgreementDto.of(saveAgreement);
     }
 }

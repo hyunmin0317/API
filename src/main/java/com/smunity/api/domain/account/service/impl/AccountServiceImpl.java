@@ -39,12 +39,12 @@ public class AccountServiceImpl implements AccountService {
         if (check)
             throw new RestException(HttpStatus.BAD_REQUEST);
         signUpDto.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-        User user = signUpDto.toEntityUser();
+        User user = signUpDto.toEntity();
         User savedUser = userRepository.save(user);
-        Profile profile = signUpDto.toEntityProfile(savedUser, year.get(), department.get());
+        Profile profile = signUpDto.toEntity(savedUser, year.get(), department.get());
         profileRepository.save(profile);
         String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getIs_superuser());
-        return new ResponseDto(true, token);
+        return ResponseDto.of(true, token);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class AccountServiceImpl implements AccountService {
         if (!matches)
             throw new RestException(HttpStatus.UNAUTHORIZED);
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUsername()), user.getIs_superuser());
-        return new ResponseDto(true, token);
+        return ResponseDto.of(true, token);
     }
 }

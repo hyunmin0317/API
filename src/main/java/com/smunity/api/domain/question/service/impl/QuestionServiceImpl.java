@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> getAllQuestions() {
         List<QuestionDto> questionDtoList = questionRepository.findAll()
                 .stream()
-                .map(QuestionDto::new)
+                .map(QuestionDto::of)
                 .collect(Collectors.toList());
         return questionDtoList;
     }
@@ -40,14 +40,14 @@ public class QuestionServiceImpl implements QuestionService {
         User user = userRepository.getByUsername(username);
         Question question = questionDto.toEntity(user);
         Question saveQuestion = questionRepository.save(question);
-        return new QuestionDto(saveQuestion);
+        return QuestionDto.of(saveQuestion);
     }
 
     @Override
     public QuestionDto getQuestionById(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return new QuestionDto(question);
+        return QuestionDto.of(question);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setContent(questionDto.getContent());
         question.setAnonymous(questionDto.getAnonymous());
         Question changedQuestion = questionRepository.save(question);
-        return new QuestionDto(changedQuestion);
+        return QuestionDto.of(changedQuestion);
     }
 
     @Override

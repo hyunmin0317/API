@@ -3,12 +3,12 @@ package com.smunity.api.domain.petition.dto;
 import java.time.LocalDateTime;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 public class PetitionDto {
     private Long id;
     private Long author_id;
@@ -33,16 +33,17 @@ public class PetitionDto {
                 .build();
     }
 
-    public PetitionDto(Petition petition) {
-        this.id = petition.getId();
-        this.author_id = petition.getAuthor().getId();
-        this.subject = petition.getSubject();
-        this.content = petition.getContent();
-        this.category = petition.getCategory();
-        this.anonymous = petition.getAnonymous();
-        this.create_date = petition.getCreate_date();
-        this.end_date = petition.getEnd_date();
-        this.modify_date = petition.getModify_date();
-        this.status = petition.getStatus();
+    public static PetitionDto of(Petition petition) {
+        return PetitionDto.builder()
+                .id(petition.getId())
+                .author_id(petition.getAuthor().getId())
+                .subject(petition.getSubject())
+                .content(petition.getContent())
+                .category(petition.getCategory())
+                .create_date(petition.getCreate_date())
+                .end_date(petition.getEnd_date())
+                .modify_date(petition.getModify_date())
+                .status(petition.getStatus())
+                .build();
     }
 }

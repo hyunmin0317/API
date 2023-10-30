@@ -3,13 +3,13 @@ package com.smunity.api.domain.petition.dto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Respond;
 import com.smunity.api.domain.petition.entity.Petition;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 public class RespondDto {
     private Long id;
     private Long author_id;
@@ -26,12 +26,14 @@ public class RespondDto {
                 .build();
     }
 
-    public RespondDto(Respond respond) {
-        this.id = respond.getId();
-        this.author_id = respond.getAuthor().getId();
-        this.petition_id = respond.getPetition().getId();
-        this.content = respond.getContent();
-        this.create_date = respond.getCreate_date();
-        this.modify_date = respond.getModify_date();
+    public static RespondDto of(Respond respond) {
+        return RespondDto.builder()
+                .id(respond.getId())
+                .author_id(respond.getAuthor().getId())
+                .petition_id(respond.getPetition().getId())
+                .content(respond.getContent())
+                .create_date(respond.getCreate_date())
+                .modify_date(respond.getModify_date())
+                .build();
     }
 }

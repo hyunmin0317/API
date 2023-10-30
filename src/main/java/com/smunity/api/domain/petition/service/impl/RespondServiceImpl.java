@@ -37,14 +37,14 @@ public class RespondServiceImpl implements RespondService {
         User user = userRepository.getByUsername(username);
         Respond respond = respondDto.toEntity(user, petition);
         Respond saveRespond = respondRepository.save(respond);
-        return new RespondDto(saveRespond);
+        return RespondDto.of(saveRespond);
     }
 
     @Override
     public RespondDto getRespondByPetitionId(Long petitionId) {
         Respond respond = respondRepository.findByPetitionId(petitionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return new RespondDto(respond);
+        return RespondDto.of(respond);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RespondServiceImpl implements RespondService {
             throw new RestException(HttpStatus.FORBIDDEN);
         respond.setContent(respondDto.getContent());
         Respond changedRespond = respondRepository.save(respond);
-        return new RespondDto(changedRespond);
+        return RespondDto.of(changedRespond);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class SignUpDto {
     private String name;
     private String department;
 
-    public User toEntityUser() {
+    public User toEntity() {
         return User.builder()
                 .username(username)
                 .password(password)
@@ -27,7 +27,7 @@ public class SignUpDto {
                 .build();
     }
 
-    public Profile toEntityProfile(User user, Year year, Department department) {
+    public Profile toEntity(User user, Year year, Department department) {
         return Profile.builder()
                 .name(name)
                 .user(user)

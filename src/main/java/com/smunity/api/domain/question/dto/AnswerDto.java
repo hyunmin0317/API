@@ -3,13 +3,13 @@ package com.smunity.api.domain.question.dto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.question.entity.Answer;
 import com.smunity.api.domain.question.entity.Question;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 public class AnswerDto {
     private Long id;
     private Long author_id;
@@ -26,12 +26,14 @@ public class AnswerDto {
                 .build();
     }
 
-    public AnswerDto(Answer answer) {
-        this.id = answer.getId();
-        this.author_id = answer.getAuthor().getId();
-        this.question_id = answer.getQuestion().getId();
-        this.content = answer.getContent();
-        this.create_date = answer.getCreate_date();
-        this.modify_date = answer.getModify_date();
+    public static AnswerDto of(Answer answer) {
+        return AnswerDto.builder()
+                .id(answer.getId())
+                .author_id(answer.getAuthor().getId())
+                .question_id(answer.getQuestion().getId())
+                .content(answer.getContent())
+                .create_date(answer.getCreate_date())
+                .modify_date(answer.getModify_date())
+                .build();
     }
 }
