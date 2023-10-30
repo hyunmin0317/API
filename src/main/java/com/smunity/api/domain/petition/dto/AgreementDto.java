@@ -3,12 +3,13 @@ package com.smunity.api.domain.petition.dto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Agreement;
 import com.smunity.api.domain.petition.entity.Petition;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 public class AgreementDto {
     private Long id;
     private Long user_id;
@@ -21,9 +22,11 @@ public class AgreementDto {
                 .build();
     }
 
-    public AgreementDto(Agreement agreement) {
-        this.id = agreement.getId();
-        this.user_id = agreement.getUser().getId();
-        this.petition_id = agreement.getPetition().getId();
+    public static AgreementDto of(Agreement agreement) {
+        return AgreementDto.builder()
+                .id(agreement.getId())
+                .user_id(agreement.getUser().getId())
+                .petition_id(agreement.getPetition().getId())
+                .build();
     }
 }
