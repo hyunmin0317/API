@@ -3,6 +3,7 @@ package com.smunity.api.domain.petition.dto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Comment;
 import com.smunity.api.domain.petition.entity.Petition;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class CommentDto {
     @Data
     @Builder
+    @ApiModel(value = "CommentDtoResponse")
     public static class Response {
         private Long id;
         private Long author_id;
@@ -37,6 +39,7 @@ public class CommentDto {
     }
 
     @Data
+    @ApiModel(value = "CommentDtoRequest")
     public static class Request {
         private String content;
 

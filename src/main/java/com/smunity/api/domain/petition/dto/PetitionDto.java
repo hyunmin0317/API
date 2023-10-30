@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import lombok.Data;
 public class PetitionDto {
     @Data
     @Builder
+    @ApiModel(value = "PetitionDtoResponse")
     public static class Response {
         private Long id;
         private Long author_id;
@@ -45,6 +47,7 @@ public class PetitionDto {
     }
 
     @Data
+    @ApiModel(value = "PetitionDtoRequest")
     public static class Request {
         private String subject;
         private String content;
