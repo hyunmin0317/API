@@ -4,8 +4,8 @@ import com.smunity.api.domain.question.dto.AnswerDto;
 
 
 public interface AnswerService {
-    AnswerDto createAnswer(Long questionId, AnswerDto answerDto, String token);
-    AnswerDto getAnswerQuestionId(Long questionId);
-    AnswerDto updateAnswer(Long questionId, AnswerDto answerDto, String token);
+    AnswerDto.Response createAnswer(Long questionId, AnswerDto.Request answerDto, String token);
+    AnswerDto.Response getAnswerQuestionId(Long questionId);
+    AnswerDto.Response updateAnswer(Long questionId, AnswerDto.Request answerDto, String token);
     void deleteAnswer(Long questionId, String token);
 }
