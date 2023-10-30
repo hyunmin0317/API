@@ -52,13 +52,11 @@ public class JwtTokenProvider {
     }
 
     public String getUsername(String token) {
-        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        return info;
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean getIsSuperuser(String token) {
-        boolean isSuperuser = (boolean) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("isSuperuser");
-        return isSuperuser;
+        return (boolean) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("isSuperuser");
     }
 
     public String resolveToken(HttpServletRequest request) {
