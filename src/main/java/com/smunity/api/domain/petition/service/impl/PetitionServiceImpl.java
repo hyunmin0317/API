@@ -24,17 +24,18 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public List<PetitionDto> getAllPetitions() {
-        return petitionRepository.findAll()
+        List<PetitionDto> petitionDtoList = petitionRepository.findAll()
                 .stream()
-                .map(PetitionDto::of)
+                .map(PetitionDto::new)
                 .collect(Collectors.toList());
+        return petitionDtoList;
     }
 
     @Override
     public PetitionDto getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return PetitionDto.of(petition);
+        return new PetitionDto(petition);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class PetitionServiceImpl implements PetitionService {
         User user = userRepository.getByUsername(username);
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
-        return PetitionDto.of(savePetition);
+        return new PetitionDto(savePetition);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class PetitionServiceImpl implements PetitionService {
         petition.setCategory(petitionDto.getCategory());
         petition.setAnonymous(petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
-        return PetitionDto.of(changedPetition);
+        return new PetitionDto(changedPetition);
     }
 
     @Override
