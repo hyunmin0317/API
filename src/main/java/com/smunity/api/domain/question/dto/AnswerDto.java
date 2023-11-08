@@ -21,8 +21,8 @@ public class AnswerDto {
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
 
-        public static AnswerDto.Response of(Answer answer) {
-            return AnswerDto.Response.builder()
+        public static Response of(Answer answer) {
+            return Response.builder()
                     .id(answer.getId())
                     .author_id(answer.getAuthor().getId())
                     .question_id(answer.getQuestion().getId())

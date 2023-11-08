@@ -21,8 +21,8 @@ public class RespondDto {
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
 
-        public static RespondDto.Response of(Respond respond) {
-            return RespondDto.Response.builder()
+        public static Response of(Respond respond) {
+            return Response.builder()
                     .id(respond.getId())
                     .author_id(respond.getAuthor().getId())
                     .petition_id(respond.getPetition().getId())
