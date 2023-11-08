@@ -1,5 +1,6 @@
 package com.smunity.api.domain.petition.service.impl;
 
+import com.querydsl.core.types.Predicate;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.petition.entity.Petition;
@@ -9,9 +10,10 @@ import com.smunity.api.domain.petition.service.PetitionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 
 @Service
@@ -22,9 +24,9 @@ public class PetitionServiceImpl implements PetitionService {
     private final PetitionRepository petitionRepository;
 
     @Override
-    public List<PetitionDto.Response> getAllPetitions() {
-        List<Petition> petitionList = petitionRepository.findAll();
-        return PetitionDto.Response.of(petitionList);
+    public Page<PetitionDto.Response> getAllPetitions(Predicate predicate, Pageable pageable) {
+        Page<Petition> petitionPage = petitionRepository.findAll(predicate, pageable);
+        return PetitionDto.Response.of(petitionPage);
     }
 
     @Override

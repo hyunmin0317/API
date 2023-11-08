@@ -1,13 +1,12 @@
 package com.smunity.api.domain.petition.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.domain.Page;
 
 
 public class PetitionDto {
@@ -26,8 +25,8 @@ public class PetitionDto {
         private LocalDateTime modify_date;
         private Integer status;
 
-        public static PetitionDto.Response of(Petition petition) {
-            return PetitionDto.Response.builder()
+        public static Response of(Petition petition) {
+            return Response.builder()
                     .id(petition.getId())
                     .author_id(petition.getAuthor().getId())
                     .subject(petition.getSubject())
@@ -40,8 +39,8 @@ public class PetitionDto {
                     .build();
         }
 
-        public static List<PetitionDto.Response> of(List<Petition> petitionList) {
-            return petitionList.stream().map(PetitionDto.Response::of).collect(Collectors.toList());
+        public static Page<Response> of(Page<Petition> petitionPage) {
+            return petitionPage.map(Response::of);
         }
     }
 
