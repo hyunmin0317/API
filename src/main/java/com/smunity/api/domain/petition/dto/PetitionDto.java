@@ -3,16 +3,15 @@ package com.smunity.api.domain.petition.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.querydsl.core.annotations.QueryProjection;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
 import io.swagger.annotations.ApiModel;
-import lombok.Builder;
 import lombok.Data;
 
 
 public class PetitionDto {
     @Data
-    @Builder
     @ApiModel(value = "PetitionDtoResponse")
     public static class Response {
         private Long id;
@@ -26,18 +25,22 @@ public class PetitionDto {
         private LocalDateTime modify_date;
         private Integer status;
 
+        @QueryProjection
+        public Response(Petition petition) {
+            this.id = petition.getId();
+            this.author_id = petition.getAuthor().getId();
+            this.subject = petition.getSubject();
+            this.content = petition.getContent();
+            this.category = petition.getCategory();
+            this.anonymous = petition.getAnonymous();
+            this.create_date = petition.getCreateDate();
+            this.end_date = petition.getEndDate();
+            this.modify_date = petition.getModifyDate();
+            this.status = petition.getStatus();
+        }
+
         public static PetitionDto.Response of(Petition petition) {
-            return PetitionDto.Response.builder()
-                    .id(petition.getId())
-                    .author_id(petition.getAuthor().getId())
-                    .subject(petition.getSubject())
-                    .content(petition.getContent())
-                    .category(petition.getCategory())
-                    .create_date(petition.getCreateDate())
-                    .end_date(petition.getEndDate())
-                    .modify_date(petition.getModifyDate())
-                    .status(petition.getStatus())
-                    .build();
+            return new Response(petition);
         }
 
         public static List<PetitionDto.Response> of(List<Petition> petitionList) {
