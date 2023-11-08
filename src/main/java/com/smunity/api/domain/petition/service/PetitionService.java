@@ -1,12 +1,14 @@
 package com.smunity.api.domain.petition.service;
 
+import com.querydsl.core.types.Predicate;
 import com.smunity.api.domain.petition.dto.PetitionDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 
 public interface PetitionService {
-    List<PetitionDto.Response> getAllPetitions();
+    Page<PetitionDto.Response> getAllPetitions(Predicate predicate, Pageable pageable);
     PetitionDto.Response createPetition(PetitionDto.Request petitionDto, String token);
     PetitionDto.Response getPetitionById(Long id);
     @Transactional
