@@ -2,6 +2,7 @@ package com.smunity.api.domain.petition.dto;
 
 import java.time.LocalDateTime;
 import com.smunity.api.domain.account.entity.User;
+import com.smunity.api.domain.petition.entity.Category;
 import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.entity.Status;
 import io.swagger.annotations.ApiModel;
@@ -19,7 +20,7 @@ public class PetitionDto {
         private Long author_id;
         private String subject;
         private String content;
-        private Integer category;
+        private String category;
         private Boolean anonymous;
         private LocalDateTime create_date;
         private LocalDateTime end_date;
@@ -32,7 +33,7 @@ public class PetitionDto {
                     .author_id(petition.getAuthor().getId())
                     .subject(petition.getSubject())
                     .content(petition.getContent())
-                    .category(petition.getCategory())
+                    .category(petition.getCategory().getCode())
                     .create_date(petition.getCreateDate())
                     .end_date(petition.getEndDate())
                     .modify_date(petition.getModifyDate())
@@ -57,7 +58,7 @@ public class PetitionDto {
             return Petition.builder()
                     .subject(subject)
                     .content(content)
-                    .category(category)
+                    .category(Category.valueOf(category))
                     .anonymous(anonymous)
                     .author(user)
                     .status(Status.IN_PROGRESS)
