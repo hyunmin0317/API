@@ -3,6 +3,7 @@ package com.smunity.api.domain.petition.dto;
 import java.time.LocalDateTime;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Petition;
+import com.smunity.api.domain.petition.entity.Status;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class PetitionDto {
         private LocalDateTime create_date;
         private LocalDateTime end_date;
         private LocalDateTime modify_date;
-        private Integer status;
+        private String status;
 
         public static Response of(Petition petition) {
             return Response.builder()
@@ -35,7 +36,7 @@ public class PetitionDto {
                     .create_date(petition.getCreateDate())
                     .end_date(petition.getEndDate())
                     .modify_date(petition.getModifyDate())
-                    .status(petition.getStatus())
+                    .status(petition.getStatus().getCode())
                     .build();
         }
 
@@ -59,7 +60,7 @@ public class PetitionDto {
                     .category(category)
                     .anonymous(anonymous)
                     .author(user)
-                    .status(1)
+                    .status(Status.IN_PROGRESS)
                     .build();
         }
     }

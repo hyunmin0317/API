@@ -34,7 +34,8 @@ public class Petition extends BaseEntity {
     private LocalDateTime endDate;
 
     @Column(nullable = false)
-    private Integer status;
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
