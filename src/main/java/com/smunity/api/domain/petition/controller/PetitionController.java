@@ -1,12 +1,17 @@
 package com.smunity.api.domain.petition.controller;
 
+import com.querydsl.core.types.Predicate;
 import com.smunity.api.domain.petition.dto.PetitionDto;
+import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.service.PetitionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 
 @RestController
@@ -16,8 +21,8 @@ public class PetitionController {
     private final PetitionService petitionService;
 
     @GetMapping()
-    ResponseEntity<List<PetitionDto.Response>> getAllPetitions() {
-        List<PetitionDto.Response> petitionDtoList = petitionService.getAllPetitions();
+    ResponseEntity<Page<PetitionDto.Response>> getAllPetitions(@QuerydslPredicate(root = Petition.class) Predicate predicate, @PageableDefault(size = 5) Pageable pageable) {
+        Page<PetitionDto.Response> petitionDtoList = petitionService.getAllPetitions(predicate, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(petitionDtoList);
     }
 
