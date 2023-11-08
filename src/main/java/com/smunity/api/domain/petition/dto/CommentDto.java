@@ -6,6 +6,7 @@ import com.smunity.api.domain.petition.entity.Petition;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.domain.Page;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,10 @@ public class CommentDto {
 
         public static List<Response> of(List<Comment> commentList) {
             return commentList.stream().map(Response::of).collect(Collectors.toList());
+        }
+
+        public static Page<Response> of(Page<Comment> commentPage) {
+            return commentPage.map(Response::of);
         }
     }
 
