@@ -25,7 +25,8 @@ public class Petition extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private Integer category;
+    @Enumerated(EnumType.ORDINAL)
+    private Category category;
 
     @Column(nullable = false)
     private Boolean anonymous;
@@ -42,7 +43,7 @@ public class Petition extends BaseEntity {
     @ToString.Exclude
     private User author;
 
-    public void update(String subject, String content, Integer category, Boolean anonymous) {
+    public void update(String subject, String content, Category category, Boolean anonymous) {
         this.subject = subject;
         this.content = content;
         this.category = category;

@@ -3,6 +3,7 @@ package com.smunity.api.domain.petition.service.impl;
 import com.querydsl.core.types.Predicate;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
+import com.smunity.api.domain.petition.entity.Category;
 import com.smunity.api.domain.petition.entity.Petition;
 import com.smunity.api.domain.petition.dto.PetitionDto;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
@@ -55,7 +56,7 @@ public class PetitionServiceImpl implements PetitionService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
             throw new RestException(HttpStatus.FORBIDDEN);
-        petition.update(petitionDto.getSubject(), petitionDto.getContent(), petitionDto.getCategory(), petitionDto.getAnonymous());
+        petition.update(petitionDto.getSubject(), petitionDto.getContent(), Category.valueOf(petitionDto.getCategory()), petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
         return PetitionDto.Response.of(changedPetition);
     }
