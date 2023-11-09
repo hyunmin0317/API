@@ -11,9 +11,11 @@ import com.smunity.api.domain.petition.service.CommentService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import static com.smunity.api.domain.petition.entity.QComment.comment;
 
 
 @Service
@@ -25,8 +27,8 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<CommentDto.Response> getCommentsByPetitionId(Long petitionId) {
-        List<Comment> commentList = commentRepository.findAllByPetitionId(petitionId);
+    public Page<CommentDto.Response> getCommentsByPetitionId(Pageable pageable, Long petitionId) {
+        Page<Comment> commentList = commentRepository.findAll(comment.petition.id.eq(petitionId), pageable);
         return CommentDto.Response.of(commentList);
     }
 

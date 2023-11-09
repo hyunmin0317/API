@@ -3,10 +3,12 @@ package com.smunity.api.domain.petition.controller;
 import com.smunity.api.domain.petition.dto.CommentDto;
 import com.smunity.api.domain.petition.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 
 @RestController
@@ -16,8 +18,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping()
-    public ResponseEntity<List<CommentDto.Response>> getCommentsByPetitionId(@PathVariable Long petitionId) {
-        List<CommentDto.Response> commentDtoList = commentService.getCommentsByPetitionId(petitionId);
+    public ResponseEntity<Page<CommentDto.Response>> getCommentsByPetitionId(@PageableDefault(size = 5) Pageable pageable, @PathVariable Long petitionId) {
+        Page<CommentDto.Response> commentDtoList = commentService.getCommentsByPetitionId(pageable, petitionId);
         return ResponseEntity.status(HttpStatus.OK).body(commentDtoList);
     }
 
