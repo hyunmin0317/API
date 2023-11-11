@@ -22,3 +22,8 @@
 
 * #### Server
   <img src="https://img.shields.io/badge/Apache%20Tomcat-F8DC75?style=round-square&logo=apachetomcat&logoColor=black"/>
+
+* #### DevOps
+  <img src="https://img.shields.io/badge/EC2-FF9900?style=round-square&logo=amazonec2&logoColor=white"/>
+  <img src="https://img.shields.io/badge/RDS-527FFF?style=round-square&logo=amazonrds&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Git-F05032?style=round-square&logo=Git&logoColor=white"/>
