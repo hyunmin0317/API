@@ -38,7 +38,7 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
             .title("SMUNITY API Test with Swagger")
             .description("스뮤니티 API Swagger")
-            .version("1.0.0")
+            .version("0.0.1")
             .build();
     }
 }
