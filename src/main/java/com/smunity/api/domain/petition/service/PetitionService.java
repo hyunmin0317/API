@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 public interface PetitionService {
+    @Transactional
     Page<PetitionDto.Response> getAllPetitions(Predicate predicate, Pageable pageable);
     PetitionDto.Response createPetition(PetitionDto.Request petitionDto, String token);
+    @Transactional
     PetitionDto.Response getPetitionById(Long id);
     @Transactional
     PetitionDto.Response updatePetition(Long id, PetitionDto.Request petitionDto, String token);

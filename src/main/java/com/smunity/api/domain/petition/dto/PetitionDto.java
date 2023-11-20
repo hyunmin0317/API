@@ -26,6 +26,7 @@ public class PetitionDto {
         private LocalDateTime end_date;
         private LocalDateTime modify_date;
         private String status;
+        private Integer agreements;
 
         public static Response of(Petition petition) {
             return Response.builder()
@@ -38,6 +39,7 @@ public class PetitionDto {
                     .end_date(petition.getEndDate())
                     .modify_date(petition.getModifyDate())
                     .status(petition.getStatus().getCode())
+                    .agreements(petition.getAgreements().size())
                     .build();
         }
 
