@@ -5,6 +5,7 @@ import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -42,6 +43,9 @@ public class Petition extends BaseEntity {
     @JoinColumn(name = "author_id")
     @ToString.Exclude
     private User author;
+
+    @OneToMany(mappedBy = "petition")
+    private List<Agreement> agreements;
 
     public void update(String subject, String content, Category category, Boolean anonymous) {
         this.subject = subject;
