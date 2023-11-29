@@ -1,7 +1,7 @@
 package com.smunity.api.domain.account.service.impl;
 
 import com.smunity.api.domain.account.dto.AuthDto;
-import com.smunity.api.domain.account.dto.SignInDto;
+import com.smunity.api.domain.account.dto.UserDto;
 import com.smunity.api.domain.account.service.AuthService;
 import com.smunity.api.global.error.exception.RestException;
 import org.jsoup.Connection;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 public class AuthServiceImpl implements AuthService {
     @Override
-    public Map<String, String> signIn(SignInDto signInDto) throws IOException {
+    public Map<String, String> signIn(UserDto.SignIn signInDto) throws IOException {
         Connection.Response res = Jsoup.connect("https://ecampus.smu.ac.kr/login/index.php")
                 .data("username", signInDto.getUsername(), "password", signInDto.getPassword())
                 .method(Connection.Method.POST)
