@@ -39,7 +39,7 @@ public class AgreementServiceImpl implements AgreementService {
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()))
             throw new RestException(HttpStatus.FORBIDDEN);
-        User user = userRepository.getByUsername(jwtTokenProvider.getUsername(token));
+        User user = userRepository.getByUsername(jwtTokenProvider.getUsername(token)).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (agreementRepository.existsByPetitionIdAndUserId(petitionId, user.getId()))
             throw new RestException(HttpStatus.CONFLICT);
         Agreement agreement = AgreementDto.toEntity(user, petition);
