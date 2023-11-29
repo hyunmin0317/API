@@ -1,9 +1,8 @@
 package com.smunity.api.domain.account.entity;
 
-
 import lombok.Data;
-import javax.persistence.*;
 
+import javax.persistence.*;
 
 @Entity
 @Data
