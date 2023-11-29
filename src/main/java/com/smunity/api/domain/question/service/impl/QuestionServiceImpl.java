@@ -32,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         String username = jwtTokenProvider.getUsername(token);
-        User user = userRepository.getByUsername(username);
+        User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Question question = questionDto.toEntity(user);
         Question saveQuestion = questionRepository.save(question);
         return QuestionDto.Response.of(saveQuestion);

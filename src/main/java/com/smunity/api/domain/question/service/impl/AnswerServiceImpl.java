@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
-        User user = userRepository.getByUsername(username);
+        User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Answer answer = answerDto.toEntity(user, question);
         Answer saveAnswer = answerRepository.save(answer);
         return AnswerDto.Response.of(saveAnswer);

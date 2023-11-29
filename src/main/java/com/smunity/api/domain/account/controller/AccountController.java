@@ -30,9 +30,9 @@ public class AccountController {
     }
 
     @PostMapping(value = "/auth")
-    public ResponseEntity<AuthDto> authenticate(@RequestBody UserDto.SignIn request) throws RuntimeException, IOException {
+    public ResponseEntity<AuthDto.Response> authenticate(@RequestBody AuthDto.Request request) throws RuntimeException, IOException {
         Map<String, String> cookies = authService.signIn(request);
-        AuthDto authDto = authService.getInformation(cookies);
-        return ResponseEntity.status(HttpStatus.OK).body(authDto);
+        AuthDto.Response response = authService.getInformation(cookies);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -34,7 +34,7 @@ public class RespondServiceImpl implements RespondService {
         Petition petition = petitionRepository.findById(petitionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
-        User user = userRepository.getByUsername(username);
+        User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Respond respond = respondDto.toEntity(user, petition);
         Respond saveRespond = respondRepository.save(respond);
         return RespondDto.Response.of(saveRespond);

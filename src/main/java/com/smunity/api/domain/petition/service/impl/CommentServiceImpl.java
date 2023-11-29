@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         Petition petition = petitionRepository.findById(petitionId)
                 .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
-        User user = userRepository.getByUsername(username);
+        User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
         return CommentDto.Response.of(saveComment);

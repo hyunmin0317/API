@@ -8,7 +8,6 @@ import com.smunity.api.domain.account.repository.DepartmentRepository;
 import com.smunity.api.domain.account.repository.ProfileRepository;
 import com.smunity.api.domain.account.repository.YearRepository;
 import com.smunity.api.domain.account.service.AccountService;
-import com.smunity.api.domain.account.dto.ResponseDto;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
@@ -46,8 +45,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserDto.Response signIn(UserDto.SignIn request) {
-        User user = userRepository.getByUsername(request.getUsername());
+    public UserDto.Response signIn(UserDto.SignIn request) throws RuntimeException {
+        User user = userRepository.getByUsername(request.getUsername())
+                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));;
         boolean matches = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!matches)
             throw new RestException(HttpStatus.UNAUTHORIZED);

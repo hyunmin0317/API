@@ -42,7 +42,7 @@ public class PetitionServiceImpl implements PetitionService {
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         String username = jwtTokenProvider.getUsername(token);
-        User user = userRepository.getByUsername(username);
+        User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
         return PetitionDto.Response.of(savePetition);
