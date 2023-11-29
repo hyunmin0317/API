@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
+
 import java.util.Map;
 
 @RestController
@@ -24,13 +24,13 @@ public class AccountController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<UserDto.Response> signIn(@RequestBody UserDto.SignIn request) throws RuntimeException {
+    public ResponseEntity<UserDto.Response> signIn(@RequestBody UserDto.SignIn request) {
         UserDto.Response response = accountService.signIn(request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping(value = "/auth")
-    public ResponseEntity<AuthDto.Response> authenticate(@RequestBody AuthDto.Request request) throws RuntimeException, IOException {
+    public ResponseEntity<AuthDto.Response> authenticate(@RequestBody AuthDto.Request request) {
         Map<String, String> cookies = authService.signIn(request);
         AuthDto.Response response = authService.getInformation(cookies);
         return ResponseEntity.status(HttpStatus.OK).body(response);
