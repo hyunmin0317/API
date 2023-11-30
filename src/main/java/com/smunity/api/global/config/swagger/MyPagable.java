@@ -3,8 +3,8 @@ package com.smunity.api.global.config.swagger;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.util.List;
 
+import java.util.List;
 
 @Data
 @ApiModel
