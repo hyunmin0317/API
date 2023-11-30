@@ -11,8 +11,8 @@ import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -40,15 +40,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto.Response getQuestionById(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         return QuestionDto.Response.of(question);
     }
 
     @Override
     public QuestionDto.Response updateQuestion(Long id, QuestionDto.Request questionDto, String token) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(question.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
@@ -60,8 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long id, String token) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(question.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))

@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
@@ -31,8 +30,7 @@ public class AnswerServiceImpl implements AnswerService {
             throw new RestException(HttpStatus.FORBIDDEN);
         if (answerRepository.existsByQuestionId(questionId))
             throw new RestException(HttpStatus.CONFLICT);
-        Question question = questionRepository.findById(questionId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Question question = questionRepository.findById(questionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Answer answer = answerDto.toEntity(user, question);
@@ -42,15 +40,13 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public AnswerDto.Response getAnswerQuestionId(Long questionId) {
-        Answer answer = answerRepository.findByQuestionId(questionId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Answer answer = answerRepository.findByQuestionId(questionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         return AnswerDto.Response.of(answer);
     }
 
     @Override
     public AnswerDto.Response updateAnswer(Long questionId, AnswerDto.Request answerDto, String token) {
-        Answer answer = answerRepository.findByQuestionId(questionId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Answer answer = answerRepository.findByQuestionId(questionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
@@ -62,8 +58,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void deleteAnswer(Long questionId, String token) {
-        Answer answer = answerRepository.findByQuestionId(questionId)
-                .orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
+        Answer answer = answerRepository.findByQuestionId(questionId).orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getIsSuperuser(token))
