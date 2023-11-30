@@ -6,8 +6,8 @@ import com.smunity.api.domain.petition.entity.Petition;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 public class RespondDto {
     @Data

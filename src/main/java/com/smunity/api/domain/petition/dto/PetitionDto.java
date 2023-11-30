@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
-
 public class PetitionDto {
     @Data
     @Builder

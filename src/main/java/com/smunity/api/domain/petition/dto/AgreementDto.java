@@ -5,9 +5,9 @@ import com.smunity.api.domain.petition.entity.Agreement;
 import com.smunity.api.domain.petition.entity.Petition;
 import lombok.Builder;
 import lombok.Data;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Data
 @Builder

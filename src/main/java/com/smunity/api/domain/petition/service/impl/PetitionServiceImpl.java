@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class PetitionServiceImpl implements PetitionService {
@@ -32,8 +31,7 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public PetitionDto.Response getPetitionById(Long id) {
-        Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Petition petition = petitionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         return PetitionDto.Response.of(petition);
     }
 
@@ -50,8 +48,7 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public PetitionDto.Response updatePetition(Long id, PetitionDto.Request petitionDto, String token) {
-        Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Petition petition = petitionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))
@@ -63,8 +60,7 @@ public class PetitionServiceImpl implements PetitionService {
 
     @Override
     public void deletePetition(Long id, String token) {
-        Petition petition = petitionRepository.findById(id)
-                .orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
+        Petition petition = petitionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NO_CONTENT));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (!jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()) && !jwtTokenProvider.getIsSuperuser(token))

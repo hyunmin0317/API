@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-
 public interface PetitionRepository extends JpaRepository<Petition, Long>, QuerydslPredicateExecutor<Petition> {
     Page<Petition> findAll(Predicate predicate, Pageable pageable);
 }
