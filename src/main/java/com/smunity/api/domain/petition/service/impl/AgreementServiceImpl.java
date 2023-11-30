@@ -13,8 +13,8 @@ import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +33,7 @@ public class AgreementServiceImpl implements AgreementService {
 
     @Override
     public AgreementDto createAgreement(Long petitionId, String token) {
-        Petition petition = petitionRepository.findById(petitionId)
-                .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+        Petition petition = petitionRepository.findById(petitionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (!jwtTokenProvider.validateToken(token))
             throw new RestException(HttpStatus.UNAUTHORIZED);
         if (jwtTokenProvider.getUsername(token).equals(petition.getAuthor().getUsername()))

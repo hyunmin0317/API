@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-
 public interface CommentService {
     Page<CommentDto.Response> getCommentsByPetitionId(Pageable pageable, Long petitionId);
     CommentDto.Response createComment(Long petitionId, CommentDto.Request commentDto, String token);
