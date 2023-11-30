@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private static final String BASE_URL = "https://ecampus.smu.ac.kr/";
+    private final String BASE_URL = "https://ecampus.smu.ac.kr/";
 
     @Override
     public Map<String, String> signIn(AuthDto.Request request) {
