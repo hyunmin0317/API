@@ -5,10 +5,10 @@ import com.smunity.api.domain.question.entity.Question;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class QuestionDto {
     @Data

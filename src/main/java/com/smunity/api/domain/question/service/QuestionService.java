@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 public interface QuestionService {
     List<QuestionDto.Response> getAllQuestions();
     QuestionDto.Response createQuestion(QuestionDto.Request questionDto, String token);
