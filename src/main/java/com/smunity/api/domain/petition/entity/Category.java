@@ -3,7 +3,6 @@ package com.smunity.api.domain.petition.entity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-
 @Getter
 @RequiredArgsConstructor
 public enum Category {

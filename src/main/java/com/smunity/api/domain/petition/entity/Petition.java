@@ -3,10 +3,10 @@ package com.smunity.api.domain.petition.entity;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.global.common.BaseEntity;
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Entity
 @Data
