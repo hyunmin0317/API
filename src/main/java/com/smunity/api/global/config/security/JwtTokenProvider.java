@@ -11,21 +11,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 
-
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-
-    private final UserDetailsService userDetailsService;
-
     @Value("${springboot.jwt.secret}")
     private String secretKey = "secretKey";
+    private final UserDetailsService userDetailsService;
     private final long tokenValidMillisecond = 1000L * 60 * 60;
 
     @PostConstruct

@@ -15,7 +15,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-
 @Configuration
 @EnableSwagger2
 @RequiredArgsConstructor
@@ -25,8 +24,7 @@ public class SwaggerConfiguration {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class),
-                    typeResolver.resolve((MyPagable.class))))
+            .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve((MyPagable.class))))
             .apiInfo(apiInfo())
             .select()
             .apis(RequestHandlerSelectors.basePackage("com.smunity.api"))
