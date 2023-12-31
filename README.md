@@ -3,11 +3,6 @@
 
 <img src="https://github.com/smu-nity/API/assets/63601183/82aed95b-20b2-4217-bc8c-8e78a5c1ecba" width="300" height="135"/>
 
-
-## ⭐ Swagger URL
-
-* #### http://13.124.238.131:8080/swagger-ui.html
-
 ## ⚒️ Tech Stack
 
 * #### Backend
