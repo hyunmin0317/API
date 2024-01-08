@@ -455,7 +455,7 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
-# properties files
-application-*.properties
+# yml files
+application-*.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
