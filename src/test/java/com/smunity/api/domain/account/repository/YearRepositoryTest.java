@@ -14,7 +14,7 @@ public class YearRepositoryTest {
     YearRepository yearRepository;
 
     @Test
-    void findByYearTest(){
+    void findByYearTest() {
         Optional<Year> year = yearRepository.findByYear("2019");
         if (!year.isEmpty())
             System.out.println(year.get());

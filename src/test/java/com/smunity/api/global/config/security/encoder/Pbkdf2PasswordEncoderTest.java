@@ -1,6 +1,5 @@
 package com.smunity.api.global.config.security.encoder;
 
-import com.smunity.api.global.config.security.encoder.Pbkdf2PasswordEncoder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
