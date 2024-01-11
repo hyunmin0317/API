@@ -2,19 +2,22 @@ package com.smunity.api.domain.question.entity;
 
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.global.common.BaseEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "qna_question")
 public class Question extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -26,10 +29,12 @@ public class Question extends BaseEntity {
     @Column(nullable = false)
     private Boolean anonymous;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    @ToString.Exclude
     private User author;
+
+    @OneToOne(mappedBy = "question", fetch = FetchType.LAZY)
+    private Answer answer;
 
     public void update(String subject, String content, Boolean anonymous) {
         this.subject = subject;

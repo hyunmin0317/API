@@ -23,7 +23,7 @@ public class AgreementDto {
                 .build();
     }
 
-    public static AgreementDto of(Agreement agreement) {
+    public static AgreementDto from(Agreement agreement) {
         return AgreementDto.builder()
                 .id(agreement.getId())
                 .user_id(agreement.getUser().getId())
@@ -31,7 +31,7 @@ public class AgreementDto {
                 .build();
     }
 
-    public static List<AgreementDto> of(List<Agreement> agreementList) {
-        return agreementList.stream().map(AgreementDto::of).collect(Collectors.toList());
+    public static List<AgreementDto> from(List<Agreement> agreementList) {
+        return agreementList.stream().map(AgreementDto::from).collect(Collectors.toList());
     }
 }
