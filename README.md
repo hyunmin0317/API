@@ -1,4 +1,4 @@
-# SMUNITY API beta ![Java versions](https://img.shields.io/badge/Java-11-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Beta](https://img.shields.io/badge/beta-0.0.1-red)
+# SMUNITY API beta ![Java versions](https://img.shields.io/badge/Java-11-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Beta](https://img.shields.io/badge/beta-0.0.2-red)
 #### 스뮤니티 API beta
 
 <img src="https://github.com/smu-nity/API/assets/63601183/82aed95b-20b2-4217-bc8c-8e78a5c1ecba" width="300" height="135"/>
