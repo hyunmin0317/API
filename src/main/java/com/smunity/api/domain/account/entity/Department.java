@@ -3,13 +3,14 @@ package com.smunity.api.domain.account.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "accounts_department")
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -21,6 +22,8 @@ public class Department {
     @Column(nullable = false)
     private String type;
 
-    @Column
     private String url;
+
+    @OneToMany(mappedBy = "department")
+    private List<Profile> profiles;
 }

@@ -2,6 +2,12 @@ package com.smunity.api.domain.account.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.smunity.api.domain.petition.entity.Agreement;
+import com.smunity.api.domain.petition.entity.Comment;
+import com.smunity.api.domain.petition.entity.Petition;
+import com.smunity.api.domain.petition.entity.Respond;
+import com.smunity.api.domain.question.entity.Answer;
+import com.smunity.api.domain.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +34,7 @@ import java.util.stream.Collectors;
 @Table(name = "auth_user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -41,10 +47,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @Column
     private String first_name;
 
-    @Column
     private String last_name;
 
     @Column(nullable = false)
@@ -56,12 +60,31 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Boolean is_active;
 
-    @Column
     private LocalDateTime last_login;
 
-    @Column
     @CreatedDate
     private LocalDateTime date_joined;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Profile profile;
+
+    @OneToMany(mappedBy = "user")
+    private List<Agreement> agreement;
+
+    @OneToMany(mappedBy = "author")
+    private List<Petition> petitions;
+
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "author")
+    private List<Respond> responds;
+
+    @OneToMany(mappedBy = "author")
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "author")
+    private List<Answer> answers;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

@@ -1,9 +1,9 @@
 package com.smunity.api.domain.petition.dto;
 
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.petition.entity.Category;
 import com.smunity.api.domain.petition.entity.Petition;
-import com.smunity.api.domain.petition.entity.Status;
+import com.smunity.api.domain.petition.entity.enums.Category;
+import com.smunity.api.domain.petition.entity.enums.Status;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
@@ -53,14 +53,14 @@ public class PetitionDto {
     public static class Request {
         private String subject;
         private String content;
-        private Integer category;
+        private Category category;
         private Boolean anonymous;
 
         public Petition toEntity(User user) {
             return Petition.builder()
                     .subject(subject)
                     .content(content)
-                    .category(Category.valueOf(category))
+                    .category(category)
                     .anonymous(anonymous)
                     .author(user)
                     .status(Status.IN_PROGRESS)
