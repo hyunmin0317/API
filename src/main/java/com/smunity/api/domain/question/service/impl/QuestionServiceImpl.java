@@ -2,8 +2,8 @@ package com.smunity.api.domain.question.service.impl;
 
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
-import com.smunity.api.domain.question.entity.Question;
 import com.smunity.api.domain.question.dto.QuestionDto;
+import com.smunity.api.domain.question.entity.Question;
 import com.smunity.api.domain.question.repository.QuestionRepository;
 import com.smunity.api.domain.question.service.QuestionService;
 import com.smunity.api.global.config.security.JwtTokenProvider;
