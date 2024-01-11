@@ -24,19 +24,19 @@ public class SwaggerConfiguration {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve((MyPagable.class))))
-            .apiInfo(apiInfo())
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("com.smunity.api"))
-            .paths(PathSelectors.any())
-            .build();
+                .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve((MyPagable.class))))
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.smunity.api"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("SMUNITY API beta Test with Swagger")
-            .description("스뮤니티 API beta Swagger")
-            .version("0.0.2")
-            .build();
+                .title("SMUNITY API beta Test with Swagger")
+                .description("스뮤니티 API beta Swagger")
+                .version("0.0.2")
+                .build();
     }
 }
