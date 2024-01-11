@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface RespondRepository extends JpaRepository<Respond, Long> {
     Optional<Respond> findByPetitionId(Long petitionId);
+
     boolean existsByPetitionId(Long petitionId);
 }

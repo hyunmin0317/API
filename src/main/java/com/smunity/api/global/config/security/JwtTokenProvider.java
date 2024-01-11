@@ -21,10 +21,10 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-    @Value("${springboot.jwt.secret}")
-    private String secretKey = "secretKey";
     private final UserDetailsService userDetailsService;
     private final long tokenValidMillisecond = 1000L * 60 * 60;
+    @Value("${springboot.jwt.secret}")
+    private String secretKey = "secretKey";
 
     @PostConstruct
     protected void init() {
@@ -36,11 +36,11 @@ public class JwtTokenProvider {
         claims.put("isSuperuser", isSuperuser);
         Date now = new Date();
         String token = Jwts.builder()
-            .setClaims(claims)
-            .setIssuedAt(now)
-            .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
-            .compact();
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
         return token;
     }
 

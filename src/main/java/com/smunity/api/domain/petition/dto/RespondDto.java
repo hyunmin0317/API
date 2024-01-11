@@ -1,8 +1,8 @@
 package com.smunity.api.domain.petition.dto;
 
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.petition.entity.Respond;
 import com.smunity.api.domain.petition.entity.Petition;
+import com.smunity.api.domain.petition.entity.Respond;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class RespondDto {
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
 
-        public static Response of(Respond respond) {
+        public static Response from(Respond respond) {
             return Response.builder()
                     .id(respond.getId())
                     .author_id(respond.getAuthor().getId())

@@ -9,8 +9,6 @@ import lombok.Data;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommentDto {
     @Data
@@ -23,7 +21,8 @@ public class CommentDto {
         private String content;
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
-        public static Response of(Comment comment) {
+
+        public static Response from(Comment comment) {
             return Response.builder()
                     .id(comment.getId())
                     .author_id(comment.getAuthor().getId())
@@ -34,12 +33,8 @@ public class CommentDto {
                     .build();
         }
 
-        public static List<Response> of(List<Comment> commentList) {
-            return commentList.stream().map(Response::of).collect(Collectors.toList());
-        }
-
-        public static Page<Response> of(Page<Comment> commentPage) {
-            return commentPage.map(Response::of);
+        public static Page<Response> from(Page<Comment> commentPage) {
+            return commentPage.map(Response::from);
         }
     }
 

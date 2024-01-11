@@ -14,7 +14,7 @@ public class DepartmentRepositoryTest {
     DepartmentRepository departmentRepository;
 
     @Test
-    void findByNameTest(){
+    void findByNameTest() {
         Optional<Department> department = departmentRepository.findByName("컴퓨터과학전공");
         if (!department.isEmpty())
             System.out.println(department.get());
