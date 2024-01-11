@@ -23,6 +23,7 @@ public class CommentDto {
         private String content;
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
+
         public static Response of(Comment comment) {
             return Response.builder()
                     .id(comment.getId())

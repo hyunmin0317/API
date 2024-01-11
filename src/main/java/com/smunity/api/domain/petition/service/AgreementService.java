@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AgreementService {
     List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId);
+
     AgreementDto createAgreement(Long petitionId, String token);
 }

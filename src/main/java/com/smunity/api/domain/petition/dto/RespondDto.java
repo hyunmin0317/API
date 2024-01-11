@@ -1,8 +1,8 @@
 package com.smunity.api.domain.petition.dto;
 
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.petition.entity.Respond;
 import com.smunity.api.domain.petition.entity.Petition;
+import com.smunity.api.domain.petition.entity.Respond;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;

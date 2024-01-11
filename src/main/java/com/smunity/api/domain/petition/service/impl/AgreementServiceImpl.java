@@ -2,9 +2,9 @@ package com.smunity.api.domain.petition.service.impl;
 
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.repository.UserRepository;
+import com.smunity.api.domain.petition.dto.AgreementDto;
 import com.smunity.api.domain.petition.entity.Agreement;
 import com.smunity.api.domain.petition.entity.Petition;
-import com.smunity.api.domain.petition.dto.AgreementDto;
 import com.smunity.api.domain.petition.repository.AgreementRepository;
 import com.smunity.api.domain.petition.repository.PetitionRepository;
 import com.smunity.api.domain.petition.service.AgreementService;

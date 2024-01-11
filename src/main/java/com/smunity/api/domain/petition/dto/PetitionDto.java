@@ -1,6 +1,5 @@
 package com.smunity.api.domain.petition.dto;
 
-import java.time.LocalDateTime;
 import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.petition.entity.Category;
 import com.smunity.api.domain.petition.entity.Petition;
@@ -9,6 +8,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;
+
+import java.time.LocalDateTime;
 
 public class PetitionDto {
     @Data
