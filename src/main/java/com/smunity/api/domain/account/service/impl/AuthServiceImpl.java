@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String getById(Document doc, String id) {
-        return doc.select("input[id="+id+"]").val();
+        return doc.select("input[id=" + id + "]").val();
     }
 
     private String changeName(String department) {

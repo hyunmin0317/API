@@ -3,13 +3,13 @@ package com.smunity.api.domain.account.service.impl;
 import com.smunity.api.domain.account.dto.UserDto;
 import com.smunity.api.domain.account.entity.Department;
 import com.smunity.api.domain.account.entity.Profile;
+import com.smunity.api.domain.account.entity.User;
 import com.smunity.api.domain.account.entity.Year;
 import com.smunity.api.domain.account.repository.DepartmentRepository;
 import com.smunity.api.domain.account.repository.ProfileRepository;
+import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.domain.account.repository.YearRepository;
 import com.smunity.api.domain.account.service.AccountService;
-import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.account.repository.UserRepository;
 import com.smunity.api.global.config.security.JwtTokenProvider;
 import com.smunity.api.global.error.exception.RestException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDto.Response signUp(UserDto.SignUp request) {
-        Year year = yearRepository.findByYear(request.getUsername().substring(0,4)).orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST));
+        Year year = yearRepository.findByYear(request.getUsername().substring(0, 4)).orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST));
         Department department = departmentRepository.findByName(request.getDepartment()).orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST));
         if (userRepository.existsByUsername(request.getUsername()))
             throw new RestException(HttpStatus.CONFLICT);
@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
         User savedUser = userRepository.save(user);
         Profile profile = request.toEntity(savedUser, year, department);
         profileRepository.save(profile);
-        String token  = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getIs_superuser());
+        String token = jwtTokenProvider.createToken(String.valueOf(savedUser.getUsername()), savedUser.getIs_superuser());
         return UserDto.Response.of(user.getUsername(), token);
     }
 

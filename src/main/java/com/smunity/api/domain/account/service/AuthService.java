@@ -6,5 +6,6 @@ import java.util.Map;
 
 public interface AuthService {
     Map<String, String> signIn(AuthDto.Request request);
+
     AuthDto.Response getInformation(Map<String, String> cookies);
 }
