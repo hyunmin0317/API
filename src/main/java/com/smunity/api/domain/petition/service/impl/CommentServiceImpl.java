@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<CommentDto.Response> getCommentsByPetitionId(Pageable pageable, Long petitionId) {
         Page<Comment> commentList = commentRepository.findAll(comment.petition.id.eq(petitionId), pageable);
-        return CommentDto.Response.of(commentList);
+        return CommentDto.Response.from(commentList);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Comment comment = commentDto.toEntity(user, petition);
         Comment saveComment = commentRepository.save(comment);
-        return CommentDto.Response.of(saveComment);
+        return CommentDto.Response.from(saveComment);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         if (comment.getPetition().getId() != petitionId)
             throw new RestException(HttpStatus.BAD_REQUEST);
-        return CommentDto.Response.of(comment);
+        return CommentDto.Response.from(comment);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
             throw new RestException(HttpStatus.BAD_REQUEST);
         comment.update(commentDto.getContent());
         Comment changedComment = commentRepository.save(comment);
-        return CommentDto.Response.of(changedComment);
+        return CommentDto.Response.from(changedComment);
     }
 
     @Override

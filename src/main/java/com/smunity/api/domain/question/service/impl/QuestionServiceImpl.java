@@ -24,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<QuestionDto.Response> getAllQuestions() {
         List<Question> questionList = questionRepository.findAll();
-        return QuestionDto.Response.of(questionList);
+        return QuestionDto.Response.from(questionList);
     }
 
     @Override
@@ -35,13 +35,13 @@ public class QuestionServiceImpl implements QuestionService {
         User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Question question = questionDto.toEntity(user);
         Question saveQuestion = questionRepository.save(question);
-        return QuestionDto.Response.of(saveQuestion);
+        return QuestionDto.Response.from(saveQuestion);
     }
 
     @Override
     public QuestionDto.Response getQuestionById(Long id) {
         Question question = questionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return QuestionDto.Response.of(question);
+        return QuestionDto.Response.from(question);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
             throw new RestException(HttpStatus.FORBIDDEN);
         question.update(questionDto.getSubject(), questionDto.getContent(), questionDto.getAnonymous());
         Question changedQuestion = questionRepository.save(question);
-        return QuestionDto.Response.of(changedQuestion);
+        return QuestionDto.Response.from(changedQuestion);
     }
 
     @Override

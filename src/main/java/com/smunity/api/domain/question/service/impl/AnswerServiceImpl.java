@@ -35,13 +35,13 @@ public class AnswerServiceImpl implements AnswerService {
         User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Answer answer = answerDto.toEntity(user, question);
         Answer saveAnswer = answerRepository.save(answer);
-        return AnswerDto.Response.of(saveAnswer);
+        return AnswerDto.Response.from(saveAnswer);
     }
 
     @Override
     public AnswerDto.Response getAnswerQuestionId(Long questionId) {
         Answer answer = answerRepository.findByQuestionId(questionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return AnswerDto.Response.of(answer);
+        return AnswerDto.Response.from(answer);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AnswerServiceImpl implements AnswerService {
             throw new RestException(HttpStatus.FORBIDDEN);
         answer.update(answerDto.getContent());
         Answer changedAnswer = answerRepository.save(answer);
-        return AnswerDto.Response.of(changedAnswer);
+        return AnswerDto.Response.from(changedAnswer);
     }
 
     @Override

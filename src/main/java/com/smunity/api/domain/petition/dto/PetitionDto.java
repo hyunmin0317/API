@@ -28,7 +28,7 @@ public class PetitionDto {
         private String status;
         private Integer agreements;
 
-        public static Response of(Petition petition) {
+        public static Response from(Petition petition) {
             return Response.builder()
                     .id(petition.getId())
                     .author_id(petition.getAuthor().getId())
@@ -43,8 +43,8 @@ public class PetitionDto {
                     .build();
         }
 
-        public static Page<Response> of(Page<Petition> petitionPage) {
-            return petitionPage.map(Response::of);
+        public static Page<Response> from(Page<Petition> petitionPage) {
+            return petitionPage.map(Response::from);
         }
     }
 

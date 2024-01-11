@@ -28,7 +28,7 @@ public class AgreementServiceImpl implements AgreementService {
     public List<AgreementDto> getAgreementUsersByPetitionId(Long petitionId) {
         petitionRepository.findById(petitionId).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         List<Agreement> agreementList = agreementRepository.findAllByPetitionId(petitionId);
-        return AgreementDto.of(agreementList);
+        return AgreementDto.from(agreementList);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class AgreementServiceImpl implements AgreementService {
             throw new RestException(HttpStatus.CONFLICT);
         Agreement agreement = AgreementDto.toEntity(user, petition);
         Agreement saveAgreement = agreementRepository.save(agreement);
-        return AgreementDto.of(saveAgreement);
+        return AgreementDto.from(saveAgreement);
     }
 }

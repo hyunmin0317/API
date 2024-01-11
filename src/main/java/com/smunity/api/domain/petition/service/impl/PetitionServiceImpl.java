@@ -26,13 +26,13 @@ public class PetitionServiceImpl implements PetitionService {
     @Override
     public Page<PetitionDto.Response> getAllPetitions(Predicate predicate, Pageable pageable) {
         Page<Petition> petitionPage = petitionRepository.findAll(predicate, pageable);
-        return PetitionDto.Response.of(petitionPage);
+        return PetitionDto.Response.from(petitionPage);
     }
 
     @Override
     public PetitionDto.Response getPetitionById(Long id) {
         Petition petition = petitionRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
-        return PetitionDto.Response.of(petition);
+        return PetitionDto.Response.from(petition);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PetitionServiceImpl implements PetitionService {
         User user = userRepository.getByUsername(username).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
         Petition petition = petitionDto.toEntity(user);
         Petition savePetition = petitionRepository.save(petition);
-        return PetitionDto.Response.of(savePetition);
+        return PetitionDto.Response.from(savePetition);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PetitionServiceImpl implements PetitionService {
             throw new RestException(HttpStatus.FORBIDDEN);
         petition.update(petitionDto.getSubject(), petitionDto.getContent(), Category.valueOf(petitionDto.getCategory()), petitionDto.getAnonymous());
         Petition changedPetition = petitionRepository.save(petition);
-        return PetitionDto.Response.of(changedPetition);
+        return PetitionDto.Response.from(changedPetition);
     }
 
     @Override
