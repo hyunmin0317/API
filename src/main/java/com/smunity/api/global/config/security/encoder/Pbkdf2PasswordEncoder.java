@@ -18,7 +18,7 @@ public class Pbkdf2PasswordEncoder implements PasswordEncoder {
     private final String PREFIX = "pbkdf2_sha256";
     private final int ITERATIONS = 390000;
     private final int HASH_WIDTH = 256;
-    private final String ALGORITHM= "PBKDF2WithHmacSHA256";
+    private final String ALGORITHM = "PBKDF2WithHmacSHA256";
 
     private byte[] base64Decode(String string) {
         return Base64.getDecoder().decode(string);
