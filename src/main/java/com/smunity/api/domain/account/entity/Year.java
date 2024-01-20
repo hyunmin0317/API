@@ -3,7 +3,6 @@ package com.smunity.api.domain.account.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -16,16 +15,18 @@ public class Year {
     @Column(nullable = false)
     private String year;
 
+    @Column
     private int major_i;
 
+    @Column
     private int major_s;
 
+    @Column
     private int culture;
 
+    @Column
     private int culture_cnt;
 
+    @Column
     private int all;
-
-    @OneToMany(mappedBy = "year")
-    private List<Profile> profiles;
 }

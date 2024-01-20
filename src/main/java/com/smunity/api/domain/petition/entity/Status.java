@@ -1,4 +1,4 @@
-package com.smunity.api.domain.petition.entity.enums;
+package com.smunity.api.domain.petition.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

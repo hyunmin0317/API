@@ -23,7 +23,7 @@ public class QuestionDto {
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
 
-        public static Response from(Question question) {
+        public static Response of(Question question) {
             return Response.builder()
                     .id(question.getId())
                     .author_id(question.getAuthor().getId())
@@ -35,8 +35,8 @@ public class QuestionDto {
                     .build();
         }
 
-        public static List<Response> from(List<Question> questionList) {
-            return questionList.stream().map(Response::from).collect(Collectors.toList());
+        public static List<Response> of(List<Question> questionList) {
+            return questionList.stream().map(Response::of).collect(Collectors.toList());
         }
     }
 

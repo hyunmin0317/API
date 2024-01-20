@@ -21,7 +21,7 @@ public class AnswerDto {
         private LocalDateTime create_date;
         private LocalDateTime modify_date;
 
-        public static Response from(Answer answer) {
+        public static Response of(Answer answer) {
             return Response.builder()
                     .id(answer.getId())
                     .author_id(answer.getAuthor().getId())

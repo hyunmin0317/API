@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface AgreementRepository extends JpaRepository<Agreement, Long> {
     List<Agreement> findAllByPetitionId(Long petitionId);
-
     boolean existsByPetitionIdAndUserId(Long petitionId, Long userId);
 }
