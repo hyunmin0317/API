@@ -1,27 +1,22 @@
 package com.smunity.api.domain.petition.entity;
 
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.petition.entity.enums.Category;
-import com.smunity.api.domain.petition.entity.enums.Status;
 import com.smunity.api.global.common.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "petitions_petition")
 public class Petition extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -44,18 +39,13 @@ public class Petition extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id")
+    @ToString.Exclude
     private User author;
 
     @OneToMany(mappedBy = "petition")
     private List<Agreement> agreements;
-
-    @OneToOne(mappedBy = "petition", fetch = FetchType.LAZY)
-    private Respond respond;
-
-    @OneToMany(mappedBy = "petition")
-    private List<Comment> comments;
 
     public void update(String subject, String content, Category category, Boolean anonymous) {
         this.subject = subject;

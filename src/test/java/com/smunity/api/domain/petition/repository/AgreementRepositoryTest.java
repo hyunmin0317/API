@@ -4,7 +4,6 @@ import com.smunity.api.domain.petition.entity.Agreement;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
 
 
@@ -14,9 +13,9 @@ public class AgreementRepositoryTest {
     AgreementRepository agreementRepository;
 
     @Test
-    void findAllest() {
+    void findAllest(){
         List<Agreement> agreementList = agreementRepository.findAll();
-        for (Agreement agreement : agreementList) {
+        for(Agreement agreement: agreementList) {
             System.out.println(agreement);
         }
     }
