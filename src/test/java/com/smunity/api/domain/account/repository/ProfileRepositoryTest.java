@@ -14,9 +14,9 @@ public class ProfileRepositoryTest {
     ProfileRepository profileRepository;
 
     @Test
-    void findAllest(){
+    void findAllest() {
         List<Profile> profileList = profileRepository.findAll();
-        for (Profile profile: profileList)
+        for (Profile profile : profileList)
             System.out.println(profile);
     }
 }

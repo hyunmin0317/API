@@ -1,14 +1,15 @@
 package com.smunity.api.domain.petition.dto;
 
-import java.time.LocalDateTime;
 import com.smunity.api.domain.account.entity.User;
-import com.smunity.api.domain.petition.entity.Category;
 import com.smunity.api.domain.petition.entity.Petition;
-import com.smunity.api.domain.petition.entity.Status;
+import com.smunity.api.domain.petition.entity.enums.Category;
+import com.smunity.api.domain.petition.entity.enums.Status;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;
+
+import java.time.LocalDateTime;
 
 public class PetitionDto {
     @Data
@@ -27,7 +28,7 @@ public class PetitionDto {
         private String status;
         private Integer agreements;
 
-        public static Response of(Petition petition) {
+        public static Response from(Petition petition) {
             return Response.builder()
                     .id(petition.getId())
                     .author_id(petition.getAuthor().getId())
@@ -42,8 +43,8 @@ public class PetitionDto {
                     .build();
         }
 
-        public static Page<Response> of(Page<Petition> petitionPage) {
-            return petitionPage.map(Response::of);
+        public static Page<Response> from(Page<Petition> petitionPage) {
+            return petitionPage.map(Response::from);
         }
     }
 
@@ -52,14 +53,14 @@ public class PetitionDto {
     public static class Request {
         private String subject;
         private String content;
-        private Integer category;
+        private Category category;
         private Boolean anonymous;
 
         public Petition toEntity(User user) {
             return Petition.builder()
                     .subject(subject)
                     .content(content)
-                    .category(Category.valueOf(category))
+                    .category(category)
                     .anonymous(anonymous)
                     .author(user)
                     .status(Status.IN_PROGRESS)
